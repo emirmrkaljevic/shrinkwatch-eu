@@ -1,0 +1,14 @@
+{
+  "name": "shrinkwatch-eu",
+  "version": "0.1.0",
+  "description": "Browser extension: price per kg/l and shrinkflation warnings for EU and Balkan supermarket web shops.",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "node --test test/",
+    "build": "node scripts/build.js"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.5"
+  }
+}
