@@ -3,6 +3,7 @@
   // prev/cur: { size: {amount, unit}, price, currency, ts }
   function compare(prev, cur) {
     if (!prev || !cur || !prev.size || !cur.size) return null;
+    if (prev.size.derived || cur.size.derived) return null; // estimated sizes are too rough to accuse a product
     if (prev.size.unit !== cur.size.unit || prev.currency !== cur.currency) return null;
     if (!(cur.size.amount < prev.size.amount)) return null;
     const oldUnit = prev.price / prev.size.amount;
