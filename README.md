@@ -8,18 +8,13 @@ A browser extension for Chrome and Firefox that shows the **price per kg / litre
 - Remembers pack sizes and prices **only in your browser** so it can spot a smaller pack next time.
 - Open source (MIT).
 
-## Supported shops (v0.1)
+## Supported shops
 
-| Shop | Domains | Status |
-|---|---|---|
-| Konzum | konzum.hr, konzum.ba | Verified |
-| Lidl | lidl.de, .hr, .si, .rs, .at, .ba | Verified (lidl.de) |
-| Mercator | mercatoronline.si | Verified |
-| Tommy | tommy.hr | Verified |
-| Bingo | bingoshop.ba | Verified (mostly non-food) |
-| Kaufland, Rewe, Tesco, Spar | see `src/adapters.js` | Generic reader, not verified yet |
+About 70 grocery and drugstore web shops in 25 EU countries plus Serbia and Bosnia and Herzegovina. The full list, with live check results, is in [docs/shops.md](docs/shops.md).
 
-Details of the checks are in [docs/compatibility.md](docs/compatibility.md).
+- **Core shops** work right after install: Konzum, Tommy, Mercator, Bingo, Lidl (DE, AT, HR, SI, RS, BA) and Maxi.
+- **Opt-in shops**: open the shop, click the ShrinkWatch icon and choose "Enable on this shop". The browser asks for access to that shop only.
+- **Any other site**: "Check this page now" reads the current page once, without any standing permission.
 
 Every shop first uses the page's own schema.org `Product` data, then Open Graph tags, then a few CSS selectors. If your shop is missing or broken, please open an issue with the product URL.
 

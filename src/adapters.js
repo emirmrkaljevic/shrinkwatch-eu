@@ -14,17 +14,17 @@
     A('lidl-eu', 'EU', ['lidl.fr', 'lidl.es', 'lidl.it', 'lidl.nl', 'lidl.be', 'lidl.pl', 'lidl.cz', 'lidl.sk', 'lidl.hu', 'lidl.ro', 'lidl.bg', 'lidl.pt', 'lidl.ie', 'lidl.se', 'lidl.dk', 'lidl.fi', 'lidl.gr', 'lidl.lt', 'lidl.lv', 'lidl.ee'], { productPath: /\/p\d+/, price: '.ods-price__value, .m-price__price' }),
     // Balkans (optional)
     A('spar-hr', 'HR', ['online.spar.hr']),
-    A('maxi', 'RS', ['maxi.rs'], { currency: 'RSD' }),
+    A('maxi', 'RS', ['maxi.rs'], { status: 'verified', core: true, productPath: /\/p\/\d+/, currency: 'RSD', price: '[data-testid="product-properties-price-info"] [data-testid="product-block-price"], [data-testid="product-block-price"]', size: '[data-testid="product-properties-supplementary-price-info"]' }),
     A('idea', 'RS', ['online.idea.rs'], { currency: 'RSD' }),
     A('spar-si', 'SI', ['online.spar.si']),
     // Germany
     A('rewe', 'DE', ['shop.rewe.de'], { productPath: /\/p\// }),
     A('kaufland', 'DE/CZ/SK', ['kaufland.de', 'kaufland.cz', 'kaufland.sk'], { productPath: /\/product\//, price: '.rd-price-information__price' }),
     A('dm', 'DE/AT', ['dm.de', 'dm.at'], { productPath: /-p\d+\.html/ }),
-    A('rossmann', 'DE', ['rossmann.de'], { productPath: /\/p\// }),
+    A('rossmann', 'DE', ['rossmann.de'], { status: 'verified (price; size not in name)', productPath: /\/p\// }),
     A('netto', 'DE', ['netto-online.de']),
     // Austria
-    A('billa', 'AT', ['shop.billa.at'], { productPath: /\/produkte\// }),
+    A('billa', 'AT', ['shop.billa.at'], { status: 'verified (price; size not in name)', productPath: /\/produkte\//, price: '.ws-product-price-value' }),
     A('gurkerl', 'AT', ['gurkerl.at']),
     // France
     A('carrefour-fr', 'FR', ['carrefour.fr'], { productPath: /\/p\// }),
@@ -34,7 +34,7 @@
     A('monoprix', 'FR', ['monoprix.fr']),
     A('coursesu', 'FR', ['coursesu.com'], { productPath: /\/p\// }),
     // Italy
-    A('esselunga', 'IT', ['spesaonline.esselunga.it']),
+    A('esselunga', 'IT', ['spesaonline.esselunga.it'], { status: 'verified' }),
     A('carrefour-it', 'IT', ['carrefour.it']),
     A('conad', 'IT', ['spesaonline.conad.it']),
     A('coop-it', 'IT', ['coopshop.it', 'easycoop.com']),
@@ -52,7 +52,7 @@
     A('jumbo', 'NL', ['jumbo.com'], { productPath: /\/producten\// }),
     A('plus', 'NL', ['plus.nl'], { productPath: /\/product\// }),
     A('dirk', 'NL', ['dirk.nl'], { productPath: /\/boodschappen\// }),
-    A('delhaize', 'BE', ['delhaize.be'], { productPath: /\/p\// }),
+    A('delhaize', 'BE', ['delhaize.be'], { productPath: /\/p\/\d+/, price: '[data-testid="product-properties-price-info"] [data-testid="product-block-price"], [data-testid="product-block-price"]', size: '[data-testid="product-properties-supplementary-price-info"]' }),
     A('colruyt', 'BE', ['colruyt.be', 'collectandgo.be']),
     A('carrefour-be', 'BE', ['carrefour.be']),
     // Poland / Czechia / Slovakia / Hungary / Romania / Bulgaria
@@ -65,7 +65,7 @@
     A('kifli', 'HU', ['kifli.hu']),
     A('auchan-hu', 'HU', ['online.auchan.hu']),
     A('carrefour-ro', 'RO', ['carrefour.ro']),
-    A('mega-image', 'RO', ['mega-image.ro'], { productPath: /\/p\// }),
+    A('mega-image', 'RO', ['mega-image.ro'], { status: 'verified', productPath: /\/p\/\d+/, currency: 'RON', price: '[data-testid="product-properties-price-info"] [data-testid="product-block-price"], [data-testid="product-block-price"]', size: '[data-testid="product-properties-supplementary-price-info"]' }),
     A('auchan-ro', 'RO', ['auchan.ro']),
     A('freshful', 'RO', ['freshful.ro']),
     A('ebag', 'BG', ['ebag.bg']),
@@ -78,14 +78,14 @@
     A('coop-se', 'SE', ['coop.se']),
     A('mathem', 'SE', ['mathem.se']),
     A('nemlig', 'DK', ['nemlig.com']),
-    A('bilkatogo', 'DK', ['bilkatogo.dk']),
-    A('s-kaupat', 'FI', ['s-kaupat.fi'], { productPath: /\/tuote\// }),
+    A('bilkatogo', 'DK', ['bilkatogo.dk'], { status: 'verified (price; size not in name)', productPath: /\/produkt\//, currency: 'DKK', price: '.product-price-col .product-price' }),
+    A('s-kaupat', 'FI', ['s-kaupat.fi'], { status: 'verified (price; loose produce)', productPath: /\/tuote\//, price: '[class*="ProductPagePricing"] [class*="UnitPrice"]' }),
     A('k-ruoka', 'FI', ['k-ruoka.fi']),
     A('barbora', 'LT/LV/EE', ['barbora.lt', 'barbora.lv', 'barbora.ee'], { productPath: /\/produktai\/|\/produkti\/|\/toode\// }),
-    A('rimi', 'LT/LV/EE', ['rimi.lt', 'rimi.lv', 'rimi.ee'], { productPath: /\/p\// }),
+    A('rimi', 'LT/LV/EE', ['rimi.lt', 'rimi.lv', 'rimi.ee'], { status: 'verified', productPath: /\/p\// }),
     A('selver', 'EE', ['selver.ee']),
     A('sklavenitis', 'GR', ['sklavenitis.gr']),
-    A('ab', 'GR', ['ab.gr'], { productPath: /\/p\// }),
+    A('ab', 'GR', ['ab.gr'], { status: 'verified', productPath: /\/p\/\d+/, price: '[data-testid="product-properties-price-info"] [data-testid="product-block-price"], [data-testid="product-block-price"]', size: '[data-testid="product-properties-supplementary-price-info"]' }),
     A('mymarket', 'GR', ['mymarket.gr'])
   ];
 

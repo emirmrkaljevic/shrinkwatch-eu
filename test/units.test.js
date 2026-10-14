@@ -48,3 +48,10 @@ test('format', () => {
   assert.strictEqual(formatSize({ amount: 1500, unit: 'g' }), '1.5 kg');
   assert.strictEqual(formatSize({ amount: 330, unit: 'ml' }), '330 ml');
 });
+
+test('prices with the cents written separately', () => {
+  assert.strictEqual(parsePrice('269 99 RSD'), 269.99);
+  assert.strictEqual(parsePrice('1 59 €/kom'), 1.59);
+  assert.strictEqual(parsePrice('32,-'), 32);
+  assert.strictEqual(parsePrice('1 299,00 kr'), 1299);
+});

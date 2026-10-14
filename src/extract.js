@@ -28,7 +28,8 @@
   function text(doc, sel) {
     if (!sel) return null;
     const el = doc.querySelector(sel);
-    return el ? el.textContent.replace(/\s+/g, ' ').trim() : null;
+    // innerText keeps visual gaps such as "269 99" where textContent would give "26999"
+    return el ? (typeof el.innerText === 'string' && el.innerText ? el.innerText : el.textContent).replace(/\s+/g, ' ').trim() : null;
   }
 
   function meta(doc, prop) {

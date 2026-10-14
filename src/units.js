@@ -45,6 +45,8 @@
   function parsePrice(text) {
     if (text == null) return null;
     if (typeof text === 'number') return text;
+    const split = String(text).match(/^\D*?(\d+)\s+(\d{2})(?!\d)(?![.,]\d)/); // "269 99 RSD", "1 59 €"
+    if (split) return parseFloat(split[1] + '.' + split[2]);
     const m = String(text).replace(/\s/g, '').match(/\d[\d.,]*/);
     if (!m) return null;
     let s = m[0].replace(/[.,]$/, '');
