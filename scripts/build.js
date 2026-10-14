@@ -3,10 +3,11 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const pkg = require('../package.json');
-const { ADAPTERS } = require('../src/adapters.js');
+const { ADAPTERS, matchPatterns } = require('../src/adapters.js');
 
 const root = path.join(__dirname, '..');
-const matches = [...new Set(ADAPTERS.flatMap(a => a.hosts.flatMap(h => [`https://${h}/*`, `https://*.${h}/*`])))];
+const matches = [...new Set(ADAPTERS.filter(a => a.core).flatMap(matchPatterns))];
+const optional = [...new Set(ADAPTERS.filter(a => !a.core).flatMap(matchPatterns))];
 const scripts = ['src/units.js', 'src/history.js', 'src/extract.js', 'src/adapters.js', 'src/content.js'];
 
 function manifest(target) {
@@ -16,12 +17,15 @@ function manifest(target) {
     version: pkg.version,
     description: 'Shows price per kg/l on supermarket web shops and warns when a pack gets smaller for the same price.',
     icons: { 16: 'icons/icon16.png', 32: 'icons/icon32.png', 48: 'icons/icon48.png', 128: 'icons/icon128.png' },
-    permissions: ['storage'],
+    permissions: ['storage', 'scripting', 'activeTab'],
+    host_permissions: matches,
+    optional_host_permissions: optional,
     content_scripts: [{ matches, js: scripts, css: ['src/badge.css'], run_at: 'document_idle' }],
+    background: target === 'firefox' ? { scripts: ['src/background.js'] } : { service_worker: 'src/background.js' },
     action: { default_title: 'ShrinkWatch EU', default_popup: 'src/popup.html' }
   };
   if (target === 'firefox') {
-    m.browser_specific_settings = { gecko: { id: 'shrinkwatch-eu@emirmrkaljevic.github.io', strict_min_version: '115.0', data_collection_permissions: { required: ['none'] } } };
+    m.browser_specific_settings = { gecko: { id: 'shrinkwatch-eu@emirmrkaljevic.github.io', strict_min_version: '128.0', data_collection_permissions: { required: ['none'] } } };
   }
   return m;
 }

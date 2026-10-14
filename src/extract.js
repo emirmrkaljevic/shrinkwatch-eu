@@ -36,14 +36,21 @@
     return el ? el.getAttribute('content') : null;
   }
 
+  // schema.org microdata: <span itemprop="price" content="1.99">
+  function microdata(doc, prop) {
+    const el = doc.querySelector(`[itemscope][itemtype*="schema.org/Product" i] [itemprop="${prop}"], [itemprop="offers"] [itemprop="${prop}"]`);
+    if (!el) return null;
+    return el.getAttribute('content') || el.textContent.trim();
+  }
+
   // adapter: { name, price, currency, size, id } CSS selectors (all optional)
   function extract(doc, adapter = {}, url = '') {
     const ld = findProductLd(doc);
     const offer = ld ? offerOf(ld) : {};
-    const name = (ld && ld.name) || text(doc, adapter.name) || meta(doc, 'og:title') || text(doc, 'h1');
+    const name = (ld && ld.name) || text(doc, adapter.name) || microdata(doc, 'name') || meta(doc, 'og:title') || text(doc, 'h1');
     let price = U.parsePrice(offer.price);
-    if (!(price > 0)) price = U.parsePrice(text(doc, adapter.price) || meta(doc, 'product:price:amount') || meta(doc, 'price'));
-    const currency = offer.currency || meta(doc, 'product:price:currency') || meta(doc, 'priceCurrency') || adapter.currency || 'EUR';
+    if (!(price > 0)) price = U.parsePrice(text(doc, adapter.price) || meta(doc, 'product:price:amount') || meta(doc, 'price') || microdata(doc, 'price'));
+    const currency = offer.currency || meta(doc, 'product:price:currency') || meta(doc, 'priceCurrency') || microdata(doc, 'priceCurrency') || adapter.currency || 'EUR';
     const sizeText = [text(doc, adapter.size), name, ld && ld.description].filter(Boolean);
     let size = null;
     for (const s of sizeText) { size = U.parseSize(s); if (size) break; }
