@@ -12,7 +12,6 @@ Live checks: 14 October 2026, headless Chromium, real product pages. Sites with 
 | BA | bingo | bingoshop.ba | core | Works |
 | DE/AT/HR/SI/RS/BA | lidl | lidl.de, lidl.at, lidl.hr, lidl.si, lidl.rs, lidl.ba | core | Works |
 | EU | lidl-eu | lidl.fr, lidl.es, lidl.it, lidl.nl, lidl.be, lidl.pl, lidl.cz, lidl.sk, lidl.hu, lidl.ro, lidl.bg, lidl.pt, lidl.ie, lidl.se, lidl.dk, lidl.fi, lidl.gr, lidl.lt, lidl.lv, lidl.ee | opt-in | Not verified yet |
-| HR | spar-hr | online.spar.hr | opt-in | Not checked: site did not load in time |
 | RS | maxi | maxi.rs | core | Works |
 | RS | idea | online.idea.rs | opt-in | Not verified yet |
 | SI | spar-si | online.spar.si | opt-in | Not checked: site did not load in time |

@@ -51,3 +51,33 @@ test('every shop has unique hosts and valid patterns', () => {
   for (const a of ADAPTERS) for (const m of matchPatterns(a)) assert.match(m, /^https:\/\/(\*\.)?[a-z0-9.-]+\/\*$/);
   assert.ok(ADAPTERS.filter(a => a.core).length <= 6);
 });
+
+test('pack size from a labelled field', () => {
+  const { document } = parseHTML('<html><head><meta property="og:title" content="Bio Haferdrink"></head><body><span class="price">1,49 €</span><dl><dt>Inhalt</dt><dd>1 Liter</dd></dl></body></html>');
+  const p = extract(document, { price: '.price' });
+  assert.strictEqual(p.size.amount, 1000);
+  const d2 = parseHTML('<html><head><meta property="og:title" content="Fromage"></head><body><p class="price">3,20 €</p><p>Poids net : 200 g</p></body></html>').document;
+  assert.strictEqual(extract(d2, { price: '.price' }).size.amount, 200);
+});
+
+test('pack size from schema.org netContent', () => {
+  const { document } = parseHTML('<html><head><script type="application/ld+json">{"@type":"Product","name":"Rice","netContent":{"@type":"QuantitativeValue","value":2,"unitCode":"KGM"},"offers":{"price":"3.98","priceCurrency":"EUR"}}</script></head></html>');
+  assert.strictEqual(extract(document).size.amount, 2000);
+});
+
+test('pack size derived from the shop unit price', () => {
+  const { document } = parseHTML('<html><head><meta property="og:title" content="Grødris øko"></head><body><div><div><div><span class="p">32,-</span></div><span>64,00 kr/kg</span></div></div></body></html>');
+  const p = extract(document, { price: '.p', currency: 'DKK' });
+  assert.strictEqual(p.size.amount, 500);
+  assert.ok(p.size.derived);
+});
+
+test('size shown as its own line under the title', () => {
+  const { document } = parseHTML('<html><head><meta property="og:title" content="Port Salut"></head><body><main><h1>Port Salut 26%</h1><span>Arla</span><span>ca: 750g</span><span class="price">69,90 kr</span></main></body></html>');
+  assert.strictEqual(extract(document, { price: '.price', currency: 'SEK' }).size.amount, 750);
+});
+
+test('offers list where the first offer has no price', () => {
+  const { document } = parseHTML('<html><head><script type="application/ld+json">{"@type":"Product","name":"Thé vert 100 g","offers":[{"@type":"Offer","url":"x"},{"@type":"AggregateOffer","lowPrice":2.5,"priceCurrency":"EUR"}]}</script></head></html>');
+  assert.strictEqual(extract(document).price, 2.5);
+});

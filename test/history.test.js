@@ -32,3 +32,8 @@ test('history is capped', () => {
   for (let i = 0; i < 30; i++) h = record(h, o(500, i + 1, i));
   assert.strictEqual(h.length, 20);
 });
+
+test('derived sizes never trigger a warning', () => {
+  const d = (amount, price) => ({ size: { amount, unit: 'g', derived: true }, price, currency: 'EUR', ts: 1 });
+  assert.strictEqual(compare(d(500, 2), d(450, 2)), null);
+});

@@ -55,3 +55,9 @@ test('prices with the cents written separately', () => {
   assert.strictEqual(parsePrice('32,-'), 32);
   assert.strictEqual(parsePrice('1 299,00 kr'), 1299);
 });
+
+test('unit-first multipack (carrefour.it style)', () => {
+  const s = parseSize("Sant'Anna Pet Lt 2,0X6 Naturale");
+  assert.equal(s.amount, 12000); assert.equal(s.count, 6);
+  assert.equal(parseSize('Raclette Grill 6 coupelles'), null);
+});
