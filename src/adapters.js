@@ -3,14 +3,14 @@
 (function (root) {
   const ADAPTERS = [
     { id: 'konzum', hosts: ['konzum.hr', 'konzum.ba'], productPath: /^\/web\/products\//, price: '.single-product__price .price--primary', name: '.single-product__title h1', status: 'verified' },
-    { id: 'lidl', hosts: ['lidl.hr', 'lidl.si', 'lidl.rs', 'lidl.de', 'lidl.at', 'lidl.ba'], productPath: /\/p\d+/, price: '.m-price__price, .ods-price__value', size: '.price-footer, .ods-price__footer', status: 'json-ld (price rendered client-side)' },
-    { id: 'kaufland', hosts: ['kaufland.de', 'kaufland.hr', 'kaufland.bg', 'kaufland.ro', 'kaufland.cz', 'kaufland.sk'], productPath: /\/product\//, price: '.rd-price-information__price', status: 'best-effort' },
-    { id: 'mercator', hosts: ['mercatoronline.si', 'mercator.si', 'mercator.rs'], productPath: /./, price: '.price, .product-price', status: 'best-effort' },
-    { id: 'bingo', hosts: ['bingotuzla.ba', 'bingo.ba'], productPath: /./, price: '.price .amount, .woocommerce-Price-amount', currency: 'BAM', status: 'best-effort (WooCommerce)' },
-    { id: 'spar', hosts: ['spar.hr', 'spar.si', 'spar.at'], productPath: /./, status: 'json-ld' },
-    { id: 'tommy', hosts: ['tommy.hr'], productPath: /./, status: 'json-ld' },
-    { id: 'rewe', hosts: ['shop.rewe.de', 'rewe.de'], productPath: /\/p\//, status: 'json-ld' },
-    { id: 'tesco', hosts: ['tesco.com', 'tesco.ie'], productPath: /\/products\//, status: 'json-ld' }
+    { id: 'lidl', hosts: ['lidl.hr', 'lidl.si', 'lidl.rs', 'lidl.de', 'lidl.at', 'lidl.ba'], productPath: /\/p\d+/, price: '.m-price__price, .ods-price__value', size: '.price-footer, .ods-price__footer', status: 'verified (lidl.de)' },
+    { id: 'kaufland', hosts: ['kaufland.de', 'kaufland.hr', 'kaufland.bg', 'kaufland.ro', 'kaufland.cz', 'kaufland.sk'], productPath: /\/product\//, price: '.rd-price-information__price', status: 'unverified (bot protection)' },
+    { id: 'mercator', hosts: ['mercatoronline.si', 'mercator.si', 'mercator.rs'], productPath: /^\/izdelek\//, price: '.price-box .price', status: 'verified' },
+    { id: 'bingo', hosts: ['bingoshop.ba', 'bingotuzla.ba'], productPath: /^\/proizvod\//, price: 'div.price, .woocommerce-Price-amount', currency: 'BAM', status: 'verified' },
+    { id: 'spar', hosts: ['spar.hr', 'spar.si', 'spar.at'], productPath: /./, status: 'unverified (bot protection)' },
+    { id: 'tommy', hosts: ['tommy.hr'], productPath: /^\/proizvodi\//, status: 'verified' },
+    { id: 'rewe', hosts: ['shop.rewe.de', 'rewe.de'], productPath: /\/p\//, status: 'unverified (bot protection)' },
+    { id: 'tesco', hosts: ['tesco.com', 'tesco.ie'], productPath: /\/products\//, status: 'unverified (bot protection)' }
   ];
 
   function adapterFor(hostname) {
