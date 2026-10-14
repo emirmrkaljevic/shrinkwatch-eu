@@ -12,12 +12,14 @@ A browser extension for Chrome and Firefox that shows the **price per kg / litre
 
 | Shop | Domains | Status |
 |---|---|---|
-| Konzum | konzum.hr, konzum.ba | Verified on live product pages |
-| Lidl | lidl.hr, .si, .rs, .de, .at, .ba | Structured data; price is rendered client-side, best-effort |
-| Kaufland | kaufland.de, .hr, .bg, .ro, .cz, .sk | Best-effort |
-| Mercator | mercatoronline.si, mercator.si, mercator.rs | Best-effort |
-| Bingo | bingotuzla.ba | Best-effort (WooCommerce markup) |
-| Spar, Tommy, Rewe, Tesco | see `src/adapters.js` | Structured data (schema.org) |
+| Konzum | konzum.hr, konzum.ba | Verified |
+| Lidl | lidl.de, .hr, .si, .rs, .at, .ba | Verified (lidl.de) |
+| Mercator | mercatoronline.si | Verified |
+| Tommy | tommy.hr | Verified |
+| Bingo | bingoshop.ba | Verified (mostly non-food) |
+| Kaufland, Rewe, Tesco, Spar | see `src/adapters.js` | Generic reader, not verified yet |
+
+Details of the checks are in [docs/compatibility.md](docs/compatibility.md).
 
 Every shop first uses the page's own schema.org `Product` data, then Open Graph tags, then a few CSS selectors. If your shop is missing or broken, please open an issue with the product URL.
 
