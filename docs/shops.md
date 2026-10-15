@@ -1,8 +1,8 @@
 # Supported shops
 
-Core shops run automatically. Other shops are switched on per shop from the extension popup ("Enable on this shop"), so the extension only asks for access to sites you use. On any other site, "Check this page now" reads the current page once.
+Core shops run automatically. Other shops are switched on per shop from the extension popup ("Enable on this shop"), so the extension only asks for access to sites you use. An enabled opt-in shop can be turned off again with "Disable on this shop". On unsupported or not-yet-enabled sites, "Check this page now" reads the current page once.
 
-Live checks: 14 October 2026 (updated after the third round), headless Chromium, real product pages. Sites with bot protection were not tested.
+Live checks: 14 October 2026 (updated after the third round), headless Chromium, real product pages. Sites with bot protection were not tested. Opt-in permission flow verified in a real Chrome browser on 15 October 2026 (gurkerl.at): Enable prompt, then unit-price badge after reload; Disable removes access.
 
 Listing tiles (15 October 2026): Tommy shows unit-price badges on category/search tiles. Konzum, Mercator and Maxi already print unit prices on tiles; a shrinkflation marker is added when local history shows a smaller pack (verified on Konzum).
 
@@ -23,7 +23,7 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | DE | rossmann | rossmann.de | opt-in | Not tested: bot protection |
 | DE | netto | netto-online.de | opt-in | Not tested: bot protection |
 | AT | billa | shop.billa.at | opt-in | Works |
-| AT | gurkerl | gurkerl.at | opt-in | Works |
+| AT | gurkerl | gurkerl.at | opt-in | Works; opt-in flow verified in real Chrome (15 Oct 2026) |
 | FR | carrefour-fr | carrefour.fr | opt-in | Not tested: bot protection |
 | FR | auchan-fr | auchan.fr | opt-in | Needs a store or postcode chosen first |
 | FR | leclerc | e.leclerc, leclercdrive.fr | opt-in | Price works; pack size only on food items |

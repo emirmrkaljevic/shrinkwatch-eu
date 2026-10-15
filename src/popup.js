@@ -12,26 +12,45 @@ async function currentTab() {
   return tab;
 }
 
+function applyState(state) {
+  document.getElementById('site').textContent = state.siteText;
+  document.getElementById('enable').hidden = !state.showEnable;
+  document.getElementById('disable').hidden = !state.showDisable;
+  document.getElementById('check').hidden = !state.showCheck;
+}
+
 async function setup() {
   const tab = await currentTab();
-  const site = document.getElementById('site');
   const enable = document.getElementById('enable');
+  const disable = document.getElementById('disable');
   let url;
-  try { url = new URL(tab.url); } catch (e) { site.textContent = 'Open a shop product page to use ShrinkWatch.'; return; }
+  try { url = new URL(tab.url); } catch (e) {
+    applyState(globalThis.SW.popupState({ hostname: null, adapter: null, granted: false }));
+    return;
+  }
   const adapter = globalThis.SW.adapterFor(url.hostname);
-  if (!adapter) { site.textContent = `${url.hostname} is not a known shop. You can still check a page manually.`; return; }
-  const origins = globalThis.SW.matchPatterns(adapter);
-  const granted = await chrome.permissions.contains({ origins });
-  if (adapter.core || granted) { site.textContent = `Active on ${url.hostname}`; return; }
-  site.textContent = `${url.hostname} is supported but not enabled yet.`;
-  enable.hidden = false;
+  const origins = adapter ? globalThis.SW.matchPatterns(adapter) : [];
+  const granted = adapter ? await chrome.permissions.contains({ origins }) : false;
+  applyState(globalThis.SW.popupState({ hostname: url.hostname, adapter, granted }));
+
   enable.onclick = async () => {
     // Must run directly in the click handler so the browser shows its permission prompt.
     const ok = await chrome.permissions.request({ origins });
     if (!ok) return;
     await chrome.runtime.sendMessage({ type: 'sync' });
-    site.textContent = `Enabled on ${url.hostname}. Reload the page to see unit prices.`;
-    enable.hidden = true;
+    applyState({
+      siteText: `Enabled on ${url.hostname}. Reload the page to see unit prices.`,
+      showEnable: false,
+      showDisable: true,
+      showCheck: false
+    });
+  };
+
+  disable.onclick = async () => {
+    await chrome.permissions.remove({ origins });
+    // Background syncs on permissions.onRemoved; message covers browsers that need a nudge.
+    await chrome.runtime.sendMessage({ type: 'sync' });
+    applyState(globalThis.SW.popupState({ hostname: url.hostname, adapter, granted: false }));
   };
 }
 

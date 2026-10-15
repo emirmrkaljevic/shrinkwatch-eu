@@ -1,15 +1,24 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>ShrinkWatch EU</title>
-<style>body{font:14px system-ui,sans-serif;width:300px;margin:12px}h1{font-size:16px;margin:0 0 8px}small{color:#666}button{margin:4px 0;display:block}#site{font-weight:600}</style></head>
+<style>
+body{font:14px system-ui,sans-serif;width:300px;margin:12px}
+h1{font-size:16px;margin:0 0 8px}
+small{color:#666}
+button{margin:4px 0;display:block}
+[hidden]{display:none!important}
+#site{font-weight:600}
+</style></head>
 <body>
 <h1>ShrinkWatch EU</h1>
 <p id="site"></p>
 <button id="enable" type="button" hidden>Enable on this shop</button>
-<button id="check" type="button">Check this page now</button>
+<button id="disable" type="button" hidden>Disable on this shop</button>
+<button id="check" type="button" hidden>Check this page now</button>
 <p>Pack sizes you have seen are stored only in this browser.</p>
 <p id="count"></p>
 <button id="clear" type="button">Clear stored history</button>
 <p><small>Not affiliated with, endorsed by or sponsored by any retailer. Shop names are used only to describe compatibility.</small></p>
 <script src="adapters.js"></script>
+<script src="popup-state.js"></script>
 <script src="popup.js"></script>
 </body></html>

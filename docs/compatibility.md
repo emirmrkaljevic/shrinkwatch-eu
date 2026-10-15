@@ -57,3 +57,13 @@ Category and search tiles were checked in headless Chromium with the extension l
 | Bingo | Listing scan enabled; most items are non-food without a pack size, so few badges |
 | Lidl | No listing adapter yet (online catalogue is mostly non-food appliances) |
 
+## Opt-in permissions (15 October 2026)
+Verified in a real desktop Chrome (not headless) with the unpacked `dist/chrome` build:
+
+| Shop | Check | Result |
+|---|---|---|
+| Gurkerl (AT) | Enable on this shop → reload product page | Permission prompt shown; badge `€1.59 / l (1 l)` after reload |
+| Konzum (HR, core) | Product page (no Enable) | Badge `€1.39 / l (1 l)`; core shops show Active with neither Enable nor Disable |
+
+Popup after the same session: enabled opt-in shops show Active + Disable (not a stuck Enable button); core shops show Active only.
+
