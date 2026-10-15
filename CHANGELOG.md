@@ -1,9 +1,11 @@
 # Changelog
 
-## 0.2.0 (unreleased)
+## 0.2.0 (15 October 2026)
 - About 70 shops across the EU, Serbia and Bosnia and Herzegovina (docs/shops.md).
 - Opt-in permissions per shop from the popup; "Check this page now" for any site.
 - Reads schema.org microdata; handles prices shown as "269 99".
+- Reads pack sizes from labelled fields (Inhalt, Menge, Contenu and others) and multipacks like "Lt 2,0X6".
+- Regression tests against trimmed excerpts of real product pages for 27 shops.
 
 ## 0.1.1
 - Mercator, Tommy and Bingo adapters fixed and checked on live product pages.

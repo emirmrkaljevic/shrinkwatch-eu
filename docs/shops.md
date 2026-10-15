@@ -2,78 +2,78 @@
 
 Core shops run automatically. Other shops are switched on per shop from the extension popup ("Enable on this shop"), so the extension only asks for access to sites you use. On any other site, "Check this page now" reads the current page once.
 
-Live checks: 14 October 2026, headless Chromium, real product pages. Sites with bot protection were not tested.
+Live checks: 14 October 2026 (updated after the third round), headless Chromium, real product pages. Sites with bot protection were not tested.
 
 | Country | Shop | Domains | Mode | Live check |
 |---|---|---|---|---|
 | HR/BA | konzum | konzum.hr, konzum.ba | core | Works |
 | HR | tommy | tommy.hr | core | Works |
 | SI | mercator | mercatoronline.si | core | Works |
-| BA | bingo | bingoshop.ba | core | Works |
+| BA | bingo | bingoshop.ba | core | Works; mostly non-food, few pack sizes |
 | DE/AT/HR/SI/RS/BA | lidl | lidl.de, lidl.at, lidl.hr, lidl.si, lidl.rs, lidl.ba | core | Works |
 | EU | lidl-eu | lidl.fr, lidl.es, lidl.it, lidl.nl, lidl.be, lidl.pl, lidl.cz, lidl.sk, lidl.hu, lidl.ro, lidl.bg, lidl.pt, lidl.ie, lidl.se, lidl.dk, lidl.fi, lidl.gr, lidl.lt, lidl.lv, lidl.ee | opt-in | Not verified yet |
 | RS | maxi | maxi.rs | core | Works |
-| RS | idea | online.idea.rs | opt-in | Not verified yet |
-| SI | spar-si | online.spar.si | opt-in | Not checked: site did not load in time |
-| DE | rewe | shop.rewe.de | opt-in | Not checked: site blocks automated browsers |
-| DE/CZ/SK | kaufland | kaufland.de, kaufland.cz, kaufland.sk | opt-in | Not checked: site blocks automated browsers |
-| DE/AT | dm | dm.de, dm.at | opt-in | Not verified yet |
-| DE | rossmann | rossmann.de | opt-in | Works |
-| DE | netto | netto-online.de | opt-in | Not checked: site blocks automated browsers |
+| RS | idea | online.idea.rs | opt-in | Works |
+| SI | spar-si | online.spar.si | opt-in | Works |
+| DE | rewe | shop.rewe.de | opt-in | Not tested: bot protection |
+| DE/CZ/SK | kaufland | kaufland.de, kaufland.cz, kaufland.sk | opt-in | Not tested: bot protection |
+| DE/AT | dm | dm.de, dm.at | opt-in | Not tested: bot protection |
+| DE | rossmann | rossmann.de | opt-in | Not tested: bot protection |
+| DE | netto | netto-online.de | opt-in | Not tested: bot protection |
 | AT | billa | shop.billa.at | opt-in | Works |
-| AT | gurkerl | gurkerl.at | opt-in | Not verified yet |
-| FR | carrefour-fr | carrefour.fr | opt-in | Not checked: site blocks automated browsers |
-| FR | auchan-fr | auchan.fr | opt-in | Not verified yet |
-| FR | leclerc | e.leclerc, leclercdrive.fr | opt-in | Not verified yet |
-| FR | intermarche | intermarche.com | opt-in | Not checked: site blocks automated browsers |
-| FR | monoprix | monoprix.fr | opt-in | Not checked: site blocks automated browsers |
-| FR | coursesu | coursesu.com | opt-in | Not checked: site blocks automated browsers |
+| AT | gurkerl | gurkerl.at | opt-in | Works |
+| FR | carrefour-fr | carrefour.fr | opt-in | Not tested: bot protection |
+| FR | auchan-fr | auchan.fr | opt-in | Needs a store or postcode chosen first |
+| FR | leclerc | e.leclerc, leclercdrive.fr | opt-in | Price works; pack size only on food items |
+| FR | intermarche | intermarche.com | opt-in | Not tested: bot protection |
+| FR | monoprix | monoprix.fr | opt-in | Not tested: bot protection |
+| FR | coursesu | coursesu.com | opt-in | Not tested: bot protection |
 | IT | esselunga | spesaonline.esselunga.it | opt-in | Works |
-| IT | carrefour-it | carrefour.it | opt-in | Not checked: site did not load in time |
-| IT | conad | spesaonline.conad.it | opt-in | Not checked: site did not load in time |
-| IT | coop-it | coopshop.it, easycoop.com | opt-in | Not checked: site did not load in time |
-| ES | mercadona | tienda.mercadona.es | opt-in | Not verified yet |
-| ES | carrefour-es | carrefour.es | opt-in | Not checked: site blocks automated browsers |
-| ES | dia | dia.es | opt-in | Not checked: site blocks automated browsers |
-| ES | alcampo | compraonline.alcampo.es | opt-in | Not checked: site blocks automated browsers |
-| ES | eroski | supermercado.eroski.es | opt-in | Not checked: site blocks automated browsers |
-| PT | continente | continente.pt | opt-in | Not checked: site did not load in time |
-| PT | pingodoce | pingodoce.pt | opt-in | Not checked: site did not load in time |
-| PT | auchan-pt | auchan.pt | opt-in | Not verified yet |
-| NL/BE | ah | ah.nl, ah.be | opt-in | Not checked: site blocks automated browsers |
-| NL | jumbo | jumbo.com | opt-in | Not verified yet |
-| NL | plus | plus.nl | opt-in | Not verified yet |
-| NL | dirk | dirk.nl | opt-in | Not verified yet |
-| BE | delhaize | delhaize.be | opt-in | Not verified yet |
-| BE | colruyt | colruyt.be, collectandgo.be | opt-in | Not verified yet |
-| BE | carrefour-be | carrefour.be | opt-in | Not checked: site blocks automated browsers |
-| PL | frisco | frisco.pl | opt-in | Not checked: site did not load in time |
-| PL | carrefour-pl | carrefour.pl | opt-in | Not checked: site blocks automated browsers |
-| PL | auchan-pl | zakupy.auchan.pl | opt-in | Not checked: site blocks automated browsers |
-| CZ | rohlik | rohlik.cz | opt-in | Not verified yet |
-| CZ | kosik | kosik.cz | opt-in | Not verified yet |
-| CZ/SK/HU | tesco-ce | nakup.itesco.cz, potravinydomov.itesco.sk, bevasarlas.tesco.hu | opt-in | Not checked: site blocks automated browsers |
-| HU | kifli | kifli.hu | opt-in | Not verified yet |
-| HU | auchan-hu | online.auchan.hu | opt-in | Not checked: site did not load in time |
-| RO | carrefour-ro | carrefour.ro | opt-in | Not verified yet |
+| IT | carrefour-it | carrefour.it | opt-in | Works |
+| IT | conad | spesaonline.conad.it | opt-in | Needs a store or postcode chosen first |
+| IT | coop-it | coopshop.it, easycoop.com | opt-in | Needs a store or postcode chosen first |
+| ES | mercadona | tienda.mercadona.es | opt-in | Needs a store or postcode chosen first |
+| ES | carrefour-es | carrefour.es | opt-in | Not tested: bot protection |
+| ES | dia | dia.es | opt-in | Not tested: bot protection |
+| ES | alcampo | compraonline.alcampo.es | opt-in | Not tested: bot protection |
+| ES | eroski | supermercado.eroski.es | opt-in | Not tested: bot protection |
+| PT | continente | continente.pt | opt-in | Works |
+| PT | pingodoce | pingodoce.pt | opt-in | Works |
+| PT | auchan-pt | auchan.pt | opt-in | Works |
+| NL/BE | ah | ah.nl, ah.be | opt-in | Not tested: bot protection |
+| NL | jumbo | jumbo.com | opt-in | Works |
+| NL | plus | plus.nl | opt-in | Works |
+| NL | dirk | dirk.nl | opt-in | Works |
+| BE | delhaize | delhaize.be | opt-in | Works |
+| BE | colruyt | colruyt.be, collectandgo.be | opt-in | Not tested: bot protection |
+| BE | carrefour-be | carrefour.be | opt-in | Not tested: bot protection |
+| PL | frisco | frisco.pl | opt-in | Works |
+| PL | carrefour-pl | carrefour.pl | opt-in | Not tested: bot protection |
+| PL | auchan-pl | zakupy.auchan.pl | opt-in | Not tested: bot protection |
+| CZ | rohlik | rohlik.cz | opt-in | Works |
+| CZ | kosik | kosik.cz | opt-in | Works |
+| CZ/SK/HU | tesco-ce | nakup.itesco.cz, potravinydomov.itesco.sk, bevasarlas.tesco.hu | opt-in | Not tested: bot protection |
+| HU | kifli | kifli.hu | opt-in | Works |
+| HU | auchan-hu | online.auchan.hu | opt-in | Works |
+| RO | carrefour-ro | carrefour.ro | opt-in | Works |
 | RO | mega-image | mega-image.ro | opt-in | Works |
-| RO | auchan-ro | auchan.ro | opt-in | Not checked: site did not load in time |
-| RO | freshful | freshful.ro | opt-in | Not checked: site did not load in time |
-| BG | ebag | ebag.bg | opt-in | Not checked: site did not load in time |
-| IE/UK | tesco | tesco.ie, tesco.com | opt-in | Not checked: site blocks automated browsers |
-| IE | dunnes | dunnesstoresgrocery.com | opt-in | Not checked: site blocks automated browsers |
-| IE | supervalu | shop.supervalu.ie | opt-in | Not verified yet |
-| SE | ica | handlaprivatkund.ica.se | opt-in | Not checked: site did not load in time |
-| SE | willys | willys.se | opt-in | Not verified yet |
-| SE | coop-se | coop.se | opt-in | Not verified yet |
-| SE | mathem | mathem.se | opt-in | Not checked: site did not load in time |
-| DK | nemlig | nemlig.com | opt-in | Not checked: site did not load in time |
+| RO | auchan-ro | auchan.ro | opt-in | Works |
+| RO | freshful | freshful.ro | opt-in | Works |
+| BG | ebag | ebag.bg | opt-in | Price works; some items show no pack size |
+| IE/UK | tesco | tesco.ie, tesco.com | opt-in | Not tested: bot protection |
+| IE | dunnes | dunnesstoresgrocery.com | opt-in | Not tested: bot protection |
+| IE | supervalu | shop.supervalu.ie | opt-in | Works |
+| SE | ica | handlaprivatkund.ica.se | opt-in | Needs a store or postcode chosen first |
+| SE | willys | willys.se | opt-in | Works |
+| SE | coop-se | coop.se | opt-in | Works |
+| SE | mathem | mathem.se | opt-in | Works |
+| DK | nemlig | nemlig.com | opt-in | Works |
 | DK | bilkatogo | bilkatogo.dk | opt-in | Works |
 | FI | s-kaupat | s-kaupat.fi | opt-in | Works |
-| FI | k-ruoka | k-ruoka.fi | opt-in | Not checked: site blocks automated browsers |
-| LT/LV/EE | barbora | barbora.lt, barbora.lv, barbora.ee | opt-in | Not checked: site blocks automated browsers |
+| FI | k-ruoka | k-ruoka.fi | opt-in | Not tested: bot protection |
+| LT/LV/EE | barbora | barbora.lt, barbora.lv, barbora.ee | opt-in | Not tested: bot protection |
 | LT/LV/EE | rimi | rimi.lt, rimi.lv, rimi.ee | opt-in | Works |
-| EE | selver | selver.ee | opt-in | Not checked: site blocks automated browsers |
-| GR | sklavenitis | sklavenitis.gr | opt-in | Not checked: site blocks automated browsers |
+| EE | selver | selver.ee | opt-in | Not tested: bot protection |
+| GR | sklavenitis | sklavenitis.gr | opt-in | Not tested: bot protection |
 | GR | ab | ab.gr | opt-in | Works |
-| GR | mymarket | mymarket.gr | opt-in | Not checked: site did not load in time |
+| GR | mymarket | mymarket.gr | opt-in | Works |

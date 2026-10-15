@@ -4,6 +4,8 @@ A browser extension for Chrome and Firefox that shows the **price per kg / litre
 
 > "Was 500 g for €2.00, now 450 g for €2.00 = **+11.1% per kg**"
 
+![The badge on a fictional demo product: unit price, then a shrinkflation warning](docs/img/demo.gif)
+
 - Works on the product pages you open. No account, no server, no tracking.
 - Remembers pack sizes and prices **only in your browser** so it can spot a smaller pack next time.
 - Open source (MIT).
