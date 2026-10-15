@@ -6,14 +6,19 @@
   const A = (id, country, hosts, extra = {}) => ({ id, country, hosts, productPath: /./, core: false, status: 'unverified', ...extra });
   const ADAPTERS = [
     // Balkans (core)
-    A('konzum', 'HR/BA', ['konzum.hr', 'konzum.ba'], { core: true, productPath: /^\/web\/products\//, price: '.single-product__price .price--primary', name: '.single-product__title h1', status: 'verified' }),
-    A('tommy', 'HR', ['tommy.hr'], { core: true, productPath: /^\/proizvodi\//, status: 'verified' }),
-    A('mercator', 'SI', ['mercatoronline.si'], { core: true, productPath: /^\/izdelek\//, price: '.price-box .price', status: 'verified' }),
-    A('bingo', 'BA', ['bingoshop.ba'], { core: true, productPath: /^\/proizvod\//, price: 'div.price', currency: 'BAM', status: 'verified' }),
+    A('konzum', 'HR/BA', ['konzum.hr', 'konzum.ba'], { core: true, productPath: /^\/web\/products\//, price: '.single-product__price .price--primary', name: '.single-product__title h1', status: 'verified',
+      listing: { tile: 'article.product-item', link: 'a.link-to-product', nameAttr: 'data-ga-name', priceAttr: 'data-ga-price', idAttr: 'data-ga-id', ownUnitPrice: true } }),
+    A('tommy', 'HR', ['tommy.hr'], { core: true, productPath: /^\/proizvodi\//, status: 'verified',
+      listing: { tile: 'article', link: 'a[href*="/proizvodi/"]' } }),
+    A('mercator', 'SI', ['mercatoronline.si'], { core: true, productPath: /^\/izdelek\//, price: '.price-box .price', status: 'verified',
+      listing: { tile: '.box.item.product', link: 'a[href*="/izdelek/"]', name: '.product-name', ownUnitPrice: true } }),
+    A('bingo', 'BA', ['bingoshop.ba'], { core: true, productPath: /^\/proizvod\//, price: 'div.price', currency: 'BAM', status: 'verified',
+      listing: { tile: 'div.product', link: 'a[href*="/proizvod/"]', price: 'div.price', currency: 'BAM' } }),
     A('lidl', 'DE/AT/HR/SI/RS/BA', ['lidl.de', 'lidl.at', 'lidl.hr', 'lidl.si', 'lidl.rs', 'lidl.ba'], { core: true, productPath: /\/p\d+/, price: '.ods-price__value, .m-price__price', status: 'verified (lidl.de)' }),
     A('lidl-eu', 'EU', ['lidl.fr', 'lidl.es', 'lidl.it', 'lidl.nl', 'lidl.be', 'lidl.pl', 'lidl.cz', 'lidl.sk', 'lidl.hu', 'lidl.ro', 'lidl.bg', 'lidl.pt', 'lidl.ie', 'lidl.se', 'lidl.dk', 'lidl.fi', 'lidl.gr', 'lidl.lt', 'lidl.lv', 'lidl.ee'], { productPath: /\/p\d+/, price: '.ods-price__value, .m-price__price' }),
     // Balkans (optional)
-    A('maxi', 'RS', ['maxi.rs'], { status: 'verified', core: true, productPath: /\/p\/\d+/, currency: 'RSD', price: '[data-testid="product-properties-price-info"] [data-testid="product-block-price"], [data-testid="product-block-price"]', size: '[data-testid="product-properties-supplementary-price-info"]' }),
+    A('maxi', 'RS', ['maxi.rs'], { status: 'verified', core: true, productPath: /\/p\/\d+/, currency: 'RSD', price: '[data-testid="product-properties-price-info"] [data-testid="product-block-price"], [data-testid="product-block-price"]', size: '[data-testid="product-properties-supplementary-price-info"]',
+      listing: { tile: 'li.product-item', link: 'a[href*="/p/"]', name: '[data-testid="product-block-product-name"]', currency: 'RSD', ownUnitPrice: true } }),
     A('idea', 'RS', ['online.idea.rs'], { currency: 'RSD' , status: 'verified' }),
     A('spar-si', 'SI', ['online.spar.si']),
     // Germany

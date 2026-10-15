@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+- Unit-price badges on listing pages (category and search tiles) for shops that do not already show €/kg or €/l on the tile. Verified live on Tommy.
+- Small "smaller pack" shrinkflation marker on listing tiles when local history shows a shrink. Verified live on Konzum (seeded history). Konzum, Mercator and Maxi already print unit prices on tiles, so only the shrinkflation marker is added there.
+- One debounced MutationObserver for dynamically loaded tiles; no network requests.
+
 ## 0.2.0 (15 October 2026)
 - About 70 shops across the EU, Serbia and Bosnia and Herzegovina (docs/shops.md).
 - Opt-in permissions per shop from the popup; "Check this page now" for any site.

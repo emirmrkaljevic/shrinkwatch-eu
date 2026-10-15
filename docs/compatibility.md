@@ -44,3 +44,16 @@ Each shop below was opened on a real product page with the extension loaded. A t
 | dm, Rossmann, Albert Heijn, Colruyt and the shops listed in round two | Not checked: the site blocks automated browsers |
 
 Spar Croatia was removed: it has no online shop.
+
+## Listing pages (15 October 2026)
+Category and search tiles were checked in headless Chromium with the extension loaded.
+
+| Shop | Listing result |
+|---|---|
+| Tommy | Unit-price badges on tiles (shop does not show €/kg). Example: milk multipack 4×1 L at €4.08 → €1.02 / l |
+| Konzum | Shop already shows "Cijena za j.m.: €/kg"; no duplicate unit badge. Shrinkflation marker appears when local history has a larger pack |
+| Mercator | Shop already shows €/kg on tiles; no duplicate unit badge |
+| Maxi | Shop already shows rsd/Kg or rsd/L on tiles; no duplicate unit badge |
+| Bingo | Listing scan enabled; most items are non-food without a pack size, so few badges |
+| Lidl | No listing adapter yet (online catalogue is mostly non-food appliances) |
+

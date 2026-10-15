@@ -1,6 +1,6 @@
 // Registers content scripts for optional shops the user has enabled.
 // Re-registers on every start because Firefox does not persist dynamic scripts across sessions.
-const SCRIPTS = ['src/units.js', 'src/history.js', 'src/extract.js', 'src/adapters.js', 'src/content.js'];
+const SCRIPTS = ['src/units.js', 'src/history.js', 'src/extract.js', 'src/adapters.js', 'src/listings.js', 'src/content.js'];
 const ID = 'optional-shops';
 
 async function grantedOptionalPatterns() {

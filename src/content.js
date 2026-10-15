@@ -4,7 +4,9 @@
   if (globalThis.SW_RAN) return; // already active on this page
   const forced = globalThis.SW_FORCE === true; // user clicked "Check this page"
   const adapter = SW.adapterFor(location.hostname) || (forced ? { id: 'site-' + location.hostname, productPath: /./ } : null);
-  if (!adapter || (!forced && !adapter.productPath.test(location.pathname))) return;
+  const onProduct = adapter && adapter.productPath && adapter.productPath.test(location.pathname);
+  const onListing = adapter && adapter.listing;
+  if (!adapter || (!forced && !onProduct && !onListing)) return;
   globalThis.SW_RAN = true;
   const store = chrome.storage.local;
 
@@ -47,21 +49,70 @@
     document.querySelector('#shrinkwatch-badge div').textContent = 'No product price found on this page';
   }
 
-  async function run() {
-    const p = SW.extract(document, adapter, location.href);
-    if (!p) { if (forced && tries === 9) renderMissing(); return false; }
+  async function saveHistory(p) {
+    const obs = { size: p.size, price: p.price, currency: p.currency, ts: Date.now() };
     const key = `p:${adapter.id}:${p.id}`;
     const got = await store.get(key);
     const history = got[key] || [];
-    const obs = { size: p.size, price: p.price, currency: p.currency, ts: Date.now() };
     const alert = SW.detect(history, obs);
+    const updates = { [key]: SW.record(history, obs) };
+    // Also index by page URL so listing tiles (link-only) can find the same history.
+    const urlId = location.href.split(/[?#]/)[0];
+    if (urlId && urlId !== String(p.id)) {
+      const urlKey = `p:${adapter.id}:${urlId}`;
+      const got2 = await store.get(urlKey);
+      updates[urlKey] = SW.record(got2[urlKey] || [], obs);
+    }
+    await store.set(updates);
+    return alert;
+  }
+
+  async function runProduct() {
+    const p = SW.extract(document, adapter, location.href);
+    if (!p) { if (forced && tries === 9) renderMissing(); return false; }
+    const alert = await saveHistory(p);
     render(p, alert);
-    await store.set({ [key]: SW.record(history, obs) });
     return true;
   }
 
-  // Shops that render client-side need a few retries.
+  async function scanListings() {
+    if (!adapter.listing || typeof SW.findTiles !== 'function') return;
+    const tiles = SW.findTiles(document, adapter);
+    if (!tiles.length) return;
+    const own = !!adapter.listing.ownUnitPrice;
+    for (const tile of tiles) {
+      const product = SW.extractTile(tile, adapter, location.href);
+      tile.setAttribute('data-sw-tile', '1');
+      if (!product) continue;
+      let alert = null;
+      if (product.size) {
+        const keys = [`p:${adapter.id}:${product.id}`];
+        if (product.href && product.href !== product.id) keys.push(`p:${adapter.id}:${product.href}`);
+        const got = await store.get(keys);
+        for (const k of keys) {
+          alert = SW.detect(got[k] || [], { size: product.size, price: product.price, currency: product.currency, ts: Date.now() });
+          if (alert) break;
+        }
+      }
+      const showUnit = !own && !SW.shopShowsUnitPrice(tile) && !!product.unitPrice;
+      if (showUnit || alert) SW.decorateTile(tile, product, alert, showUnit);
+    }
+  }
+
   let tries = 0;
-  const tick = async () => { if (!(await run()) && ++tries < 10) setTimeout(tick, 1000); };
-  tick();
+  if (onProduct || forced) {
+    const tick = async () => { if (!(await runProduct()) && ++tries < 10) setTimeout(tick, 1000); };
+    tick();
+  }
+
+  if (onListing) {
+    let timer = 0;
+    const schedule = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { scanListings().catch(() => {}); }, 250);
+    };
+    schedule();
+    const obs = new MutationObserver(schedule);
+    obs.observe(document.documentElement, { childList: true, subtree: true });
+  }
 })();

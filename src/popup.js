@@ -1,5 +1,5 @@
 const store = chrome.storage.local;
-const SCRIPTS = ['src/units.js', 'src/history.js', 'src/extract.js', 'src/adapters.js', 'src/content.js'];
+const SCRIPTS = ['src/units.js', 'src/history.js', 'src/extract.js', 'src/adapters.js', 'src/listings.js', 'src/content.js'];
 
 async function refresh() {
   const all = await store.get(null);

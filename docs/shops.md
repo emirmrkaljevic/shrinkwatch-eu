@@ -4,6 +4,8 @@ Core shops run automatically. Other shops are switched on per shop from the exte
 
 Live checks: 14 October 2026 (updated after the third round), headless Chromium, real product pages. Sites with bot protection were not tested.
 
+Listing tiles (15 October 2026): Tommy shows unit-price badges on category/search tiles. Konzum, Mercator and Maxi already print unit prices on tiles; a shrinkflation marker is added when local history shows a smaller pack (verified on Konzum).
+
 | Country | Shop | Domains | Mode | Live check |
 |---|---|---|---|---|
 | HR/BA | konzum | konzum.hr, konzum.ba | core | Works |

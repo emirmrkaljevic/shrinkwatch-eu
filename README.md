@@ -14,7 +14,7 @@ A browser extension for Chrome and Firefox that shows the **price per kg / litre
 
 About 70 grocery and drugstore web shops in 25 EU countries plus Serbia and Bosnia and Herzegovina. The full list, with live check results, is in [docs/shops.md](docs/shops.md).
 
-- **Core shops** work right after install: Konzum, Tommy, Mercator, Bingo, Lidl (DE, AT, HR, SI, RS, BA) and Maxi.
+- **Core shops** work right after install: Konzum, Tommy, Mercator, Bingo, Lidl (DE, AT, HR, SI, RS, BA) and Maxi. On Tommy category and search pages the extension also shows unit prices on product tiles; Konzum, Mercator and Maxi already print unit prices there, so only a shrinkflation marker is added when your local history shows a smaller pack.
 - **Opt-in shops**: open the shop, click the ShrinkWatch icon and choose "Enable on this shop". The browser asks for access to that shop only.
 - **Any other site**: "Check this page now" reads the current page once, without any standing permission.
 
