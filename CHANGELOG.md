@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.0 (16 October 2026)
 - Popup: when an opt-in shop is enabled, hide "Enable on this shop" and show "Disable on this shop" (removes the optional host permission and unregisters its content script). Core shops show neither button. "Check this page now" only on unsupported or not-yet-enabled sites. Fixed `button { display:block }` overriding the HTML `hidden` attribute so Enable no longer stuck visible after enable.
 - Unit-price badges on listing pages (category and search tiles) for shops that do not already show €/kg or €/l on the tile. Verified live on Tommy.
 - Small "smaller pack" shrinkflation marker on listing tiles when local history shows a shrink. Verified live on Konzum (seeded history). Konzum, Mercator and Maxi already print unit prices on tiles, so only the shrinkflation marker is added there.
