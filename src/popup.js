@@ -29,8 +29,9 @@ async function setup() {
     return;
   }
   const adapter = globalThis.SW.adapterFor(url.hostname);
-  const origins = adapter ? globalThis.SW.matchPatterns(adapter) : [];
-  const granted = adapter ? await chrome.permissions.contains({ origins }) : false;
+  // Only the origins of the shop domain the user is on (kaufland.de, not kaufland.cz and kaufland.sk).
+  const origins = globalThis.SW.originsForHost(adapter, url.hostname);
+  const granted = origins.length ? await chrome.permissions.contains({ origins }) : false;
   applyState(globalThis.SW.popupState({ hostname: url.hostname, adapter, granted }));
 
   enable.onclick = async () => {
@@ -47,10 +48,23 @@ async function setup() {
   };
 
   disable.onclick = async () => {
-    await chrome.permissions.remove({ origins });
-    // Background syncs on permissions.onRemoved; message covers browsers that need a nudge.
-    await chrome.runtime.sendMessage({ type: 'sync' });
-    applyState(globalThis.SW.popupState({ hostname: url.hostname, adapter, granted: false }));
+    // Remove the origins exactly as the browser granted them (Chrome may report them without the path).
+    const { origins: granted = [] } = await chrome.permissions.getAll();
+    const toRemove = globalThis.SW.originsToRemove(origins, granted);
+    try { await chrome.permissions.remove({ origins: toRemove }); } catch (e) { console.warn('ShrinkWatch: remove failed', e); }
+    // Background also syncs on permissions.onRemoved; the message waits until the script is unregistered.
+    try { await chrome.runtime.sendMessage({ type: 'sync' }); } catch (e) { /* background restarts and syncs on its own */ }
+    const still = await chrome.permissions.contains({ origins });
+    // Take the badge off the open page now instead of waiting for a reload (activeTab covers this tab).
+    if (!still) {
+      chrome.scripting.executeScript({ target: { tabId: tab.id }, func: () => {
+        const b = document.getElementById('shrinkwatch-badge'); if (b) b.remove();
+        for (const el of document.querySelectorAll('.sw-tile-badge, [data-sw-tile]')) { if (el.classList.contains('sw-tile-badge')) el.remove(); else el.removeAttribute('data-sw-tile'); }
+      } }).catch(() => {});
+    }
+    applyState(still
+      ? { siteText: `Could not remove access to ${url.hostname}. Remove it under Site access in the browser's extension settings.`, showEnable: false, showDisable: true, showCheck: false }
+      : globalThis.SW.popupState({ hostname: url.hostname, adapter, granted: false }));
   };
 }
 

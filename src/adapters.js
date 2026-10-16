@@ -22,18 +22,27 @@
     A('idea', 'RS', ['online.idea.rs'], { currency: 'RSD' , status: 'verified' }),
     A('spar-si', 'SI', ['online.spar.si']),
     // Germany
-    A('rewe', 'DE', ['shop.rewe.de'], { productPath: /\/p\// }),
-    A('kaufland', 'DE/CZ/SK', ['kaufland.de', 'kaufland.cz', 'kaufland.sk'], { productPath: /\/product\//, price: '.rd-price-information__price' }),
-    A('dm', 'DE/AT', ['dm.de', 'dm.at'], { productPath: /-p\d+\.html|\/p\/d\/\d+/ }),
-    A('rossmann', 'DE', ['rossmann.de'], { status: 'verified (price; size not in name)', productPath: /\/p\// }),
-    A('netto', 'DE', ['netto-online.de']),
+    // shop.rewe.de now redirects to www.rewe.de/shop/p/<slug>/<id>; only the /shop/ part of www.rewe.de is used.
+    // Product JSON-LD has no offers: the price is only in <mark itemprop="price">0,85 €</mark>, the pack in .pdsr-Grammage ("1l").
+    A('rewe', 'DE', ['shop.rewe.de', 'www.rewe.de/shop'], { status: 'verified (www.rewe.de/shop)', productPath: /\/p\//,
+      price: '.pdpr-Price__Price, .rs-qa-price', size: '.pdsr-Grammage, .rs-qa-price-base', currency: 'EUR' }),
+    // Product price in the buybox (captured in a real Chrome, 16 Oct 2026); recommendation tiles below use other classes.
+    A('kaufland', 'DE/CZ/SK', ['kaufland.de', 'kaufland.cz', 'kaufland.sk'], { status: 'verified (kaufland.de)', productPath: /\/product\//,
+      price: '.pdp-buybox-price [data-test="product-price"], .pdp-price-information__price, .rd-price-information__price', unitPrice: '.pdp-buybox-price .pdp-base-prices__base-price',
+      currencyByHost: { 'kaufland.de': 'EUR', 'kaufland.sk': 'EUR', 'kaufland.cz': 'CZK' } }),
+    A('dm', 'DE/AT', ['dm.de', 'dm.at'], { status: 'verified (dm.de)', productPath: /-p\d+\.html|\/p\/d\/\d+/ }),
+    A('rossmann', 'DE', ['rossmann.de'], { status: 'verified', productPath: /\/p\// }),
+    // Captured in a real Chrome, 16 Oct 2026: price "90.48" in .tc-salePrice .prices__ins--digits-before-comma (its cents
+    // siblings repeat "48"), shop unit price "Grundpreis: 15.08 / kg". JSON-LD offers.price is used first.
+    A('netto', 'DE', ['netto-online.de'], { status: 'verified', productPath: /\/p-\d+/, currency: 'EUR',
+      price: '.tc-salePrice .prices__ins--digits-before-comma', unitPrice: '.tc-product-baseprice, .product-property__base-price' }),
     // Austria
     A('billa', 'AT', ['shop.billa.at'], { status: 'verified', productPath: /\/produkte\//, price: '.ws-product-price-value',
       // pack info is a list item such as "1 liter Packung" or "500 g Becher"
       custom: (doc, U) => { for (const li of doc.querySelectorAll('li')) { const t = li.textContent.trim(); if (t.length < 40 && /packung|stück|flasche|dose|beutel|becher|glas|tasse|schale|netz|karton|tube|tiegel/i.test(t)) { const size = U.parseSize(t); if (size) return { size }; } } return null; } }),
     A('gurkerl', 'AT', ['gurkerl.at'], { productPath: /^\/\d+-/ , status: 'verified' }),
     // France
-    A('carrefour-fr', 'FR', ['carrefour.fr'], { productPath: /\/p\// }),
+    A('carrefour-fr', 'FR', ['carrefour.fr'], { status: 'verified', productPath: /\/p\// }),
     A('auchan-fr', 'FR', ['auchan.fr'], { productPath: /\/pr-/ }),
     A('leclerc', 'FR', ['e.leclerc', 'leclercdrive.fr']),
     A('intermarche', 'FR', ['intermarche.com'], { productPath: /\/produit\// }),
@@ -78,7 +87,9 @@
     A('freshful', 'RO', ['freshful.ro'], { productPath: /^\/p\//, currency: 'RON', price: '[class*="ProductPrice-module"]' , status: 'verified' }),
     A('ebag', 'BG', ['ebag.bg'], { productPath: /\/\d+$/ }),
     // Ireland / Nordics / Baltics / Greece
-    A('tesco', 'IE/UK', ['tesco.ie', 'tesco.com'], { productPath: /\/products\// }),
+    // /groceries/en-IE/products/<id> (old) and /shop/en-IE/products/<id> (since October 2026)
+    // tesco.ie product JSON-LD says GBP next to a € price, so the currency comes from the domain.
+    A('tesco', 'IE/UK', ['tesco.ie', 'tesco.com'], { status: 'verified (tesco.ie)', productPath: /\/products\//, currencyByHost: { 'tesco.ie': 'EUR', 'tesco.com': 'GBP' } }),
     A('dunnes', 'IE', ['dunnesstoresgrocery.com']),
     A('supervalu', 'IE', ['shop.supervalu.ie']),
     A('ica', 'SE', ['handlaprivatkund.ica.se']),
@@ -97,16 +108,57 @@
     A('mymarket', 'GR', ['mymarket.gr'])
   ];
 
+  // A host entry is a domain ("kaufland.de": the domain and its subdomains), a full host ("shop.billa.at": that host only)
+  // or a host with a path prefix ("www.rewe.de/shop": that host, only below /shop/).
+  function parseEntry(entry) {
+    const i = entry.indexOf('/');
+    return i < 0 ? { host: entry, path: '' } : { host: entry.slice(0, i), path: entry.slice(i) };
+  }
+  const bare = h => String(h).toLowerCase().replace(/^www\./, '');
+
+  function entryMatches(entry, hostname) {
+    const { host, path } = parseEntry(entry);
+    const h = bare(hostname), x = bare(host);
+    return path ? h === x : h === x || h.endsWith('.' + x);
+  }
+
+  function entryPatterns(entry) {
+    const { host, path } = parseEntry(entry);
+    if (path) return [`https://${host}${path}/*`];
+    return host.split('.').length > 2 ? [`https://${host}/*`] : [`https://${host}/*`, `https://*.${host}/*`];
+  }
+
   function adapterFor(hostname) {
-    const h = String(hostname).replace(/^www\./, '');
-    return ADAPTERS.find(a => a.hosts.some(x => h === x || h.endsWith('.' + x))) || null;
+    return ADAPTERS.find(a => a.hosts.some(x => entryMatches(x, hostname))) || null;
   }
 
   function matchPatterns(a) {
-    return a.hosts.flatMap(h => (h.split('.').length > 2 ? [`https://${h}/*`] : [`https://${h}/*`, `https://*.${h}/*`]));
+    return a.hosts.flatMap(entryPatterns);
   }
 
-  const api = { ADAPTERS, adapterFor, matchPatterns };
+  // Match patterns to request for the tab the user is on: only the shop domain of that host, not the shop's other countries.
+  function originsForHost(a, hostname) {
+    if (!a) return [];
+    return a.hosts.filter(x => entryMatches(x, hostname)).flatMap(entryPatterns);
+  }
+
+  // Optional patterns from the manifest that are covered by granted origins.
+  // Browsers may report granted origins with the path reduced to "/*", so compare scheme and host only.
+  const originKey = p => String(p).replace(/^([^:]+:\/\/[^/]+).*$/, '$1');
+  function grantedPatterns(optional, granted) {
+    const have = new Set(granted.map(originKey));
+    return optional.filter(p => have.has(originKey(p)));
+  }
+
+  // What "Disable" must remove: the granted origins (as the browser reports them, e.g. "https://www.rewe.de/*"
+  // for a requested "https://www.rewe.de/shop/*") that belong to the requested ones. Falls back to the requested list.
+  function originsToRemove(wanted, granted) {
+    const keys = new Set(wanted.map(originKey));
+    const hit = [...new Set(granted.filter(g => keys.has(originKey(g))))];
+    return hit.length ? hit : wanted.slice();
+  }
+
+  const api = { ADAPTERS, adapterFor, matchPatterns, originsForHost, grantedPatterns, originsToRemove };
   root.SW = Object.assign(root.SW || {}, api);
   if (typeof module !== 'undefined') module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

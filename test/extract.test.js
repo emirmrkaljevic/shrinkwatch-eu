@@ -48,7 +48,7 @@ test('every shop has unique hosts and valid patterns', () => {
   const { ADAPTERS, matchPatterns } = require('../src/adapters.js');
   const hosts = ADAPTERS.flatMap(a => a.hosts);
   assert.strictEqual(new Set(hosts).size, hosts.length);
-  for (const a of ADAPTERS) for (const m of matchPatterns(a)) assert.match(m, /^https:\/\/(\*\.)?[a-z0-9.-]+\/\*$/);
+  for (const a of ADAPTERS) for (const m of matchPatterns(a)) assert.match(m, /^https:\/\/(\*\.)?[a-z0-9.-]+(\/[a-z0-9-]+)*\/\*$/);
   assert.ok(ADAPTERS.filter(a => a.core).length <= 6);
 });
 
@@ -80,4 +80,11 @@ test('size shown as its own line under the title', () => {
 test('offers list where the first offer has no price', () => {
   const { document } = parseHTML('<html><head><script type="application/ld+json">{"@type":"Product","name":"Thé vert 100 g","offers":[{"@type":"Offer","url":"x"},{"@type":"AggregateOffer","lowPrice":2.5,"priceCurrency":"EUR"}]}</script></head></html>');
   assert.strictEqual(extract(document).price, 2.5);
+});
+
+test('multipack name wins over a per-item netContent', () => {
+  const { document } = parseHTML('<html><head><script type="application/ld+json">{"@type":"Product","name":"Melitta Auslese 500 g, 12er Pack","weight":"500 g","offers":{"price":"90.48","priceCurrency":"EUR"}}</script></head></html>');
+  const p = extract(document, adapterFor('www.netto-online.de'), 'https://www.netto-online.de/x');
+  assert.strictEqual(p.size.amount, 6000);
+  assert.strictEqual(p.unitPrice.value.toFixed(2), '15.08');
 });

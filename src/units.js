@@ -11,6 +11,22 @@
   const MULTI = new RegExp(NUM + '\\s*[x×*]\\s*' + NUM + '\\s*' + UNIT + '(?![a-zčćšžđа-яα-ω])', 'i');
   const SINGLE = new RegExp('(?:^|[^\\d.,])' + NUM + '\\s*' + UNIT + '(?![a-zčćšžđа-яα-ω])', 'gi');
 
+  // Size first, count after: "500 g x 12".
+  const MULTI_AFTER = new RegExp(NUM + '\\s*' + UNIT + '\\s*[x×*]\\s*(\\d{1,3})(?![.,]\\d|\\d|\\s*(?:mg|g|kg|ml|cl|l)\\b)', 'i');
+  // Pack count written as words: "12er Pack", "6er-Pack", "10er", "Packung mit 12", "pack of 6", "6-pack", "lot de 6".
+  const PACK_COUNT = [
+    /(?:^|[^\d.,])(\d{1,3})\s*-?\s*er(?![a-zäöüß])/i,
+    /(?:^|[^\d.,])(\d{1,3})\s*-?\s*(?:pack|packs|stück-packung)(?![a-zäöüß])/i,
+    /\b(?:packung|pack|karton|kiste|set|lot|confezione|pak)\s+(?:mit|of|de|da|van|à)\s+(\d{1,3})(?![.,]\d|\d|\s*(?:mg|g|kg|ml|cl|l)\b)/i
+  ];
+  function packCount(t) {
+    for (const re of PACK_COUNT) {
+      const m = t.match(re);
+      if (m) { const n = parseInt(m[1], 10); if (n >= 2 && n <= 100) return n; }
+    }
+    return 1;
+  }
+
   // Unit written first, as in "Lt 2,0X6" (Italian shops).
   const UNIT_FIRST = /(?:^|[^a-z])(lt|kg|gr|ml|cl)\.?\s*(\d+(?:[.,]\d+)?)\s*(?:[x×*]\s*(\d+))?(?![\d.,])/i;
 
@@ -26,6 +42,13 @@
       const each = num(m[2]) * f;
       return { amount: round(count * each), unit: base, count, each: round(each) };
     }
+    const a = t.match(MULTI_AFTER);
+    if (a) {
+      const [base, f] = UNITS[a[2].toLowerCase()];
+      const count = num(a[3]);
+      const each = num(a[1]) * f;
+      if (base !== 'pc' && count >= 2 && each > 0) return { amount: round(count * each), unit: base, count, each: round(each) };
+    }
     let last = null;
     for (const s of t.matchAll(SINGLE)) {
       const [base, f] = UNITS[s[2].toLowerCase()];
@@ -33,7 +56,10 @@
       last = { amount: round(num(s[1]) * f), unit: base, count: 1, each: round(num(s[1]) * f) };
       if (base !== 'pc') break;
     }
-    if (last && last.amount > 0) return last;
+    if (last && last.amount > 0) {
+      const count = last.unit === 'pc' ? 1 : packCount(t);
+      return count > 1 ? { amount: round(count * last.each), unit: last.unit, count, each: last.each } : last;
+    }
     const u = t.match(UNIT_FIRST);
     if (u) {
       const [base, f] = UNITS[u[1].toLowerCase()];

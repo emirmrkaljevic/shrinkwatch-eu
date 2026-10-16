@@ -2,7 +2,9 @@
 
 Core shops run automatically. Other shops are switched on per shop from the extension popup ("Enable on this shop"), so the extension only asks for access to sites you use. An enabled opt-in shop can be turned off again with "Disable on this shop". On unsupported or not-yet-enabled sites, "Check this page now" reads the current page once.
 
-Live checks: 14 October 2026 (updated after the third round), headless Chromium, real product pages. Sites with bot protection were not tested. Opt-in permission flow verified in a real Chrome browser on 15 October 2026 (gurkerl.at): Enable prompt, then unit-price badge after reload; Disable removes access.
+Live checks: 14 October 2026 (updated after the third round), headless Chromium, real product pages. Sites with bot protection were not tested. Opt-in permission flow verified in a real Chrome browser on 15 October 2026 (gurkerl.at): Enable prompt, then unit-price badge after reload; Disable removes access. Chrome does not prompt again when a shop is re-enabled after Disable, because it remembers the earlier approval; Site access on the extension's details page revokes it fully.
+
+Real desktop Chrome check on 16 October 2026: dm, Rossmann, Kaufland DE, Carrefour FR and Tesco IE, Netto and Rewe work; Albert Heijn blocked the browser. See [compatibility.md](compatibility.md#real-browser-check-16-october-2026).
 
 Listing tiles (15 October 2026): Tommy shows unit-price badges on category/search tiles. Konzum, Mercator and Maxi already print unit prices on tiles; a shrinkflation marker is added when local history shows a smaller pack (verified on Konzum).
 
@@ -17,14 +19,14 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | RS | maxi | maxi.rs | core | Works |
 | RS | idea | online.idea.rs | opt-in | Works |
 | SI | spar-si | online.spar.si | opt-in | Works |
-| DE | rewe | shop.rewe.de | opt-in | Not tested: bot protection |
-| DE/CZ/SK | kaufland | kaufland.de, kaufland.cz, kaufland.sk | opt-in | Not tested: bot protection |
-| DE/AT | dm | dm.de, dm.at | opt-in | Not tested: bot protection |
-| DE | rossmann | rossmann.de | opt-in | Not tested: bot protection |
-| DE | netto | netto-online.de | opt-in | Not tested: bot protection |
+| DE | rewe | shop.rewe.de, www.rewe.de/shop | opt-in | Verified (real Chrome, 16 Oct 2026) |
+| DE/CZ/SK | kaufland | kaufland.de, kaufland.cz, kaufland.sk | opt-in | Works (kaufland.de, real Chrome, 16 Oct 2026: €10.00 / l on a 5 l olive oil) |
+| DE/AT | dm | dm.de, dm.at | opt-in | Works (dm.de, real Chrome, 16 Oct 2026) |
+| DE | rossmann | rossmann.de | opt-in | Works (real Chrome, 16 Oct 2026) |
+| DE | netto | netto-online.de | opt-in | Verified (real Chrome, 16 Oct 2026) |
 | AT | billa | shop.billa.at | opt-in | Works |
 | AT | gurkerl | gurkerl.at | opt-in | Works; opt-in flow verified in real Chrome (15 Oct 2026) |
-| FR | carrefour-fr | carrefour.fr | opt-in | Not tested: bot protection |
+| FR | carrefour-fr | carrefour.fr | opt-in | Works (real Chrome, 16 Oct 2026: €1.26 / l on 1 l milk) |
 | FR | auchan-fr | auchan.fr | opt-in | Needs a store or postcode chosen first |
 | FR | leclerc | e.leclerc, leclercdrive.fr | opt-in | Price works; pack size only on food items |
 | FR | intermarche | intermarche.com | opt-in | Not tested: bot protection |
@@ -42,7 +44,7 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | PT | continente | continente.pt | opt-in | Works |
 | PT | pingodoce | pingodoce.pt | opt-in | Works |
 | PT | auchan-pt | auchan.pt | opt-in | Works |
-| NL/BE | ah | ah.nl, ah.be | opt-in | Not tested: bot protection |
+| NL/BE | ah | ah.nl, ah.be | opt-in | Blocked: "Access Denied" in a real Chrome (16 Oct 2026), not verified |
 | NL | jumbo | jumbo.com | opt-in | Works |
 | NL | plus | plus.nl | opt-in | Works |
 | NL | dirk | dirk.nl | opt-in | Works |
@@ -62,7 +64,7 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | RO | auchan-ro | auchan.ro | opt-in | Works |
 | RO | freshful | freshful.ro | opt-in | Works |
 | BG | ebag | ebag.bg | opt-in | Price works; some items show no pack size |
-| IE/UK | tesco | tesco.ie, tesco.com | opt-in | Not tested: bot protection |
+| IE/UK | tesco | tesco.ie, tesco.com | opt-in | Works (tesco.ie, real Chrome, 16 Oct 2026: €1.13 / l on 2 l milk); tesco.com not tested |
 | IE | dunnes | dunnesstoresgrocery.com | opt-in | Not tested: bot protection |
 | IE | supervalu | shop.supervalu.ie | opt-in | Works |
 | SE | ica | handlaprivatkund.ica.se | opt-in | Needs a store or postcode chosen first |

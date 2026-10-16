@@ -67,3 +67,32 @@ Verified in a real desktop Chrome (not headless) with the unpacked `dist/chrome`
 
 Popup after the same session: enabled opt-in shops show Active + Disable (not a stuck Enable button); core shops show Active only.
 
+## Real-browser check (16 October 2026)
+Opened in a real desktop Chrome (not headless) with v0.3.0 and the opt-in shops enabled from the popup.
+
+| Shop | Page tested | Result |
+|---|---|---|
+| dm (DE) | dm.de/p/d/1453941/dmbio-pflanzendrink-haferdrink-natur | Works: €0.90 / l (1 l) |
+| Rossmann (DE) | rossmann.de product page | Works: €0.89 / l (1 l) |
+| Albert Heijn (NL) | ah.nl | Blocked: the site showed "Access Denied" in a real Chrome, so it could not be checked |
+| Rewe (DE) | rewe.de/shop/p/ja-frische-fettarme-milch-1-5-1l/2865662 | First run: the popup did not recognise www.rewe.de/shop/ (fixed). Re-check at 11:35: after Enable the popup said Active, but no badge appeared. See the re-check below. Fixed and verified in real Chrome (11:48) |
+| Netto (DE) | netto-online.de, Melitta Auslese 500 g, 12er Pack, €90.48 | First run: €16.16 / kg (500 g), the "12er Pack" count was ignored (fixed). Re-check at 11:35: €1.35 / kg (6 kg), a wrong price. See the re-check below. Fixed and verified in real Chrome (11:48) |
+| Kaufland (DE) | kaufland.de/product/300588093/ (olive oil 5 l, €49.99) | First run: €1.82 / l (5 l), the wrong price was picked. Fixed: price read from the buybox, struck prices and recommendation sliders skipped, shop unit-price cross-check. **Re-check at 11:35: works, €10.00 / l (5 l)** |
+| Carrefour (FR) | carrefour.fr/p/lait-demi-ecreme-uht-vitamine-d-lactel-3252210390014 | First run: no badge. Fixed: nested AggregateOffer price, pack size from the short description or title. **Re-check at 11:35: works, €1.26 / l (1 l)** |
+| Tesco (IE) | tesco.ie/shop/en-IE/products/250005606 (Tesco Fresh Milk 2 Litre, €2.25) | First run: no badge. Fixed: the opt-in prompt asked for tesco.com instead of tesco.ie, and the page's schema.org data says GBP next to a € price; tesco.ie is now read as EUR. **Re-check at 11:35: works, €1.13 / l (2 l)** (the shop prints €1.12/litre because it cuts instead of rounding) |
+
+Opt-in prompts: "Enable on this shop" asked for the first country of a shop group (kaufland.cz on kaufland.de, dm.at on dm.de, tesco.com on tesco.ie). Fixed: the popup now asks only for the domain of the open tab, and the content script is registered for that domain. Covered by tests; the Kaufland DE and Tesco IE badges in the re-check were shown with this build.
+
+### Re-check (16 October 2026, 11:35)
+Same real desktop Chrome, rebuilt extension.
+
+| Shop | Result |
+|---|---|
+| Kaufland (DE) | Works: €10.00 / l (5 l), matches the shop's 10,00 € / 1l |
+| Carrefour (FR) | Works: €1.26 / l (1 l) |
+| Tesco (IE) | Works: €1.13 / l (2 l) |
+| Netto (DE) | Wrong: €1.35 / kg (6 kg) instead of €15.08 / kg. The page's schema.org price (90.48) was not used, and a fallback joined two stray "08" cents nodes into a price of 8.08. Fixed in tests: JSON-LD that strict JSON parsing rejects (line breaks inside strings, invalid escapes, trailing commas) is now repaired and read; split euro/cent prices are only joined from neighbouring elements and never from a cents-looking euro part; Netto's buybox price and its "Grundpreis: 15.08 / kg" are read, and the shop unit-price cross-check also finds a labelled "Grundpreis". A fixture from the captured page gives €15.08 / kg (6 kg). Verified in real Chrome at 11:48: `€15.08 / kg (6 kg)` |
+| Rewe (DE) | No badge: after Enable the popup said Active, but no badge was added to the page. Two causes: the service worker registered the opt-in content script from several events at once and failed with "Duplicate script ID" / "Nonexistent script ID", which can leave no script registered; and the page has no price in its schema.org data (only `<mark itemprop="price">0,85 €</mark>`, pack size "1l" in a separate field, several empty h1 elements before the title). Fixed in tests: registration is serialized and updates an existing script instead of registering it again; Rewe's price and pack-size fields are read, a lone `itemprop="price"` is used on any shop, and the first non-empty h1 is the title. A fixture from the captured page gives €0.85 / l (1 l). Verified in real Chrome at 11:48: `€0.85 / l (1 l)` |
+
+Disable: after "Disable on this shop", "Enable" brought access back without a new prompt (Kaufland, Netto, Carrefour). This is how Chrome works: removing an optional permission keeps it in the extension's approved list, so asking for it again is granted silently ([Chromium permissions docs](https://chromium.googlesource.com/chromium/src/+/main/extensions/docs/permissions.md)). To revoke it fully, use Site access on the extension's details page. Old badges also appeared briefly after Disable and a reload. Changed: Disable now removes the origins as the browser reports them, waits until the content script is unregistered, takes the badge off the open page, and says so if access could not be removed; the content script on an opt-in shop also asks the background whether access is still granted before showing anything. Covered by tests with a simulated browser and verified in real Chrome on Rewe at 11:48: the badge disappears at once on Disable, does not show after a reload, and returns after Enable and reload. The extension's error list stayed empty.
+

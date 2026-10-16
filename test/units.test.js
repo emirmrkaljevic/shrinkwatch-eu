@@ -61,3 +61,24 @@ test('unit-first multipack (carrefour.it style)', () => {
   assert.equal(s.amount, 12000); assert.equal(s.count, 6);
   assert.equal(parseSize('Raclette Grill 6 coupelles'), null);
 });
+
+test('multipacks written as a pack count (German and similar)', () => {
+  assert.deepStrictEqual(parseSize('Melitta Auslese 500 g, 12er Pack'), { amount: 6000, unit: 'g', count: 12, each: 500 });
+  assert.strictEqual(parseSize('12er Pack Kaffee 500 g').amount, 6000);
+  assert.strictEqual(parseSize('Kaffee 12 x 500 g').amount, 6000);
+  assert.strictEqual(parseSize('Cola 1,5 l 6er-Pack').amount, 9000);
+  assert.strictEqual(parseSize('Bier 0,5 l 20er Kiste').amount, 10000);
+  assert.strictEqual(parseSize('Nüsse 200 g, Packung mit 3').amount, 600);
+  assert.strictEqual(parseSize('Water 500 ml pack of 24').amount, 12000);
+  assert.strictEqual(parseSize('Tonic 330 ml 6-pack').amount, 1980);
+  assert.strictEqual(parseSize('Tomaten 500 g x 3').amount, 1500);
+  // the count is not doubled when the name already says 6 x 1,5 l
+  assert.strictEqual(parseSize('Wasser 6 x 1,5 l, 6er Pack').amount, 9000);
+  // decimals after "mit" are a size, not a count
+  assert.strictEqual(parseSize('Packung mit 12,5 g').amount, 12.5);
+  assert.strictEqual(parseSize('Mutti 560 g').count, 1);
+});
+
+test('unit price of a counted multipack (Netto Melitta 12er Pack)', () => {
+  assert.strictEqual(unitPrice(90.48, parseSize('Melitta Auslese 500 g, 12er Pack')).value.toFixed(2), '15.08');
+});

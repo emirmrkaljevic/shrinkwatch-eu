@@ -70,7 +70,8 @@
   async function runProduct() {
     const p = SW.extract(document, adapter, location.href);
     if (!p) { if (forced && tries === 9) renderMissing(); return false; }
-    const alert = await saveHistory(p);
+    // A reading that disagrees with the shop's own unit price is shown but not stored, so it cannot raise false alerts later.
+    const alert = p.unitPriceFromShop ? null : await saveHistory(p);
     render(p, alert);
     return true;
   }
@@ -99,20 +100,31 @@
     }
   }
 
-  let tries = 0;
-  if (onProduct || forced) {
-    const tick = async () => { if (!(await runProduct()) && ++tries < 10) setTimeout(tick, 1000); };
-    tick();
+  // Opt-in shops: show nothing unless access is still granted (it may have been removed with "Disable"
+  // while this page was loading). Core shops and "Check this page now" need no check.
+  async function allowed() {
+    if (forced || adapter.core) return true;
+    try { return (await chrome.runtime.sendMessage({ type: 'allowed' })) !== false; } catch (e) { return true; }
   }
 
-  if (onListing) {
-    let timer = 0;
-    const schedule = () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => { scanListings().catch(() => {}); }, 250);
-    };
-    schedule();
-    const obs = new MutationObserver(schedule);
-    obs.observe(document.documentElement, { childList: true, subtree: true });
+  let tries = 0;
+  function start() {
+    if (onProduct || forced) {
+      const tick = async () => { if (!(await runProduct()) && ++tries < 10) setTimeout(tick, 1000); };
+      tick();
+    }
+
+    if (onListing) {
+      let timer = 0;
+      const schedule = () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { scanListings().catch(() => {}); }, 250);
+      };
+      schedule();
+      const obs = new MutationObserver(schedule);
+      obs.observe(document.documentElement, { childList: true, subtree: true });
+    }
   }
+
+  allowed().then(ok => { if (ok) start(); else globalThis.SW_RAN = false; });
 })();
