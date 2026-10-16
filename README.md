@@ -1,5 +1,7 @@
 # ShrinkWatch EU
 
+[![Latest release](https://img.shields.io/github/v/release/emirmrkaljevic/shrinkwatch-eu)](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest) [![Shops](https://img.shields.io/badge/shops-about%2070-2e7d32)](docs/shops.md) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 A browser extension for Chrome and Firefox that shows the **price per kg / litre / piece** on supermarket web shops in the EU and the Balkans, and warns you about **shrinkflation**: when a pack gets smaller but the price stays the same.
 
 > "Was 500 g for €2.00, now 450 g for €2.00 = **+11.1% per kg**"
@@ -27,7 +29,22 @@ Every shop first uses the page's own schema.org `Product` data, then Open Graph 
 - Chrome / Edge / Brave: unzip, open `chrome://extensions`, enable Developer mode, click "Load unpacked" and choose the folder.
 - Firefox: open `about:debugging#/runtime/this-firefox`, click "Load Temporary Add-on" and pick the zip.
 
+- Edge: same as Chrome, but open `edge://extensions` and turn on "Developer mode" at the bottom left.
+- Firefox loads it only until the next restart. A permanent install will come with the Firefox Add-ons listing.
+
 Store listings (Chrome Web Store, Firefox Add-ons) are coming.
+
+## FAQ
+
+**My shop is not listed.** Open a product page and click "Check this page now" in the popup. If that works, please [request the shop](https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=shop-request.yml) so it can be added.
+
+**The badge shows the wrong size or price.** Please [report it](https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=wrong-result.yml) with the product link.
+
+**Why does the popup ask for permission on some shops?** Only a few shops are enabled by default. Any other shop is switched on only when you click "Enable on this shop", so the extension never gets access to sites you don't use.
+
+**Does it send my data anywhere?** No. Pack sizes and prices are stored only in your browser.
+
+**Is a shrinkflation warning proof?** No. It compares what this browser saw before with what the shop shows now. Shop data can be wrong, so check the pack before drawing conclusions.
 
 ## Develop
 

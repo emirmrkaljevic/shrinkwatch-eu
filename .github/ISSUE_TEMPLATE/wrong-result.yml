@@ -1,0 +1,18 @@
+name: Wrong price or size
+description: The badge shows a wrong price, pack size or warning
+labels: [bug]
+body:
+  - type: input
+    id: url
+    attributes: {label: Product page link}
+    validations: {required: true}
+  - type: input
+    id: shown
+    attributes: {label: What the badge shows, placeholder: "e.g. €5.53 / kg (450 g)"}
+    validations: {required: true}
+  - type: input
+    id: expected
+    attributes: {label: What it should show}
+  - type: input
+    id: browser
+    attributes: {label: Browser and extension version, placeholder: "e.g. Firefox 131, ShrinkWatch 0.3.0"}

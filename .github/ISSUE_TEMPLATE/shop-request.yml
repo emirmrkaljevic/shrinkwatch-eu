@@ -1,0 +1,17 @@
+name: Shop request
+description: Ask for a grocery web shop to be supported
+labels: [shop request]
+body:
+  - type: input
+    id: shop
+    attributes: {label: Shop and country, placeholder: "e.g. Example Market, Slovenia"}
+    validations: {required: true}
+  - type: input
+    id: url
+    attributes: {label: Link to one product page}
+    validations: {required: true}
+  - type: dropdown
+    id: check
+    attributes:
+      label: Does "Check this page now" in the popup show a badge there?
+      options: ["Yes, and it looks right", "Yes, but it is wrong", "No badge", "Did not try"]
