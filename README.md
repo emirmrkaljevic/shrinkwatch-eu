@@ -2,6 +2,8 @@
 
 [![Latest release](https://img.shields.io/github/v/release/emirmrkaljevic/shrinkwatch-eu)](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest) [![Shops](https://img.shields.io/badge/shops-about%2070-2e7d32)](docs/shops.md) [![Website](https://img.shields.io/badge/website-shrinkwatch--eu-2e7d32)](https://emirmrkaljevic.github.io/shrinkwatch-eu/) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
+<p align="center"><a href="https://skintoscan.com/#packages"><img src="https://img.shields.io/badge/%E2%98%95_Support_me-Get_a_SkinToScan_pack-ff5f5f?style=for-the-badge" alt="Support me: get a SkinToScan pack"></a><br><sub>If you find this useful, you can support me by getting a SkinToScan pack, my other project. It's a one-time purchase that directly funds my open-source work.</sub></p>
+
 A browser extension for Chrome and Firefox that shows the **price per kg / litre / piece** on supermarket web shops in the EU and the Balkans, and warns you about **shrinkflation**: when a pack gets smaller but the price stays the same.
 
 > "Was 500 g for €2.00, now 450 g for €2.00 = **+11.1% per kg**"
@@ -67,12 +69,6 @@ No data is collected or sent anywhere. See [PRIVACY.md](PRIVACY.md).
 ## Disclaimer
 
 ShrinkWatch EU is an independent project. It is not affiliated with, endorsed by or sponsored by Konzum, Lidl, Kaufland, Mercator, Bingo, Spar, Tommy, Rewe, Tesco or any other retailer. Shop names are trademarks of their owners and are used only to describe compatibility. Unit prices are computed from the information shown on the page and may be wrong; always check the shop's own label.
-
-## Support my work
-
-[![Get a SkinToScan pack](https://img.shields.io/badge/%E2%98%95_Support_me-Get_a_SkinToScan_pack-ff5f5f?style=for-the-badge)](https://skintoscan.com/#packages)
-
-If you find this useful, you can support me by getting a SkinToScan pack, my other project. It's a one-time purchase that directly funds my open-source work.
 
 ## License
 
