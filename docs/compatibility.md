@@ -96,3 +96,18 @@ Same real desktop Chrome, rebuilt extension.
 
 Disable: after "Disable on this shop", "Enable" brought access back without a new prompt (Kaufland, Netto, Carrefour). This is how Chrome works: removing an optional permission keeps it in the extension's approved list, so asking for it again is granted silently ([Chromium permissions docs](https://chromium.googlesource.com/chromium/src/+/main/extensions/docs/permissions.md)). To revoke it fully, use Site access on the extension's details page. Old badges also appeared briefly after Disable and a reload. Changed: Disable now removes the origins as the browser reports them, waits until the content script is unregistered, takes the badge off the open page, and says so if access could not be removed; the content script on an opt-in shop also asks the background whether access is still granted before showing anything. Covered by tests with a simulated browser and verified in real Chrome on Rewe at 11:48: the badge disappears at once on Disable, does not show after a reload, and returns after Enable and reload. The extension's error list stayed empty.
 
+## Real-browser check (17 October 2026)
+Real desktop Chrome with the unpacked `dist/chrome` build, one product page per shop ("Check this page now", Monoprix also with Enable and reload).
+
+| Shop | Product | Result |
+|---|---|---|
+| Monoprix (FR) | Monoprix lait demi-écrémé 1L, 1,19 € | `€1.19 / l (1 l)`. First run: the badge was unstyled at the bottom-left because the shop's CSS overrode it. Fixed: the badge is now drawn in a shadow root with its own styles. Verified after the fix |
+| Carrefour (ES) | Leche semidesnatada Carrefour 1 l, 0,83 € | `€0.83 / l (1 l)` after a normal Cloudflare checkbox |
+| Dia (ES) | Leche 1 L, 1,09 € | `€1.09 / l (1 l)` |
+| Alcampo (ES) | Leche semidesnatada 6 x 1 l, 4,98 € | `€0.83 / l (6 l)` |
+| Eroski (ES) | Leche semidesnatada PRESIDENT, brik 1 litro, 1,12 € | First run: "Pack size not found" because "litro" was not a known unit, and the schema.org name is cut short. Fixed: litro/litros/litri/gramos are read and the full title comes from the page. Verified after the fix: `€1.12 / l (1 l)` |
+| Carrefour (BE) | Lait demi-écrémé 1 L, 1,45 € | `€1.45 / l (1 l)` |
+| Carrefour (PL) | Łaciate Mleko UHT 3,2 % 1 l, 4,49 zł | Value right, shown as "PLN 4.49 / l". Fixed: zł, Kč, Ft, lei, KM, kr and similar symbols are written after the amount. Verified after the fix: `4.49 zł / l (1 l)` |
+| Intermarché (FR) | – | Blocked by a slider bot check, not attempted |
+| Cours U (FR) | – | No prices until a store is chosen, then "Access Denied" |
+

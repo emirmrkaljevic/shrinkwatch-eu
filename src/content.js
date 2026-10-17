@@ -10,19 +10,36 @@
   globalThis.SW_RAN = true;
   const store = chrome.storage.local;
 
-  function fmt(v, cur) {
-    try { return new Intl.NumberFormat('en-GB', { style: 'currency', currency: cur }).format(v); } catch (e) { return v.toFixed(2) + ' ' + cur; }
+  const fmt = (v, cur) => SW.formatMoney(v, cur);
+
+  // The badge lives in a shadow root with its own styles, so shop CSS (resets, !important rules) cannot restyle or hide it.
+  const BADGE_CSS = ':host{all:initial}' +
+    '.box{position:fixed;right:16px;bottom:16px;z-index:2147483647;max-width:320px;padding:10px 30px 10px 12px;background:#fff;color:#111;border:2px solid #2e7d32;border-radius:10px;font:14px/1.4 system-ui,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.2);text-align:left}' +
+    '.box.sw-alert{border-color:#c62828;background:#fff5f5}div{margin:0}b{font-weight:700;color:#111}span{color:#555}' +
+    'button{position:absolute;top:4px;right:6px;border:0;padding:0 4px;background:none;font:18px/1 system-ui,sans-serif;cursor:pointer;color:#555}';
+
+  function badgeBox() {
+    let host = document.getElementById('shrinkwatch-badge');
+    if (host && host.shadowRoot) return host.shadowRoot.querySelector('.box');
+    if (host) host.remove();
+    host = document.createElement('div');
+    host.id = 'shrinkwatch-badge';
+    host.style.setProperty('all', 'initial', 'important');
+    host.style.setProperty('display', 'block', 'important');
+    const root = host.attachShadow({ mode: 'open' });
+    const style = document.createElement('style');
+    style.textContent = BADGE_CSS;
+    const box = document.createElement('div');
+    box.className = 'box';
+    box.setAttribute('role', 'status');
+    root.append(style, box);
+    document.documentElement.appendChild(host);
+    return box;
   }
 
   function render(p, alert) {
-    let box = document.getElementById('shrinkwatch-badge');
-    if (!box) {
-      box = document.createElement('div');
-      box.id = 'shrinkwatch-badge';
-      box.setAttribute('role', 'status');
-      document.documentElement.appendChild(box);
-    }
-    box.className = alert ? 'sw-alert' : '';
+    const box = badgeBox();
+    box.className = alert ? 'box sw-alert' : 'box';
     box.textContent = '';
     const line = (parts) => {
       const div = document.createElement('div');
@@ -40,13 +57,13 @@
     close.type = 'button';
     close.setAttribute('aria-label', 'Close');
     close.textContent = '×';
-    close.onclick = () => box.remove();
+    close.onclick = () => { const host = document.getElementById('shrinkwatch-badge'); if (host) host.remove(); };
     box.appendChild(close);
   }
 
   function renderMissing() {
     render({ unitPrice: null, size: null, currency: 'EUR' }, null);
-    document.querySelector('#shrinkwatch-badge div').textContent = 'No product price found on this page';
+    badgeBox().querySelector('div').textContent = 'No product price found on this page';
   }
 
   async function saveHistory(p) {

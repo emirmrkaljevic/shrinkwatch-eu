@@ -6,6 +6,8 @@ Live checks: 14 October 2026 (updated after the third round), headless Chromium,
 
 Real desktop Chrome check on 16 October 2026: dm, Rossmann, Kaufland DE, Carrefour FR and Tesco IE, Netto and Rewe work; Albert Heijn blocked the browser. See [compatibility.md](compatibility.md#real-browser-check-16-october-2026).
 
+Real desktop Chrome check on 17 October 2026: Monoprix, Carrefour ES, Dia, Alcampo, Eroski, Carrefour BE and Carrefour PL work; Intermarché and Cours U blocked the browser. See [compatibility.md](compatibility.md#real-browser-check-17-october-2026).
+
 Listing tiles (15 October 2026): Tommy shows unit-price badges on category/search tiles. Konzum, Mercator and Maxi already print unit prices on tiles; a shrinkflation marker is added when local history shows a smaller pack (verified on Konzum).
 
 | Country | Shop | Domains | Mode | Live check |
@@ -29,18 +31,18 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | FR | carrefour-fr | carrefour.fr | opt-in | Works (real Chrome, 16 Oct 2026: €1.26 / l on 1 l milk) |
 | FR | auchan-fr | auchan.fr | opt-in | Needs a store or postcode chosen first |
 | FR | leclerc | e.leclerc, leclercdrive.fr | opt-in | Price works; pack size only on food items |
-| FR | intermarche | intermarche.com | opt-in | Not tested: bot protection |
-| FR | monoprix | monoprix.fr | opt-in | Not tested: bot protection |
-| FR | coursesu | coursesu.com | opt-in | Not tested: bot protection |
+| FR | intermarche | intermarche.com | opt-in | Blocked: slider bot check in a real Chrome (17 Oct 2026), not verified |
+| FR | monoprix | monoprix.fr | opt-in | Verified (real Chrome, 17 Oct 2026) |
+| FR | coursesu | coursesu.com | opt-in | Blocked: "Access Denied" after choosing a store in a real Chrome (17 Oct 2026), not verified |
 | IT | esselunga | spesaonline.esselunga.it | opt-in | Works |
 | IT | carrefour-it | carrefour.it | opt-in | Works |
 | IT | conad | spesaonline.conad.it | opt-in | Needs a store or postcode chosen first |
 | IT | coop-it | coopshop.it, easycoop.com | opt-in | Needs a store or postcode chosen first |
 | ES | mercadona | tienda.mercadona.es | opt-in | Needs a store or postcode chosen first |
-| ES | carrefour-es | carrefour.es | opt-in | Not tested: bot protection |
-| ES | dia | dia.es | opt-in | Not tested: bot protection |
-| ES | alcampo | compraonline.alcampo.es | opt-in | Not tested: bot protection |
-| ES | eroski | supermercado.eroski.es | opt-in | Not tested: bot protection |
+| ES | carrefour-es | carrefour.es | opt-in | Verified (real Chrome, 17 Oct 2026) |
+| ES | dia | dia.es | opt-in | Verified (real Chrome, 17 Oct 2026) |
+| ES | alcampo | compraonline.alcampo.es | opt-in | Verified (real Chrome, 17 Oct 2026); multipacks such as 6 x 1 l |
+| ES | eroski | supermercado.eroski.es | opt-in | Verified (real Chrome, 17 Oct 2026) |
 | PT | continente | continente.pt | opt-in | Works |
 | PT | pingodoce | pingodoce.pt | opt-in | Works |
 | PT | auchan-pt | auchan.pt | opt-in | Works |
@@ -50,9 +52,9 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | NL | dirk | dirk.nl | opt-in | Works |
 | BE | delhaize | delhaize.be | opt-in | Works |
 | BE | colruyt | colruyt.be, collectandgo.be | opt-in | Not tested: bot protection |
-| BE | carrefour-be | carrefour.be | opt-in | Not tested: bot protection |
+| BE | carrefour-be | carrefour.be | opt-in | Verified (real Chrome, 17 Oct 2026) |
 | PL | frisco | frisco.pl | opt-in | Works |
-| PL | carrefour-pl | carrefour.pl | opt-in | Not tested: bot protection |
+| PL | carrefour-pl | carrefour.pl | opt-in | Verified (real Chrome, 17 Oct 2026) |
 | PL | auchan-pl | zakupy.auchan.pl | opt-in | Not tested: bot protection |
 | CZ | rohlik | rohlik.cz | opt-in | Works |
 | CZ | kosik | kosik.cz | opt-in | Works |

@@ -82,3 +82,21 @@ test('multipacks written as a pack count (German and similar)', () => {
 test('unit price of a counted multipack (Netto Melitta 12er Pack)', () => {
   assert.strictEqual(unitPrice(90.48, parseSize('Melitta Auslese 500 g, 12er Pack')).value.toFixed(2), '15.08');
 });
+
+test('parses Spanish, Italian and Czech unit words', () => {
+  assert.strictEqual(parseSize('Leche semidesnatada PRESIDENT, brik 1 litro').amount, 1000);
+  assert.strictEqual(parseSize('Agua mineral 1,5 litros').amount, 1500);
+  assert.strictEqual(parseSize('Latte intero 1 litri').amount, 1000);
+  assert.strictEqual(parseSize('Arroz redondo 500 gramos').amount, 500);
+  assert.strictEqual(parseSize('Leche 6 x 1 litro').amount, 6000);
+});
+
+test('formats money with the symbol shoppers expect', () => {
+  const { formatMoney } = require('../src/units.js');
+  assert.strictEqual(formatMoney(4.49, 'EUR'), '€4.49');
+  assert.strictEqual(formatMoney(4.49, 'GBP'), '£4.49');
+  assert.strictEqual(formatMoney(4.49, 'PLN'), '4.49 zł');
+  assert.strictEqual(formatMoney(129.9, 'CZK'), '129.90 Kč');
+  assert.strictEqual(formatMoney(2.5, 'BAM'), '2.50 KM');
+  assert.strictEqual(formatMoney(199, 'RSD'), '199.00 din');
+});

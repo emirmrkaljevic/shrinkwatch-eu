@@ -1,7 +1,13 @@
 # Changelog
 
 ## Unreleased
+Checked in a real desktop Chrome: Monoprix, Carrefour ES, Dia, Alcampo, Eroski, Carrefour BE and Carrefour PL now verified. Intermarché and Cours U block the browser, so they stay unverified.
+
 - Popup: price history for the product on the open tab, with a small chart of the unit price over time and a list of each price and pack size seen.
+- Badge: drawn inside a shadow root with its own styles, so shop stylesheets can no longer restyle or move it (it was unstyled on Monoprix).
+- Prices: złoty, koruna, forint, leu, marka, krone and similar currencies are shown after the amount ("4.49 zł / l") on the badge, listing tiles and in the popup.
+- Pack sizes: "litro", "litros", "litri" and "gramos" are read (Eroski showed "Pack size not found").
+- Eroski: full product title from the page, since its product data has a shortened name.
 
 ## 0.3.1 (16 October 2026)
 Checked in a real desktop Chrome on shops that block automated browsers. Now verified: Kaufland DE, Netto, Rewe, dm, Rossmann (DE), Carrefour FR and Tesco IE. Albert Heijn still blocks the browser, so it stays unverified.

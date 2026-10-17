@@ -104,7 +104,8 @@ async function showHistory() {
   const list = document.getElementById('histlist');
   const seen = new Set();
   for (const p of pts.slice().reverse()) {
-    const label = `${p.price} ${p.currency} for ${globalThis.SW.formatSize(p.size)} = ${p.value.toFixed(2)} ${p.currency} / ${p.per}`;
+    const money = globalThis.SW.formatMoney;
+    const label = `${money(p.price, p.currency)} for ${globalThis.SW.formatSize(p.size)} = ${money(p.value, p.currency)} / ${p.per}`;
     if (seen.has(label)) continue;
     seen.add(label);
     const li = document.createElement('li');

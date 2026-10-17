@@ -91,6 +91,7 @@
   }
 
   function fmt(v, cur) {
+    if (typeof U.formatMoney === 'function') return U.formatMoney(v, cur);
     try { return new Intl.NumberFormat('en-GB', { style: 'currency', currency: cur }).format(v); }
     catch (e) { return v.toFixed(2) + ' ' + cur; }
   }

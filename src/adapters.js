@@ -46,7 +46,7 @@
     A('auchan-fr', 'FR', ['auchan.fr'], { productPath: /\/pr-/ }),
     A('leclerc', 'FR', ['e.leclerc', 'leclercdrive.fr']),
     A('intermarche', 'FR', ['intermarche.com'], { productPath: /\/produit\// }),
-    A('monoprix', 'FR', ['monoprix.fr'], { productPath: /\/products\/|\/p\// }),
+    A('monoprix', 'FR', ['monoprix.fr'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/products\/|\/p\// }),
     A('coursesu', 'FR', ['coursesu.com'], { productPath: /\/p\// }),
     // Italy
     A('esselunga', 'IT', ['spesaonline.esselunga.it'], { status: 'verified' }),
@@ -55,10 +55,12 @@
     A('coop-it', 'IT', ['coopshop.it', 'easycoop.com']),
     // Spain / Portugal
     A('mercadona', 'ES', ['tienda.mercadona.es']),
-    A('carrefour-es', 'ES', ['carrefour.es'], { productPath: /\/R-/ }),
-    A('dia', 'ES', ['dia.es'], { productPath: /\/p\// }),
-    A('alcampo', 'ES', ['compraonline.alcampo.es'], { productPath: /\/products\// }),
-    A('eroski', 'ES', ['supermercado.eroski.es'], { productPath: /\/productdetail\// }),
+    A('carrefour-es', 'ES', ['carrefour.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/R-/ }),
+    A('dia', 'ES', ['dia.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/p\// }),
+    A('alcampo', 'ES', ['compraonline.alcampo.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/products\// }),
+    // Eroski's schema.org name is cut short ("Leche semi presid.1"); the full title is in p.text-desktop.
+    A('eroski', 'ES', ['supermercado.eroski.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/productdetail\//,
+      custom: doc => { const el = doc.querySelector('p.text-desktop'); const t = el && el.textContent.trim(); return t ? { name: t } : null; } }),
     A('continente', 'PT', ['continente.pt'], { productPath: /\/produto\// , status: 'verified' }),
     A('pingodoce', 'PT', ['pingodoce.pt'], { productPath: /\/produtos\/.+\.html$/, size: 'h1.product-unit-measure', unitPrice: 'h1.product-unit-measure', name: 'h1.product-name' , status: 'verified' }),
     A('auchan-pt', 'PT', ['auchan.pt']),
@@ -71,10 +73,10 @@
       custom: doc => { const box = doc.querySelector('.product .price-container .price, .price-container .price'); if (!box) return null; const e = box.querySelector('.hasEuros'); const c = box.querySelector('.hasCents, .price-small'); return e ? { price: parseFloat(e.textContent + '.' + (c ? c.textContent.trim().padStart(2, '0') : '00')) } : null; } }),
     A('delhaize', 'BE', ['delhaize.be'], { productPath: /\/p\/[A-Z0-9]+$/i, price: '[data-testid="product-properties-price-info"] [data-testid="product-block-price"], [data-testid="product-block-price"]', size: '[data-testid="product-properties-supplementary-price-info"]' , status: 'verified' }),
     A('colruyt', 'BE', ['colruyt.be', 'collectandgo.be']),
-    A('carrefour-be', 'BE', ['carrefour.be']),
+    A('carrefour-be', 'BE', ['carrefour.be'], { status: 'verified (real Chrome, 17 Oct 2026)' }),
     // Poland / Czechia / Slovakia / Hungary / Romania / Bulgaria
     A('frisco', 'PL', ['frisco.pl'], { productPath: /\/pid,/ , status: 'verified' }),
-    A('carrefour-pl', 'PL', ['carrefour.pl']),
+    A('carrefour-pl', 'PL', ['carrefour.pl'], { status: 'verified (real Chrome, 17 Oct 2026)', currency: 'PLN' }),
     A('auchan-pl', 'PL', ['zakupy.auchan.pl'], { productPath: /\/products\//, currency: 'PLN' }),
     A('rohlik', 'CZ', ['rohlik.cz'], { productPath: /^\/\d+-/, currency: 'CZK' , status: 'verified' }),
     A('kosik', 'CZ', ['kosik.cz'], { productPath: /\/p\d+/, currency: 'CZK', size: '[class*="product-detail__product-weight"]' , status: 'verified' }),

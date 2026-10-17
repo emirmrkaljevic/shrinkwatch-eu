@@ -4,7 +4,7 @@ const assert = require('node:assert');
 const fs = require('fs');
 const path = require('path');
 const { parseHTML } = require('linkedom');
-const { formatSize } = require('../src/units.js');
+const { formatSize, formatMoney } = require('../src/units.js');
 const { extract } = require('../src/extract.js');
 const { adapterFor, originsForHost, grantedPatterns, matchPatterns } = require('../src/adapters.js');
 
@@ -12,7 +12,7 @@ const load = f => parseHTML(fs.readFileSync(path.join(__dirname, 'fixtures', f),
 const page = (head, body = '') => parseHTML(`<html><head>${head}</head><body>${body}</body></html>`).document;
 const ld = o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`;
 // Same text as the badge in content.js
-const badge = p => `${new Intl.NumberFormat('en-GB', { style: 'currency', currency: p.currency }).format(p.unitPrice.value)} / ${p.unitPrice.per} (${formatSize(p.size)})`;
+const badge = p => `${formatMoney(p.unitPrice.value, p.currency)} / ${p.unitPrice.per} (${formatSize(p.size)})`;
 
 test('Carrefour FR: AggregateOffer with nested offer, size only in description and title', () => {
   const p = extract(load('carrefour-fr.html'), adapterFor('www.carrefour.fr'), 'https://www.carrefour.fr/p/lait-demi-ecreme-uht-vitamine-d-lactel-3252210390014');
@@ -167,4 +167,21 @@ test('Rewe: price only in <mark itemprop="price">, size in the grammage field, e
   assert.strictEqual(badge(p), '€0.85 / l (1 l)');
   // the lone itemprop="price" is also found without the Rewe selectors; the slider price is not used
   assert.strictEqual(extract(load('rewe.html'), {}, url).price, 0.85);
+});
+
+// Real-browser check of 17 October 2026: Eroski's JSON-LD name is cut short ("Leche semi presid.1"); the size is only
+// in the description and the visible title, written out as "1 litro".
+test('Eroski: size from "1 litro" in the description', () => {
+  const head = ld({ '@type': 'Product', name: 'Leche semi presid.1', description: 'Leche semidesnatada PRESIDENT, brik 1 litro', offers: { '@type': 'Offer', price: '1.12', priceCurrency: 'EUR' } });
+  const body = '<p class="text-desktop">Leche semidesnatada PRESIDENT, brik 1 litro</p><span class="price-now"><span itemprop="price" class="offer-now"> 1,12</span><span class="euro">€</span></span>';
+  const p = extract(page(head, body), adapterFor('supermercado.eroski.es'), 'https://supermercado.eroski.es/es/productdetail/3360443-leche-semidesnatada-president-brik-1-litro/');
+  assert.strictEqual(p.price, 1.12);
+  assert.strictEqual(p.name, 'Leche semidesnatada PRESIDENT, brik 1 litro');
+  assert.strictEqual(badge(p), '€1.12 / l (1 l)');
+});
+
+test('Carrefour PL: złoty shown after the amount', () => {
+  const head = ld({ '@type': 'Product', name: 'Łaciate Mleko UHT 3,2% 1 l', offers: { '@type': 'Offer', price: '4.49', priceCurrency: 'PLN' } });
+  const p = extract(page(head), adapterFor('www.carrefour.pl'), 'https://www.carrefour.pl/napoje/mleko-napoje-mleczne-i-roslinne/mleko-uht/laciate-mleko-uht-32-1-l');
+  assert.strictEqual(badge(p), '4.49 zł / l (1 l)');
 });
