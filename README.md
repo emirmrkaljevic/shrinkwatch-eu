@@ -68,9 +68,11 @@ No data is collected or sent anywhere. See [PRIVACY.md](PRIVACY.md).
 
 ShrinkWatch EU is an independent project. It is not affiliated with, endorsed by or sponsored by Konzum, Lidl, Kaufland, Mercator, Bingo, Spar, Tommy, Rewe, Tesco or any other retailer. Shop names are trademarks of their owners and are used only to describe compatibility. Unit prices are computed from the information shown on the page and may be wrong; always check the shop's own label.
 
-## Support
+## Support my work
 
-If this is useful, you can support development via [GitHub Sponsors](https://github.com/sponsors/emirmrkaljevic).
+[![Get a SkinToScan pack](https://img.shields.io/badge/%E2%98%95_Support_me-Get_a_SkinToScan_pack-ff5f5f?style=for-the-badge)](https://skintoscan.com/#packages)
+
+If you find this useful, you can support me by getting a SkinToScan pack, my other project. It's a one-time purchase that directly funds my open-source work.
 
 ## License
 
