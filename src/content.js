@@ -52,6 +52,8 @@
   async function saveHistory(p) {
     const obs = { size: p.size, price: p.price, currency: p.currency, ts: Date.now() };
     const key = `p:${adapter.id}:${p.id}`;
+    // Lets the popup show this product's price history.
+    globalThis.SW_LAST = { key, name: p.name };
     const got = await store.get(key);
     const history = got[key] || [];
     const alert = SW.detect(history, obs);

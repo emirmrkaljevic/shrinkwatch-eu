@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Popup: price history for the product on the open tab, with a small chart of the unit price over time and a list of each price and pack size seen.
+
 ## 0.3.1 (16 October 2026)
 Checked in a real desktop Chrome on shops that block automated browsers. Now verified: Kaufland DE, Netto, Rewe, dm, Rossmann (DE), Carrefour FR and Tesco IE. Albert Heijn still blocks the browser, so it stays unverified.
 

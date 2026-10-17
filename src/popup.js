@@ -77,5 +77,43 @@ document.getElementById('check').onclick = async () => {
   window.close();
 };
 document.getElementById('clear').onclick = async () => { await store.clear(); refresh(); };
+async function showHistory() {
+  const tab = await currentTab();
+  let last;
+  try {
+    const [r] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: () => globalThis.SW_LAST || null });
+    last = r && r.result;
+  } catch (e) { return; } // no access to this page
+  if (!last) return;
+  const got = await store.get(last.key);
+  const pts = globalThis.SW.historyPoints(got[last.key]);
+  if (!pts.length) return;
+  const svg = document.getElementById('chart');
+  const ns = 'http://www.w3.org/2000/svg';
+  const xy = globalThis.SW.layout(pts, +svg.getAttribute('width'), +svg.getAttribute('height'));
+  const line = document.createElementNS(ns, 'polyline');
+  line.setAttribute('points', xy.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '));
+  line.setAttribute('fill', 'none'); line.setAttribute('stroke', '#2e7d32'); line.setAttribute('stroke-width', '2');
+  svg.appendChild(line);
+  for (const p of xy) {
+    const c = document.createElementNS(ns, 'circle');
+    c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); c.setAttribute('r', '3'); c.setAttribute('fill', '#2e7d32');
+    svg.appendChild(c);
+  }
+  document.getElementById('histname').textContent = last.name;
+  const list = document.getElementById('histlist');
+  const seen = new Set();
+  for (const p of pts.slice().reverse()) {
+    const label = `${p.price} ${p.currency} for ${globalThis.SW.formatSize(p.size)} = ${p.value.toFixed(2)} ${p.currency} / ${p.per}`;
+    if (seen.has(label)) continue;
+    seen.add(label);
+    const li = document.createElement('li');
+    li.textContent = `${new Date(p.ts).toLocaleDateString('en-GB')}: ${label}`;
+    list.appendChild(li);
+  }
+  document.getElementById('hist').hidden = false;
+}
+
 setup();
 refresh();
+showHistory();

@@ -7,6 +7,9 @@ small{color:#666}
 button{margin:4px 0;display:block}
 [hidden]{display:none!important}
 #site{font-weight:600}
+#hist h2{font-size:13px;margin:10px 0 4px}
+#hist svg{background:#f6f6f6;border-radius:4px;display:block}
+#hist ul{margin:4px 0;padding-left:18px;font-size:12px}
 </style></head>
 <body>
 <h1>ShrinkWatch EU</h1>
@@ -14,10 +17,13 @@ button{margin:4px 0;display:block}
 <button id="enable" type="button" hidden>Enable on this shop</button>
 <button id="disable" type="button" hidden>Disable on this shop</button>
 <button id="check" type="button" hidden>Check this page now</button>
+<section id="hist" hidden><h2>Price history</h2><div id="histname"></div><svg id="chart" width="276" height="70" role="img" aria-label="Unit price over time"></svg><ul id="histlist"></ul></section>
 <p>Pack sizes you have seen are stored only in this browser.</p>
 <p id="count"></p>
 <button id="clear" type="button">Clear stored history</button>
 <p><small>Not affiliated with, endorsed by or sponsored by any retailer. Shop names are used only to describe compatibility.</small></p>
+<script src="units.js"></script>
+<script src="chart.js"></script>
 <script src="adapters.js"></script>
 <script src="popup-state.js"></script>
 <script src="popup.js"></script>
