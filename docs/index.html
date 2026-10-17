@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShrinkWatch EU – unit prices and shrinkflation alerts for grocery web shops</title>
+<meta name="description" content="Free, open-source browser extension for Chrome, Edge and Firefox. Shows the price per kg or litre on about 70 supermarket web shops in the EU and the Balkans and warns when a pack gets smaller for the same price.">
+<meta property="og:title" content="ShrinkWatch EU">
+<meta property="og:description" content="See the price per kg or litre on grocery web shops and get warned about shrinkflation. Free and open source, no tracking.">
+<meta property="og:image" content="https://emirmrkaljevic.github.io/shrinkwatch-eu/img/social-preview.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://emirmrkaljevic.github.io/shrinkwatch-eu/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"ShrinkWatch EU","applicationCategory":"BrowserApplication","operatingSystem":"Chrome, Edge, Firefox","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"url":"https://emirmrkaljevic.github.io/shrinkwatch-eu/"}</script>
+<style>
+body{font:17px/1.55 system-ui,sans-serif;margin:0;color:#222;background:#fafafa}
+header{background:#2e7d32;color:#fff;padding:48px 20px;text-align:center}
+header h1{margin:0 0 8px;font-size:34px}header p{margin:0 auto;max-width:640px;font-size:19px}
+.btn{display:inline-block;margin:20px 6px 0;padding:11px 20px;border-radius:6px;background:#fff;color:#2e7d32;font-weight:600;text-decoration:none}
+.btn.alt{background:transparent;color:#fff;border:2px solid #fff}
+main{max-width:820px;margin:0 auto;padding:20px}
+img{max-width:100%;border-radius:6px;box-shadow:0 2px 10px #0002}
+h2{margin-top:40px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:#fff;padding:16px;border-radius:8px;box-shadow:0 1px 4px #0001}
+footer{text-align:center;color:#777;font-size:14px;padding:30px 20px}
+</style>
+</head>
+<body>
+<header>
+<h1>ShrinkWatch EU</h1>
+<p>See the real price per kg or litre on supermarket web shops, and get a warning when a pack shrinks but the price stays the same.</p>
+<a class="btn" href="https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest">Download the latest release</a>
+<a class="btn alt" href="https://github.com/emirmrkaljevic/shrinkwatch-eu">Source on GitHub</a>
+</header>
+<main>
+<p><img src="img/demo.gif" alt="ShrinkWatch EU badge on a fictional product page: unit price, then a shrinkflation warning" width="800"></p>
+
+<h2>What it does</h2>
+<div class="grid">
+<div class="card"><strong>Unit price on every product</strong><br>Shows €/kg, €/l or price per piece, even when the shop doesn't. Works with euros and with CZK, HUF, PLN, RON, SEK, DKK, RSD and BAM.</div>
+<div class="card"><strong>Shrinkflation warning</strong><br>Remembers pack sizes you've seen, so if 500 g becomes 450 g for the same price, you see "+11.1% per kg".</div>
+<div class="card"><strong>Price history</strong><br>The popup shows how the unit price of the product you're viewing has changed.</div>
+<div class="card"><strong>Private by design</strong><br>No account, no server, no tracking. Everything stays in your browser.</div>
+</div>
+
+<h2>Supported shops</h2>
+<p>About 70 grocery web shops in Germany, Austria, France, Italy, Spain, Portugal, the Netherlands, Belgium, the Nordics, Poland, Czechia, Hungary, Romania, Greece, the Baltics, Croatia, Slovenia, Serbia and Bosnia and Herzegovina, including Lidl, Kaufland, Rewe, Billa, Carrefour, Auchan, Konzum, Mercator and Maxi. <a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/blob/main/docs/shops.md">See the full list</a>. A few shops are on by default. Others ask for access only when you switch them on.</p>
+
+<h2>Install</h2>
+<ol>
+<li>Download <code>shrinkwatch-chrome-*.zip</code> or <code>shrinkwatch-firefox-*.zip</code> from the <a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest">latest release</a>.</li>
+<li><strong>Chrome / Edge / Brave:</strong> unzip it, open <code>chrome://extensions</code> (or <code>edge://extensions</code>), turn on Developer mode and click "Load unpacked".</li>
+<li><strong>Firefox:</strong> open <code>about:debugging#/runtime/this-firefox</code>, click "Load Temporary Add-on" and pick the zip.</li>
+</ol>
+<p>Store listings for Chrome and Firefox are coming.</p>
+
+<h2>Missing a shop?</h2>
+<p><a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=shop-request.yml">Request it on GitHub</a>, or <a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=wrong-result.yml">report a wrong result</a>.</p>
+</main>
+<footer>MIT licensed. Not affiliated with, endorsed by or sponsored by any retailer. Shop names are used only to describe compatibility.</footer>
+</body>
+</html>

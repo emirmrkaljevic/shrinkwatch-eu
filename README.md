@@ -1,6 +1,6 @@
 # ShrinkWatch EU
 
-[![Latest release](https://img.shields.io/github/v/release/emirmrkaljevic/shrinkwatch-eu)](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest) [![Shops](https://img.shields.io/badge/shops-about%2070-2e7d32)](docs/shops.md) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/emirmrkaljevic/shrinkwatch-eu)](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest) [![Shops](https://img.shields.io/badge/shops-about%2070-2e7d32)](docs/shops.md) [![Website](https://img.shields.io/badge/website-shrinkwatch--eu-2e7d32)](https://emirmrkaljevic.github.io/shrinkwatch-eu/) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 A browser extension for Chrome and Firefox that shows the **price per kg / litre / piece** on supermarket web shops in the EU and the Balkans, and warns you about **shrinkflation**: when a pack gets smaller but the price stays the same.
 
