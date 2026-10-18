@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://emirmrkaljevic.github.io/shrinkwatch-eu/sitemap.xml
