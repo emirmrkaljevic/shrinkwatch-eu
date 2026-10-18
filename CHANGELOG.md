@@ -1,7 +1,8 @@
 # Changelog
 
 ## Unreleased
-- Mercadona: unit price shown without choosing a postcode first. The product data is read from Mercadona's own site (tienda.mercadona.es/api/products/...), the same data its shop page loads. Nothing is sent to any other server.
+- Website: sitemap, robots.txt and a per-country shop list.
+- Mercadona still needs a postcode chosen first. The extension only reads the page you see and makes no requests of its own.
 
 ## 0.3.2 (17 October 2026)
 Checked in a real desktop Chrome: Monoprix, Carrefour ES, Dia, Alcampo, Eroski, Carrefour BE and Carrefour PL now verified. Intermarché and Cours U block the browser, so they stay unverified.
