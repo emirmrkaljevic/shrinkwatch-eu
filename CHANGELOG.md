@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Mercadona: unit price shown without choosing a postcode first. The product data is read from Mercadona's own site (tienda.mercadona.es/api/products/...), the same data its shop page loads. Nothing is sent to any other server.
+
 ## 0.3.2 (17 October 2026)
 Checked in a real desktop Chrome: Monoprix, Carrefour ES, Dia, Alcampo, Eroski, Carrefour BE and Carrefour PL now verified. Intermarché and Cours U block the browser, so they stay unverified.
 
@@ -8,7 +11,7 @@ Checked in a real desktop Chrome: Monoprix, Carrefour ES, Dia, Alcampo, Eroski, 
 - Prices: złoty, koruna, forint, leu, marka, krone and similar currencies are shown after the amount ("4.49 zł / l") on the badge, listing tiles and in the popup.
 - Pack sizes: "litro", "litros", "litri" and "gramos" are read (Eroski showed "Pack size not found").
 - Website: https://emirmrkaljevic.github.io/shrinkwatch-eu/ with install steps and the shop list.
-- Support links now point only to the "Support my work" section in the README; GitHub Sponsors links were removed.
+- README: new "Support my work" section.
 - Eroski: full product title from the page, since its product data has a shortened name.
 
 ## 0.3.1 (16 October 2026)

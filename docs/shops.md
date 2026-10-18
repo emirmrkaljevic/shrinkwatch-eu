@@ -38,7 +38,7 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | IT | carrefour-it | carrefour.it | opt-in | Works |
 | IT | conad | spesaonline.conad.it | opt-in | Needs a store or postcode chosen first |
 | IT | coop-it | coopshop.it, easycoop.com | opt-in | Needs a store or postcode chosen first |
-| ES | mercadona | tienda.mercadona.es | opt-in | Needs a store or postcode chosen first |
+| ES | mercadona | tienda.mercadona.es | opt-in | Works, without choosing a postcode |
 | ES | carrefour-es | carrefour.es | opt-in | Verified (real Chrome, 17 Oct 2026) |
 | ES | dia | dia.es | opt-in | Verified (real Chrome, 17 Oct 2026) |
 | ES | alcampo | compraonline.alcampo.es | opt-in | Verified (real Chrome, 17 Oct 2026); multipacks such as 6 x 1 l |

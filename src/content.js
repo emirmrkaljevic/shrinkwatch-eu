@@ -87,7 +87,12 @@
   }
 
   async function runProduct() {
-    const p = SW.extract(document, adapter, location.href);
+    let p = SW.extract(document, adapter, location.href);
+    // Some shops show no price before a store is chosen; read the product data from the shop's own site instead.
+    if (!p && adapter.apiUrl && adapter.fromApi) {
+      const url = adapter.apiUrl(location);
+      if (url) { try { const r = await fetch(url, { credentials: 'same-origin' }); if (r.ok) p = adapter.fromApi(await r.json(), SW); } catch (e) { /* page may still render the price later */ } }
+    }
     if (!p) { if (forced && tries === 9) renderMissing(); return false; }
     // A reading that disagrees with the shop's own unit price is shown but not stored, so it cannot raise false alerts later.
     const alert = p.unitPriceFromShop ? null : await saveHistory(p);

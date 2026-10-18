@@ -54,7 +54,18 @@
     A('conad', 'IT', ['spesaonline.conad.it']),
     A('coop-it', 'IT', ['coopshop.it', 'easycoop.com']),
     // Spain / Portugal
-    A('mercadona', 'ES', ['tienda.mercadona.es']),
+    // Mercadona hides prices until a postcode is chosen, but its own site serves the product data at /api/products/<id>/.
+    A('mercadona', 'ES', ['tienda.mercadona.es'], { productPath: /^\/product\/\d+/,
+      apiUrl: loc => { const m = loc.pathname.match(/^\/product\/(\d+)/); return m ? `${loc.origin}/api/products/${m[1]}/` : null; },
+      fromApi: (d, U) => {
+        const pi = d && d.price_instructions; if (!pi) return null;
+        const price = parseFloat(pi.unit_price); if (!(price > 0)) return null;
+        const unit = String(pi.size_format || '').toLowerCase();
+        let size = null;
+        if (pi.is_pack && pi.total_units > 1 && pi.pack_size) size = U.parseSize(`${pi.total_units} x ${pi.pack_size} ${unit}`);
+        else if (pi.unit_size && !pi.approx_size) size = U.parseSize(`${pi.unit_size} ${unit}`);
+        return { id: String(d.id), name: d.display_name || '', price, currency: 'EUR', size, unitPrice: U.unitPrice(price, size) };
+      } }),
     A('carrefour-es', 'ES', ['carrefour.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/R-/ }),
     A('dia', 'ES', ['dia.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/p\// }),
     A('alcampo', 'ES', ['compraonline.alcampo.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/products\// }),
