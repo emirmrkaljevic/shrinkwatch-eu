@@ -186,28 +186,31 @@
     const m = (el.textContent || '').match(UNIT_PRICE);
     if (!m) return null;
     const up = U.parsePrice(m[1]);
-    const per = m[2].replace(/\s/g, '').toLowerCase();
+    const per = perOf(m);
     const base = per.startsWith('100') ? 100 : 1000;
     return up > 0 ? Math.round(up * size.amount / base * 100) / 100 : null;
   }
 
-  // schema.org netContent / weight / size: { value, unitCode | unitText } or "500 g"
+  // schema.org netContent / weight / size: { value, unitCode | unitText } or "500 g". from: the property it came from.
   function ldSize(ld) {
     if (!ld) return null;
     for (const k of ['netContent', 'weight', 'size']) {
       const v = ld[k];
       if (!v) continue;
-      if (typeof v === 'string') { const s = U.parseSize(v); if (s) return s; }
+      if (typeof v === 'string') { const s = U.parseSize(v); if (s) return Object.assign(s, { from: k }); }
       else if (v.value) {
         const unit = ({ GRM: 'g', KGM: 'kg', MLT: 'ml', LTR: 'l', CLT: 'cl', H87: 'pcs' })[v.unitCode] || v.unitText || '';
-        const s = U.parseSize(`${v.value} ${unit}`); if (s) return s;
+        const s = U.parseSize(`${v.value} ${unit}`); if (s) return Object.assign(s, { from: k });
       }
     }
     return null;
   }
 
   // When only the shop's own unit price is shown ("1,99 €/kg"), derive the pack size from it.
-  const UNIT_PRICE = /(\d+(?:[.,]\d{1,2})?)\s*(?:€|eur|kr|kč|zł|ft|lei|ron|rsd|din|km|bam|лв|bgn|huf|pln|czk|sek|dkk)?\s*\/\s*(?:1\s*)?(kg|l|100\s*g|100\s*ml)\b/i;
+  // Greek shops write the unit as a word: "1,05 €/λίτρο", "8,40 €/κιλό".
+  const UNIT_PRICE = /(\d+(?:[.,]\d{1,2})?)\s*(?:€|eur|kr|kč|zł|ft|lei|ron|rsd|din|km|bam|лв|bgn|huf|pln|czk|sek|dkk)?\s*\/\s*(?:1\s*)?(kg|l|100\s*g|100\s*ml|κιλό|κιλο|λίτρο|λιτρο)(?![a-z0-9_α-ωά-ώ])/i;
+  // The matched unit as 'kg', 'l', '100g' or '100ml'.
+  const perOf = m => { const p = m[2].replace(/\s/g, '').toLowerCase(); return /^κιλ/.test(p) ? 'kg' : /^λ/.test(p) ? 'l' : p; };
   function derivedSize(doc, price, adapter) {
     if (!(price > 0)) return null;
     let scope = first(doc, adapter.unitPrice);
@@ -220,7 +223,7 @@
     if (!m) return null;
     const up = U.parsePrice(m[1]);
     if (!(up > 0)) return null;
-    const per = m[2].replace(/\s/g, '').toLowerCase();
+    const per = perOf(m);
     const base = per === 'kg' || per === '100g' ? 'g' : 'ml';
     const factor = per.startsWith('100') ? 100 : 1000;
     const amount = Math.round((price / up) * factor / 5) * 5;
@@ -254,7 +257,7 @@
     if (!m) return null;
     const v = U.parsePrice(m[1]);
     if (!(v > 0)) return null;
-    const per = m[2].replace(/\s/g, '').toLowerCase();
+    const per = perOf(m);
     return { value: per.startsWith('100') ? v * 10 : v, per: per === 'kg' || per === '100g' ? 'kg' : 'l' };
   }
 
@@ -317,6 +320,9 @@
     let structured = ldSize(ld);
     // Structured data often gives the size of one item of a multipack ("500 g" for "500 g, 12er Pack").
     if (structured && nameSize && nameSize.count > 1 && structured.count === 1 && nameSize.each === structured.amount && nameSize.unit === structured.unit) structured = nameSize;
+    // "weight" is often the packed weight (K-Ruoka: 1.032 kg for "Pirkka kevytmaito 1l"): the net content in the title wins.
+    if (structured && structured.from === 'weight' && nameSize && nameSize.unit !== 'pc') structured = nameSize;
+    if (structured) delete structured.from;
     const desc = ld && typeof ld.description === 'string' ? ld.description : '';
     // A short description is often just the pack ("la bouteille 1L"); og:title may add it to a name without one.
     const shortDesc = desc.length <= 60 ? U.parseSize(desc) : null;

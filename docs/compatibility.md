@@ -111,3 +111,16 @@ Real desktop Chrome with the unpacked `dist/chrome` build, one product page per 
 | Intermarché (FR) | – | Blocked by a slider bot check, not attempted |
 | Cours U (FR) | – | No prices until a store is chosen, then "Access Denied" |
 
+## Real-browser check (19 October 2026)
+Real desktop Chrome with the unpacked `dist/chrome` build (0.3.3), one product page per shop.
+
+| Shop | Product | Result |
+|---|---|---|
+| Auchan (PL) | Kawa z cykorii Auchan 250 g | `89.56 zł / kg (250 g)` |
+| Dunnes Stores (IE) | Dunnes Stores Irish Whole Milk 2L | `€1.13 / l (2 l)` |
+| Barbora (LT) | Pienas Farm Milk 2 % 1 l | `€0.83 / l (1 l)`, shown after about 15 seconds while the page loads |
+| K-Ruoka (FI) | Pirkka suomalainen kevytmaito 1l, 0,99 € | Wrong: `€0.96 / kg (1.032 kg)`. The schema.org `weight` is the packed weight. Fixed: a size in the product title wins over `weight`; re-checked: `€0.99 / l (1 l)` |
+| Selver (EE) | Piim 2,5%, kiles, FARMI, 1 L, 0,62 € | Wrong: `€0.50 / l (1 l)`, which matches the price before 24 % VAT. Fixed: the price is read from the product's own price block, not from product cards or structured data; re-checked: `€0.62 / l (1 l)` |
+| Sklavenitis (GR) | ΜΑΡΑΤΑ Φρέσκο Γάλα Πλήρες 3,5% 1lt, 1,05 € | No badge: the page has no structured data and the price block comes before the title. Fixed: the price is read from the product's price block, and "/λίτρο" and "/κιλό" unit prices are understood; re-checked: `€1.05 / l (1 l)` and `€1.74 / l (1 l)` |
+| Colruyt (BE) | – | No price without logging in or choosing a store, so it could not be checked |
+| Tesco (CZ) | – | Blocked by a bot check page |

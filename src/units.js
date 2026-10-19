@@ -3,11 +3,11 @@
   const UNITS = {
     mg: ['g', 0.001], g: ['g', 1], gr: ['g', 1], gram: ['g', 1], grama: ['g', 1], grams: ['g', 1], gramos: ['g', 1], dag: ['g', 10], kg: ['g', 1000],
     ml: ['ml', 1], milliliter: ['ml', 1], millilitre: ['ml', 1], kilogram: ['g', 1000], kilogramm: ['g', 1000], gramm: ['g', 1], cl: ['ml', 10], dl: ['ml', 100], l: ['ml', 1000], lt: ['ml', 1000], ltr: ['ml', 1000], lit: ['ml', 1000], litre: ['ml', 1000], liter: ['ml', 1000], litra: ['ml', 1000], litro: ['ml', 1000], litros: ['ml', 1000], litri: ['ml', 1000], litrů: ['ml', 1000],
-    'г': ['g', 1], 'гр': ['g', 1], 'кг': ['g', 1000], 'мл': ['ml', 1], 'л': ['ml', 1000], 'γρ': ['g', 1], 'κιλό': ['g', 1000], 'λτ': ['ml', 1000],
+    'г': ['g', 1], 'гр': ['g', 1], 'кг': ['g', 1000], 'мл': ['ml', 1], 'л': ['ml', 1000], 'γρ': ['g', 1], 'κιλό': ['g', 1000], 'κιλά': ['g', 1000], 'λτ': ['ml', 1000], 'λίτρο': ['ml', 1000], 'λίτρα': ['ml', 1000],
     kom: ['pc', 1], pcs: ['pc', 1], pc: ['pc', 1], stk: ['pc', 1], 'stück': ['pc', 1], kos: ['pc', 1]
   };
   const NUM = '(\\d+(?:[.,]\\d+)?)';
-  const UNIT = '(кг|гр|мл|г|л|γρ|κιλό|λτ|milliliter|millilitre|kilogramm|kilogram|gramm|mg|kg|dag|gr|gramos|grams|grama|gram|g|ml|cl|dl|litros|litro|litri|litrů|litre|liter|litra|ltr|lit|lt|l|kom|pcs|pc|stk|stück|kos)';
+  const UNIT = '(кг|гр|мл|г|л|γρ|κιλό|κιλά|λίτρο|λίτρα|λτ|milliliter|millilitre|kilogramm|kilogram|gramm|mg|kg|dag|gr|gramos|grams|grama|gram|g|ml|cl|dl|litros|litro|litri|litrů|litre|liter|litra|ltr|lit|lt|l|kom|pcs|pc|stk|stück|kos)';
   const MULTI = new RegExp(NUM + '\\s*[x×*]\\s*' + NUM + '\\s*' + UNIT + '(?![a-zčćšžđа-яα-ω])', 'i');
   const SINGLE = new RegExp('(?:^|[^\\d.,])' + NUM + '\\s*' + UNIT + '(?![a-zčćšžđа-яα-ω])', 'gi');
 

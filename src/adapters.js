@@ -77,7 +77,7 @@
     // Poland / Czechia / Slovakia / Hungary / Romania / Bulgaria
     A('frisco', 'PL', ['frisco.pl'], { productPath: /\/pid,/ , status: 'verified' }),
     A('carrefour-pl', 'PL', ['carrefour.pl'], { status: 'verified (real Chrome, 17 Oct 2026)', currency: 'PLN' }),
-    A('auchan-pl', 'PL', ['zakupy.auchan.pl'], { productPath: /\/products\//, currency: 'PLN' }),
+    A('auchan-pl', 'PL', ['zakupy.auchan.pl'], { status: 'verified (real Chrome, 19 Oct 2026)', productPath: /\/products\//, currency: 'PLN' }),
     A('rohlik', 'CZ', ['rohlik.cz'], { productPath: /^\/\d+-/, currency: 'CZK' , status: 'verified' }),
     A('kosik', 'CZ', ['kosik.cz'], { productPath: /\/p\d+/, currency: 'CZK', size: '[class*="product-detail__product-weight"]' , status: 'verified' }),
     A('tesco-ce', 'CZ/SK/HU', ['nakup.itesco.cz', 'potravinydomov.itesco.sk', 'bevasarlas.tesco.hu'], { productPath: /\/products\// }),
@@ -92,7 +92,7 @@
     // /groceries/en-IE/products/<id> (old) and /shop/en-IE/products/<id> (since October 2026)
     // tesco.ie product JSON-LD says GBP next to a € price, so the currency comes from the domain.
     A('tesco', 'IE/UK', ['tesco.ie', 'tesco.com'], { status: 'verified (tesco.ie)', productPath: /\/products\//, currencyByHost: { 'tesco.ie': 'EUR', 'tesco.com': 'GBP' } }),
-    A('dunnes', 'IE', ['dunnesstoresgrocery.com']),
+    A('dunnes', 'IE', ['dunnesstoresgrocery.com'], { status: 'verified (real Chrome, 19 Oct 2026)' }),
     A('supervalu', 'IE', ['shop.supervalu.ie']),
     A('ica', 'SE', ['handlaprivatkund.ica.se']),
     A('willys', 'SE', ['willys.se'], { productPath: /\/produkt\// , status: 'verified' }),
@@ -101,11 +101,27 @@
     A('nemlig', 'DK', ['nemlig.com']),
     A('bilkatogo', 'DK', ['bilkatogo.dk'], { status: 'verified', productPath: /\/produkt\//, currency: 'DKK', price: '.product-price-col .product-price' }),
     A('s-kaupat', 'FI', ['s-kaupat.fi'], { status: 'verified', productPath: /\/tuote\//, price: '[class*="ProductPagePricing"] [class*="UnitPrice"]' }),
-    A('k-ruoka', 'FI', ['k-ruoka.fi']),
-    A('barbora', 'LT/LV/EE', ['barbora.lt', 'barbora.lv', 'barbora.ee'], { productPath: /\/produktai\/|\/produkti\/|\/toode\// }),
+    // JSON-LD "weight" is the packed weight (1.032 kg for 1 l of milk); the title's "1l" is used instead (see extract.js).
+    A('k-ruoka', 'FI', ['k-ruoka.fi'], { status: 'verified (real Chrome, 19 Oct 2026)' }),
+    A('barbora', 'LT/LV/EE', ['barbora.lt', 'barbora.lv', 'barbora.ee'], { status: 'verified (barbora.lt, real Chrome, 19 Oct 2026)', productPath: /\/produktai\/|\/produkti\/|\/toode\// }),
     A('rimi', 'LT/LV/EE', ['rimi.lt', 'rimi.lv', 'rimi.ee'], { status: 'verified', productPath: /\/p\// }),
-    A('selver', 'EE', ['selver.ee']),
-    A('sklavenitis', 'GR', ['sklavenitis.gr']),
+    // Rendered client-side. The product's own price is the .ProductPrice in the product block ("0,62 €" with a
+    // .ProductPrice__unit-price child "0,62 €/l"); product cards elsewhere on the page use the same class, and the
+    // page's structured price can be the amount before VAT, so this reading wins over both.
+    A('selver', 'EE', ['selver.ee'], { status: 'verified (real Chrome, 19 Oct 2026)', unitPrice: '.Product__prices .ProductPrice__unit-price',
+      custom: (doc, U) => {
+        const own = e => !e.closest('[class*="ProductCard"], s, del') && !/ProductPrice--original/.test(e.getAttribute('class') || '');
+        const h1 = doc.querySelector('h1');
+        const afterTitle = e => !!h1 && !!(h1.compareDocumentPosition(e) & 4);
+        const el = [...doc.querySelectorAll('.Product__prices .ProductPrice')].find(own) || [...doc.querySelectorAll('.ProductPrice')].find(e => own(e) && afterTitle(e));
+        if (!el) return null;
+        const copy = el.cloneNode(true);
+        for (const u of copy.querySelectorAll('.ProductPrice__unit-price')) u.remove();
+        const price = U.parsePrice(copy.textContent);
+        return price > 0 ? { price } : null;
+      } }),
+    // No structured data: the price block (.main-price .price "1,05 €/τεμ.", .priceKil "1,05 €/λίτρο") comes before the title.
+    A('sklavenitis', 'GR', ['sklavenitis.gr'], { status: 'verified (real Chrome, 19 Oct 2026)', price: '.product-detail .main-price .price', unitPrice: '.product-detail .priceKil' }),
     A('ab', 'GR', ['ab.gr'], { status: 'verified', productPath: /\/p\/\d+/, price: '[data-testid="product-properties-price-info"] [data-testid="product-block-price"], [data-testid="product-block-price"]', size: '[data-testid="product-properties-supplementary-price-info"]' }),
     A('mymarket', 'GR', ['mymarket.gr'])
   ];

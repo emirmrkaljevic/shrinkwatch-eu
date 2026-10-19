@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+Checked in a real desktop Chrome: Auchan PL, Dunnes Stores and Barbora now verified, and K-Ruoka, Selver and Sklavenitis verified after the fixes below. Colruyt shows no price without logging in or choosing a store, and Tesco CZ blocks the browser, so both stay unverified.
+
+- K-Ruoka: the pack size comes from the product title ("1l") instead of the packed weight in the product data (it showed €0.96 / kg for 1.032 kg instead of €0.99 / l). In general, a size in the title now wins over a schema.org `weight`; `netContent` still comes first.
+- Selver: the price is read from the product's own price block and wins over product cards and the page's other price data (it showed €0.50 / l instead of €0.62 / l; €0.50 is the price without 24 % VAT).
+- Sklavenitis: badge shown again. The price is read from the product's price block, which comes before the title and has no structured data.
+- Pack sizes and unit prices: Greek "λίτρο", "λίτρα" and "κιλά" are read, and shop unit prices written as "1,05 €/λίτρο" or "8,40 €/κιλό" are used for the cross-check.
+
 ## 0.3.3 (19 October 2026)
 - Back up or move your history: a new options page (popup → "Back up or restore history") exports the stored pack sizes and prices to a JSON file and imports them again, merged with what is already stored. Nothing is uploaded.
 - Website: sitemap, robots.txt and a per-country shop list.

@@ -91,6 +91,15 @@ test('parses Spanish, Italian and Czech unit words', () => {
   assert.strictEqual(parseSize('Leche 6 x 1 litro').amount, 6000);
 });
 
+test('parses Greek unit words and abbreviations', () => {
+  assert.strictEqual(parseSize('ΜΑΡΑΤΑ Φρέσκο Γάλα Πλήρες 3,5% 1lt').amount, 1000);
+  assert.strictEqual(parseSize('Νερό 1,5 λίτρα').amount, 1500);
+  assert.strictEqual(parseSize('Γάλα 1 λίτρο').amount, 1000);
+  assert.deepStrictEqual(parseSize('Φέτα 400γρ'), { amount: 400, unit: 'g', count: 1, each: 400 });
+  assert.strictEqual(parseSize('Πατάτες 2 κιλά').amount, 2000);
+  assert.strictEqual(parsePrice('1,05 €'), 1.05);
+});
+
 test('formats money with the symbol shoppers expect', () => {
   const { formatMoney } = require('../src/units.js');
   assert.strictEqual(formatMoney(4.49, 'EUR'), '€4.49');

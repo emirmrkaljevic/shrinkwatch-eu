@@ -8,6 +8,8 @@ Real desktop Chrome check on 16 October 2026: dm, Rossmann, Kaufland DE, Carrefo
 
 Real desktop Chrome check on 17 October 2026: Monoprix, Carrefour ES, Dia, Alcampo, Eroski, Carrefour BE and Carrefour PL work; Intermarché and Cours U blocked the browser. See [compatibility.md](compatibility.md#real-browser-check-17-october-2026).
 
+Real desktop Chrome check on 19 October 2026: Auchan PL, Dunnes Stores and Barbora work. K-Ruoka, Selver and Sklavenitis showed a wrong or no badge; fixed and checked again, they now work. Colruyt shows no price without logging in or choosing a store, and Tesco CZ blocked the browser. See [compatibility.md](compatibility.md#real-browser-check-19-october-2026).
+
 Listing tiles (15 October 2026): Tommy shows unit-price badges on category/search tiles. Konzum, Mercator and Maxi already print unit prices on tiles; a shrinkflation marker is added when local history shows a smaller pack (verified on Konzum).
 
 | Country | Shop | Domains | Mode | Live check |
@@ -51,14 +53,14 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | NL | plus | plus.nl | opt-in | Works |
 | NL | dirk | dirk.nl | opt-in | Works |
 | BE | delhaize | delhaize.be | opt-in | Works |
-| BE | colruyt | colruyt.be, collectandgo.be | opt-in | Not tested: bot protection |
+| BE | colruyt | colruyt.be, collectandgo.be | opt-in | Not verified: no price is shown without logging in or choosing a store (real Chrome, 19 Oct 2026) |
 | BE | carrefour-be | carrefour.be | opt-in | Verified (real Chrome, 17 Oct 2026) |
 | PL | frisco | frisco.pl | opt-in | Works |
 | PL | carrefour-pl | carrefour.pl | opt-in | Verified (real Chrome, 17 Oct 2026) |
-| PL | auchan-pl | zakupy.auchan.pl | opt-in | Not tested: bot protection |
+| PL | auchan-pl | zakupy.auchan.pl | opt-in | Verified (real Chrome, 19 Oct 2026) |
 | CZ | rohlik | rohlik.cz | opt-in | Works |
 | CZ | kosik | kosik.cz | opt-in | Works |
-| CZ/SK/HU | tesco-ce | nakup.itesco.cz, potravinydomov.itesco.sk, bevasarlas.tesco.hu | opt-in | Not tested: bot protection |
+| CZ/SK/HU | tesco-ce | nakup.itesco.cz, potravinydomov.itesco.sk, bevasarlas.tesco.hu | opt-in | Blocked: bot check page in a real Chrome (nakup.itesco.cz, 19 Oct 2026), not verified |
 | HU | kifli | kifli.hu | opt-in | Works |
 | HU | auchan-hu | online.auchan.hu | opt-in | Works |
 | RO | carrefour-ro | carrefour.ro | opt-in | Works |
@@ -67,7 +69,7 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | RO | freshful | freshful.ro | opt-in | Works |
 | BG | ebag | ebag.bg | opt-in | Price works; some items show no pack size |
 | IE/UK | tesco | tesco.ie, tesco.com | opt-in | Works (tesco.ie, real Chrome, 16 Oct 2026: €1.13 / l on 2 l milk); tesco.com not tested |
-| IE | dunnes | dunnesstoresgrocery.com | opt-in | Not tested: bot protection |
+| IE | dunnes | dunnesstoresgrocery.com | opt-in | Verified (real Chrome, 19 Oct 2026) |
 | IE | supervalu | shop.supervalu.ie | opt-in | Works |
 | SE | ica | handlaprivatkund.ica.se | opt-in | Needs a store or postcode chosen first |
 | SE | willys | willys.se | opt-in | Works |
@@ -76,10 +78,10 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | DK | nemlig | nemlig.com | opt-in | Works |
 | DK | bilkatogo | bilkatogo.dk | opt-in | Works |
 | FI | s-kaupat | s-kaupat.fi | opt-in | Works |
-| FI | k-ruoka | k-ruoka.fi | opt-in | Not tested: bot protection |
-| LT/LV/EE | barbora | barbora.lt, barbora.lv, barbora.ee | opt-in | Not tested: bot protection |
+| FI | k-ruoka | k-ruoka.fi | opt-in | Verified (real Chrome, 19 Oct 2026, after a fix) |
+| LT/LV/EE | barbora | barbora.lt, barbora.lv, barbora.ee | opt-in | Verified (barbora.lt, real Chrome, 19 Oct 2026); the badge can take a few seconds to appear |
 | LT/LV/EE | rimi | rimi.lt, rimi.lv, rimi.ee | opt-in | Works |
-| EE | selver | selver.ee | opt-in | Not tested: bot protection |
-| GR | sklavenitis | sklavenitis.gr | opt-in | Not tested: bot protection |
+| EE | selver | selver.ee | opt-in | Verified (real Chrome, 19 Oct 2026, after a fix) |
+| GR | sklavenitis | sklavenitis.gr | opt-in | Verified (real Chrome, 19 Oct 2026, after a fix) |
 | GR | ab | ab.gr | opt-in | Works |
 | GR | mymarket | mymarket.gr | opt-in | Works |
