@@ -47,6 +47,8 @@ Store listings (Chrome Web Store, Firefox Add-ons) are coming.
 
 **Does it send my data anywhere?** No. Pack sizes and prices are stored only in your browser.
 
+**Can I move my history to another browser?** Yes. In the popup, click "Back up or restore history" to export it as a JSON file, then import that file in the other browser.
+
 **Is a shrinkflation warning proof?** No. It compares what this browser saw before with what the shop shows now. Shop data can be wrong, so check the pack before drawing conclusions.
 
 ## Develop

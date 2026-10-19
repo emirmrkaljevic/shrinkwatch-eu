@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>ShrinkWatch EU – history backup</title>
+<style>body{font:15px system-ui,sans-serif;max-width:560px;margin:30px auto;padding:0 16px}button{margin:4px 8px 4px 0}#msg{font-weight:600}</style></head>
+<body>
+<h1>ShrinkWatch EU</h1>
+<h2>Back up or move your history</h2>
+<p>The pack sizes and prices you have seen are stored only in this browser. Export them to a file to keep a backup or to move them to another browser, then import that file there.</p>
+<p id="count"></p>
+<button id="export" type="button">Export history (JSON)</button>
+<label><button id="pick" type="button">Import history…</button><input id="file" type="file" accept="application/json,.json" hidden></label>
+<p id="msg" role="status"></p>
+<p><small>Importing merges the file with what is already stored. Nothing is uploaded anywhere.</small></p>
+<script src="backup.js"></script>
+<script src="options.js"></script>
+</body></html>

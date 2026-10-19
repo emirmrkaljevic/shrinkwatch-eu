@@ -22,7 +22,8 @@ function manifest(target) {
     optional_host_permissions: optional,
     content_scripts: [{ matches, js: scripts, css: ['src/badge.css'], run_at: 'document_idle' }],
     background: target === 'firefox' ? { scripts: ['src/adapters.js', 'src/background.js'] } : { service_worker: 'src/background.js' },
-    action: { default_title: 'ShrinkWatch EU', default_popup: 'src/popup.html' }
+    action: { default_title: 'ShrinkWatch EU', default_popup: 'src/popup.html' },
+    options_ui: { page: 'src/options.html', open_in_tab: true }
   };
   if (target === 'firefox') {
     m.browser_specific_settings = { gecko: { id: 'shrinkwatch-eu@emirmrkaljevic.github.io', strict_min_version: '140.0', data_collection_permissions: { required: ['none'] } }, gecko_android: { strict_min_version: '142.0' } };

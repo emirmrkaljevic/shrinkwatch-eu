@@ -1,7 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.3.3 (19 October 2026)
+- Back up or move your history: a new options page (popup → "Back up or restore history") exports the stored pack sizes and prices to a JSON file and imports them again, merged with what is already stored. Nothing is uploaded.
 - Website: sitemap, robots.txt and a per-country shop list.
+- Corrected the 0.3.2 notes (support section).
 - Mercadona still needs a postcode chosen first. The extension only reads the page you see and makes no requests of its own.
 
 ## 0.3.2 (17 October 2026)

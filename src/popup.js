@@ -76,6 +76,7 @@ document.getElementById('check').onclick = async () => {
   await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: SCRIPTS });
   window.close();
 };
+document.getElementById('backup').onclick = () => { chrome.runtime.openOptionsPage(); window.close(); };
 document.getElementById('clear').onclick = async () => { await store.clear(); refresh(); };
 async function showHistory() {
   const tab = await currentTab();
