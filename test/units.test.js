@@ -109,3 +109,11 @@ test('formats money with the symbol shoppers expect', () => {
   assert.strictEqual(formatMoney(2.5, 'BAM'), '2.50 KM');
   assert.strictEqual(formatMoney(199, 'RSD'), '199.00 din');
 });
+
+test('reads multipacks with a container word before the x', () => {
+  assert.strictEqual(parseSize('6 briks x 1 Litro | 4,98').amount, 6000);
+  assert.strictEqual(parseSize('6 mini briks x 200 ml').amount, 1200);
+  assert.strictEqual(parseSize('6 botellas x 1,5 L').amount, 9000);
+  assert.strictEqual(parseSize('4 latas x 33 cl').amount, 1320);
+  assert.strictEqual(parseSize('Brik 1 Litro | 2,45').amount, 1000);
+});

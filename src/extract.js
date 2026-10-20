@@ -208,7 +208,8 @@
 
   // When only the shop's own unit price is shown ("1,99 €/kg"), derive the pack size from it.
   // Greek shops write the unit as a word: "1,05 €/λίτρο", "8,40 €/κιλό".
-  const UNIT_PRICE = /(\d+(?:[.,]\d{1,2})?)\s*(?:€|eur|kr|kč|zł|ft|lei|ron|rsd|din|km|bam|лв|bgn|huf|pln|czk|sek|dkk)?\s*\/\s*(?:1\s*)?(kg|l|100\s*g|100\s*ml|κιλό|κιλο|λίτρο|λιτρο)(?![a-z0-9_α-ωά-ώ])/i;
+  // The number must start the figure: in "1,367 €/L" (three decimals, Mercadona) it must not match "367 €/L".
+  const UNIT_PRICE = /(?<![\d.,])(\d+(?:[.,]\d{1,2})?)\s*(?:€|eur|kr|kč|zł|ft|lei|ron|rsd|din|km|bam|лв|bgn|huf|pln|czk|sek|dkk)?\s*\/\s*(?:1\s*)?(kg|l|100\s*g|100\s*ml|κιλό|κιλο|λίτρο|λιτρο)(?![a-z0-9_α-ωά-ώ])/i;
   // The matched unit as 'kg', 'l', '100g' or '100ml'.
   const perOf = m => { const p = m[2].replace(/\s/g, '').toLowerCase(); return /^κιλ/.test(p) ? 'kg' : /^λ/.test(p) ? 'l' : p; };
   function derivedSize(doc, price, adapter) {

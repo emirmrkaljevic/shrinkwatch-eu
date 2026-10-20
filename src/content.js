@@ -144,6 +144,18 @@
         else if (adapter.needsStore && tries < 130) setTimeout(tick, 5000);
       };
       tick();
+      // Single-page shops (Mercadona) change the URL without a page load, e.g. when a related product opens in a dialog.
+      // The badge belongs to the page it was read on, so it is removed instead of showing the earlier product's figures.
+      if (!forced) {
+        const shownFor = location.pathname;
+        const watch = setInterval(() => {
+          if (location.pathname === shownFor) return; // query changes (tracking parameters) keep the badge
+          clearInterval(watch);
+          tries = 1000;
+          const host = document.getElementById('shrinkwatch-badge');
+          if (host) host.remove();
+        }, 1000);
+      }
     }
 
     if (onListing) {

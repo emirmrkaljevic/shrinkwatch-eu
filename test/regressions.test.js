@@ -227,3 +227,33 @@ test('Sklavenitis: price block before the title, Greek unit words in the shop un
   const kg = shop('8,40 €<span>/κιλό</span>', 'Τυρί 250γρ');
   assert.deepStrictEqual([kg.unitPriceFromShop, kg.unitPrice.value, kg.unitPrice.per], [true, 8.4, 'kg']);
 });
+
+// Real-browser check of 20 October 2026: Mercadona has no structured data; markup from the live product pages.
+function mercadonaPage(srSize, priceBlock) {
+  const html = fs.readFileSync(path.join(__dirname, 'fixtures', 'mercadona.html'), 'utf8')
+    .replace(/<div class="product-format[\s\S]*?<\/div>/, `<div class="product-format sr-only-anchor product-format__size" tabindex="0"><span class="sr-only">${srSize}</span></div>`)
+    .replace(/<div class="product-price">[\s\S]*?<\/div>\s*<\/div>/, `<div class="product-price"><div class="sr-only-anchor" tabindex="0">${priceBlock}</div></div>`);
+  return parseHTML(html).document;
+}
+
+test('Mercadona: pack price and pack line from the product block', () => {
+  const p = extract(load('mercadona.html'), adapterFor('tienda.mercadona.es'), 'https://tienda.mercadona.es/product/10005/chocolate-liquido-taza-hacendado-brick');
+  assert.strictEqual(p.name, 'Chocolate líquido a la taza Hacendado');
+  assert.strictEqual(badge(p), '€2.45 / l (1 l)');
+});
+
+test('Mercadona: discounted multipack uses the current price, not the previous one', () => {
+  const doc = mercadonaPage('6 briks x 1 Litro | 0,83 €/Litro',
+    '<span class="sr-only">Precio anterior: 5,04€ por Pack, Precio actual: 4,98€ por Pack</span><p class="product-price__previous-unit-price title1-sb" data-testid="product-price" aria-hidden="true">5,04 €</p><p class="product-price__unit-price large-b product-price__unit-price--discount" data-testid="product-price" aria-hidden="true">4,98 €</p><p class="product-price__extra-price title1-r" aria-hidden="true"> /pack</p>');
+  const p = extract(doc, adapterFor('tienda.mercadona.es'), 'https://tienda.mercadona.es/product/10381/leche-semidesnatada-hacendado-pack-6');
+  assert.strictEqual(p.price, 4.98);
+  assert.strictEqual(badge(p), '€0.83 / l (6 l)');
+});
+
+test('Mercadona: "6 mini briks x 200 Mililitros" is a 1.2 l pack', () => {
+  const doc = mercadonaPage('6 mini briks x 200 Mililitros | 1,367 </span><span class="headline1-r" aria-hidden="true">6 mini briks x 200 ml</span><span class="headline1-r" aria-hidden="true"> | 1,367 €/L',
+    '<span class="sr-only">1,64€ por Pack</span><p class="product-price__unit-price large-b" data-testid="product-price" aria-hidden="true">1,64 €</p><p class="product-price__extra-price title1-r" aria-hidden="true"> /pack</p>');
+  const p = extract(doc, adapterFor('tienda.mercadona.es'), 'https://tienda.mercadona.es/product/10794/leche-semidesnatada-hacendado-pack-6');
+  assert.strictEqual(p.size.amount, 1200);
+  assert.strictEqual(badge(p), '€1.37 / l (1.2 l)');
+});

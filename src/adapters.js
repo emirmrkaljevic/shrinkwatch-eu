@@ -45,7 +45,7 @@
     A('gurkerl', 'AT', ['gurkerl.at'], { productPath: /^\/\d+-/ , status: 'verified' }),
     // France
     A('carrefour-fr', 'FR', ['carrefour.fr'], { status: 'verified', productPath: /\/p\// }),
-    A('auchan-fr', 'FR', ['auchan.fr'], { productPath: /\/pr-/, needsStore: true }),
+    A('auchan-fr', 'FR', ['auchan.fr'], { status: 'verified (real Chrome, 20 Oct 2026)', productPath: /\/pr-/, needsStore: true }),
     A('leclerc', 'FR', ['e.leclerc', 'leclercdrive.fr']),
     A('intermarche', 'FR', ['intermarche.com'], { productPath: /\/produit\// }),
     A('monoprix', 'FR', ['monoprix.fr'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/products\/|\/p\// }),
@@ -53,10 +53,13 @@
     // Italy
     A('esselunga', 'IT', ['spesaonline.esselunga.it'], { productPath: /\/prodotto\/\d+/, status: 'verified', needsStore: true }),
     A('carrefour-it', 'IT', ['carrefour.it']),
-    A('conad', 'IT', ['spesaonline.conad.it'], { productPath: /^\/p\//, needsStore: true }),
+    A('conad', 'IT', ['spesaonline.conad.it'], { status: 'verified (real Chrome, 20 Oct 2026)', productPath: /^\/p\//, needsStore: true }),
     A('coop-it', 'IT', ['coopshop.it', 'easycoop.com'], { productPath: /^\/product\//, needsStore: true }),
     // Spain / Portugal
-    A('mercadona', 'ES', ['tienda.mercadona.es'], { productPath: /^\/product\/\d+/, needsStore: true }),
+    // Mercadona has no structured data; the pack line reads "Brik 1 Litro | 2,45" for screen readers. The current pack price is
+    // .product-price__unit-price (a discounted product also has .product-price__previous-unit-price with the old price).
+    A('mercadona', 'ES', ['tienda.mercadona.es'], { status: 'verified (real Chrome, 20 Oct 2026)', productPath: /^\/product\/\d+/, needsStore: true,
+      name: 'h1.private-product-detail__description', price: '.private-product-detail__right .product-price__unit-price', size: '.private-product-detail__right .product-format__size .sr-only' }),
     A('carrefour-es', 'ES', ['carrefour.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/R-/ }),
     A('dia', 'ES', ['dia.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/p\// }),
     A('alcampo', 'ES', ['compraonline.alcampo.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/products\// }),
@@ -96,7 +99,7 @@
     A('tesco', 'IE/UK', ['tesco.ie', 'tesco.com'], { status: 'verified (tesco.ie)', productPath: /\/products\//, currencyByHost: { 'tesco.ie': 'EUR', 'tesco.com': 'GBP' } }),
     A('dunnes', 'IE', ['dunnesstoresgrocery.com'], { status: 'verified (real Chrome, 19 Oct 2026)' }),
     A('supervalu', 'IE', ['shop.supervalu.ie']),
-    A('ica', 'SE', ['handlaprivatkund.ica.se']),
+    A('ica', 'SE', ['handlaprivatkund.ica.se'], { status: 'verified (real Chrome, 20 Oct 2026)' }),
     A('willys', 'SE', ['willys.se'], { productPath: /\/produkt\// , status: 'verified' }),
     A('coop-se', 'SE', ['coop.se']),
     A('mathem', 'SE', ['mathem.se']),

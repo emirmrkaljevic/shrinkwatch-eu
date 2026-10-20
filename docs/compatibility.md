@@ -40,7 +40,7 @@ Each shop below was opened on a real product page with the extension loaded. A t
 | Carrefour (IT) | Works, including multipacks written as "Lt 2,0X6" |
 | eBag (BG) | Price works; some items show no pack size anywhere on the page |
 | E.Leclerc (FR), Bingo (BA) | Price works; tested items were non-food without a pack size |
-| Mercadona, Auchan (FR), Conad, Coop (IT), Esselunga, ICA | Product pages need a store or postcode first; the badge appears after choosing one |
+| Mercadona, Auchan (FR), Conad, Coop (IT), Esselunga, ICA | Product pages need a store or postcode first; the badge appears after choosing one (checked in a real browser on 20 October 2026, see below) |
 | dm, Rossmann, Albert Heijn, Colruyt and the shops listed in round two | Not checked: the site blocks automated browsers |
 
 Spar Croatia was removed: it has no online shop.
@@ -124,3 +124,17 @@ Real desktop Chrome with the unpacked `dist/chrome` build (0.3.3), one product p
 | Sklavenitis (GR) | ΜΑΡΑΤΑ Φρέσκο Γάλα Πλήρες 3,5% 1lt, 1,05 € | No badge: the page has no structured data and the price block comes before the title. Fixed: the price is read from the product's price block, and "/λίτρο" and "/κιλό" unit prices are understood; re-checked: `€1.05 / l (1 l)` and `€1.74 / l (1 l)` |
 | Colruyt (BE) | – | No price without logging in or choosing a store, so it could not be checked |
 | Tesco (CZ) | – | Blocked by a bot check page |
+
+## Real-browser check (20 October 2026)
+Real desktop Chrome with the unpacked `dist/chrome` build, shops that hide prices until a store or postcode is chosen. No account was created on any shop.
+
+| Shop | Product | Result |
+|---|---|---|
+| Conad (IT) | Latte UHT intero 1 L, 1,09 € (pickup store in Milan) | `€1.09 / l (1 l)` |
+| Auchan (FR) | Haché porc et bœuf 400 g, 4,99 € (Click&Collect, Paris) | `€12.48 / kg (400 g)` |
+| ICA (SE) | Färsk mellanmjölk 1,5 % 1,5 l, 19,12 kr | `12.75 kr / l (1.5 l)` |
+| Mercadona (ES) | Chocolate líquido a la taza 1 L, 2,45 € (postcode 28001) | First run: only the "choose a store" hint. The page has no structured data, so no price was found. Fixed: the title, the pack line and the pack price are read from the product block. Verified after the fix: `€2.45 / l (1 l)` |
+| Mercadona (ES) | Leche semidesnatada, 6 briks x 1 L, 4,98 € | First run: `€0.83 / l (1 l)`, right price per litre (taken from the shop's own figure) but the wrong pack size. Fixed: multipacks written with a container word ("6 briks x 1 L", "6 mini briks x 200 ml", "4 latas x 33 cl") are read, and the current price wins over the struck-out one. Verified after the fix: `€0.83 / l (6 l)` |
+| Mercadona (ES) | Leche semidesnatada, 6 mini briks x 200 ml, 1,64 € | First run: `€328.00 / l (≈5 ml)`. "Mililitros" was not a known unit, and the shop's "1,367 €/L" (three decimals) was read as 367. Fixed: Spanish unit words (mililitros, centilitros, kilos, kilogramos) are read, and a unit price is only taken when the whole number matches. Verified after the fix: `€1.37 / l (1.2 l)` |
+| Mercadona (ES) | Related product opened in a dialog | The URL changes without a page load and the badge kept the earlier product's figures. Fixed: the badge is removed when the page path changes. Verified: badge gone after opening the dialog |
+| Coop Shop (IT) | – | No prices until you log in to a Coop account, so it could not be checked |

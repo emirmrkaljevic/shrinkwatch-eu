@@ -10,6 +10,8 @@ Real desktop Chrome check on 17 October 2026: Monoprix, Carrefour ES, Dia, Alcam
 
 Real desktop Chrome check on 19 October 2026: Auchan PL, Dunnes Stores and Barbora work. K-Ruoka, Selver and Sklavenitis showed a wrong or no badge; fixed and checked again, they now work. Colruyt shows no price without logging in or choosing a store, and Tesco CZ blocked the browser. See [compatibility.md](compatibility.md#real-browser-check-19-october-2026).
 
+Real desktop Chrome check on 20 October 2026: Mercadona, Auchan FR, Conad and ICA work once a store or postcode is chosen. Mercadona needed a fix first. Coop Shop (IT) only shows prices after logging in, so it stays unverified. See [compatibility.md](compatibility.md#real-browser-check-20-october-2026).
+
 Listing tiles (15 October 2026): Tommy shows unit-price badges on category/search tiles. Konzum, Mercator and Maxi already print unit prices on tiles; a shrinkflation marker is added when local history shows a smaller pack (verified on Konzum).
 
 | Country | Shop | Domains | Mode | Live check |
@@ -31,16 +33,16 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | AT | billa | shop.billa.at | opt-in | Works |
 | AT | gurkerl | gurkerl.at | opt-in | Works; opt-in flow verified in real Chrome (15 Oct 2026) |
 | FR | carrefour-fr | carrefour.fr | opt-in | Works (real Chrome, 16 Oct 2026: €1.26 / l on 1 l milk) |
-| FR | auchan-fr | auchan.fr | opt-in | Needs a store or postcode chosen first |
+| FR | auchan-fr | auchan.fr | opt-in | Verified (real Chrome, 20 Oct 2026); choose a drive or delivery postcode first |
 | FR | leclerc | e.leclerc, leclercdrive.fr | opt-in | Price works; pack size only on food items |
 | FR | intermarche | intermarche.com | opt-in | Blocked: slider bot check in a real Chrome (17 Oct 2026), not verified |
 | FR | monoprix | monoprix.fr | opt-in | Verified (real Chrome, 17 Oct 2026) |
 | FR | coursesu | coursesu.com | opt-in | Blocked: "Access Denied" after choosing a store in a real Chrome (17 Oct 2026), not verified |
 | IT | esselunga | spesaonline.esselunga.it | opt-in | Works |
 | IT | carrefour-it | carrefour.it | opt-in | Works |
-| IT | conad | spesaonline.conad.it | opt-in | Needs a store or postcode chosen first |
-| IT | coop-it | coopshop.it, easycoop.com | opt-in | Needs a store or postcode chosen first |
-| ES | mercadona | tienda.mercadona.es | opt-in | Needs a store or postcode chosen first |
+| IT | conad | spesaonline.conad.it | opt-in | Verified (real Chrome, 20 Oct 2026); choose a pickup store or address first |
+| IT | coop-it | coopshop.it, easycoop.com | opt-in | Not verified: prices need a Coop account (real Chrome, 20 Oct 2026) |
+| ES | mercadona | tienda.mercadona.es | opt-in | Verified (real Chrome, 20 Oct 2026); enter a postcode first |
 | ES | carrefour-es | carrefour.es | opt-in | Verified (real Chrome, 17 Oct 2026) |
 | ES | dia | dia.es | opt-in | Verified (real Chrome, 17 Oct 2026) |
 | ES | alcampo | compraonline.alcampo.es | opt-in | Verified (real Chrome, 17 Oct 2026); multipacks such as 6 x 1 l |
@@ -71,7 +73,7 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | IE/UK | tesco | tesco.ie, tesco.com | opt-in | Works (tesco.ie, real Chrome, 16 Oct 2026: €1.13 / l on 2 l milk); tesco.com not tested |
 | IE | dunnes | dunnesstoresgrocery.com | opt-in | Verified (real Chrome, 19 Oct 2026) |
 | IE | supervalu | shop.supervalu.ie | opt-in | Works |
-| SE | ica | handlaprivatkund.ica.se | opt-in | Needs a store or postcode chosen first |
+| SE | ica | handlaprivatkund.ica.se | opt-in | Verified (real Chrome, 20 Oct 2026); choose a store first |
 | SE | willys | willys.se | opt-in | Works |
 | SE | coop-se | coop.se | opt-in | Works |
 | SE | mathem | mathem.se | opt-in | Works |
