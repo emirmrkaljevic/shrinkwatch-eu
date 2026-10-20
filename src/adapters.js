@@ -4,6 +4,8 @@
 // core: false -> optional host permission, requested only when the user enables the shop in the popup
 (function (root) {
   const A = (id, country, hosts, extra = {}) => ({ id, country, hosts, productPath: /./, core: false, status: 'unverified', ...extra });
+  // Hint for shops that hide prices until a store or delivery address is chosen.
+  const storeHintText = () => 'Choose a store or delivery address on this shop to see the unit price.';
   const ADAPTERS = [
     // Balkans (core)
     A('konzum', 'HR/BA', ['konzum.hr', 'konzum.ba'], { core: true, productPath: /^\/web\/products\//, price: '.single-product__price .price--primary', name: '.single-product__title h1', status: 'verified',
@@ -43,18 +45,18 @@
     A('gurkerl', 'AT', ['gurkerl.at'], { productPath: /^\/\d+-/ , status: 'verified' }),
     // France
     A('carrefour-fr', 'FR', ['carrefour.fr'], { status: 'verified', productPath: /\/p\// }),
-    A('auchan-fr', 'FR', ['auchan.fr'], { productPath: /\/pr-/ }),
+    A('auchan-fr', 'FR', ['auchan.fr'], { productPath: /\/pr-/, needsStore: true }),
     A('leclerc', 'FR', ['e.leclerc', 'leclercdrive.fr']),
     A('intermarche', 'FR', ['intermarche.com'], { productPath: /\/produit\// }),
     A('monoprix', 'FR', ['monoprix.fr'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/products\/|\/p\// }),
     A('coursesu', 'FR', ['coursesu.com'], { productPath: /\/p\// }),
     // Italy
-    A('esselunga', 'IT', ['spesaonline.esselunga.it'], { status: 'verified' }),
+    A('esselunga', 'IT', ['spesaonline.esselunga.it'], { productPath: /\/prodotto\/\d+/, status: 'verified', needsStore: true }),
     A('carrefour-it', 'IT', ['carrefour.it']),
-    A('conad', 'IT', ['spesaonline.conad.it']),
-    A('coop-it', 'IT', ['coopshop.it', 'easycoop.com']),
+    A('conad', 'IT', ['spesaonline.conad.it'], { productPath: /^\/p\//, needsStore: true }),
+    A('coop-it', 'IT', ['coopshop.it', 'easycoop.com'], { productPath: /^\/product\//, needsStore: true }),
     // Spain / Portugal
-    A('mercadona', 'ES', ['tienda.mercadona.es']),
+    A('mercadona', 'ES', ['tienda.mercadona.es'], { productPath: /^\/product\/\d+/, needsStore: true }),
     A('carrefour-es', 'ES', ['carrefour.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/R-/ }),
     A('dia', 'ES', ['dia.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/p\// }),
     A('alcampo', 'ES', ['compraonline.alcampo.es'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/products\// }),
@@ -176,7 +178,7 @@
     return hit.length ? hit : wanted.slice();
   }
 
-  const api = { ADAPTERS, adapterFor, matchPatterns, originsForHost, grantedPatterns, originsToRemove };
+  const api = { storeHintText, ADAPTERS, adapterFor, matchPatterns, originsForHost, grantedPatterns, originsToRemove };
   root.SW = Object.assign(root.SW || {}, api);
   if (typeof module !== 'undefined') module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

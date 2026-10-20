@@ -1,8 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.3.4 (20 October 2026)
 Checked in a real desktop Chrome: Auchan PL, Dunnes Stores and Barbora now verified, and K-Ruoka, Selver and Sklavenitis verified after the fixes below. Colruyt shows no price without logging in or choosing a store, and Tesco CZ blocks the browser, so both stay unverified.
 
+- Mercadona, Auchan FR, Conad, Coop IT and Esselunga hide prices until a store or delivery address is chosen. On their product pages the badge now says so instead of staying empty, and shows the unit price once the page shows a price.
 - K-Ruoka: the pack size comes from the product title ("1l") instead of the packed weight in the product data (it showed €0.96 / kg for 1.032 kg instead of €0.99 / l). In general, a size in the title now wins over a schema.org `weight`; `netContent` still comes first.
 - Selver: the price is read from the product's own price block and wins over product cards and the page's other price data (it showed €0.50 / l instead of €0.62 / l; €0.50 is the price without 24 % VAT).
 - Sklavenitis: badge shown again. The price is read from the product's price block, which comes before the title and has no structured data.

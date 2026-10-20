@@ -66,6 +66,12 @@
     badgeBox().querySelector('div').textContent = 'No product price found on this page';
   }
 
+  // Shops that hide prices until a store or delivery address is chosen get a hint instead of nothing.
+  function renderStoreHint() {
+    render({ unitPrice: null, size: null, currency: 'EUR' }, null);
+    badgeBox().querySelector('div').textContent = SW.storeHintText(adapter);
+  }
+
   async function saveHistory(p) {
     const obs = { size: p.size, price: p.price, currency: p.currency, ts: Date.now() };
     const key = `p:${adapter.id}:${p.id}`;
@@ -129,7 +135,14 @@
   let tries = 0;
   function start() {
     if (onProduct || forced) {
-      const tick = async () => { if (!(await runProduct()) && ++tries < 10) setTimeout(tick, 1000); };
+      const tick = async () => {
+        if (await runProduct()) return;
+        ++tries;
+        if (adapter.needsStore && onProduct && tries === 10) renderStoreHint();
+        // Keep looking slowly after the hint, so the unit price appears once a store is chosen on the page.
+        if (tries < 10) setTimeout(tick, 1000);
+        else if (adapter.needsStore && tries < 130) setTimeout(tick, 5000);
+      };
       tick();
     }
 
