@@ -4,9 +4,11 @@
   if (globalThis.SW_RAN) return; // already active on this page
   const forced = globalThis.SW_FORCE === true; // user clicked "Check this page"
   const adapter = SW.adapterFor(location.hostname) || (forced ? { id: 'site-' + location.hostname, productPath: /./ } : null);
-  const onProduct = adapter && adapter.productPath && adapter.productPath.test(location.pathname);
-  const onListing = adapter && adapter.listing;
-  if (!adapter || (!forced && !onProduct && !onListing)) return;
+  // Runs on every page of a supported shop: single-page shops (Mercadona) move from search to a product without a page load.
+  if (!adapter) return;
+  let mode = SW.pageMode(adapter, location.pathname, forced);
+  let onProduct = SW.pageMode(adapter, location.pathname, false).product;
+  const onListing = mode.listing;
   globalThis.SW_RAN = true;
   const store = chrome.storage.local;
 
@@ -133,29 +135,36 @@
   }
 
   let tries = 0;
+  let run = 0; // bumps on every path change so a stale product loop stops
+
+  function startProduct() {
+    const mine = ++run;
+    tries = 0;
+    const tick = async () => {
+      if (mine !== run) return;
+      if (await runProduct()) return;
+      if (mine !== run) return;
+      ++tries;
+      if (adapter.needsStore && onProduct && tries === 10) renderStoreHint();
+      // Keep looking slowly after the hint, so the unit price appears once a store is chosen on the page.
+      if (tries < 10) setTimeout(tick, 1000);
+      else if (adapter.needsStore && tries < 130) setTimeout(tick, 5000);
+    };
+    tick();
+  }
+
   function start() {
-    if (onProduct || forced) {
-      const tick = async () => {
-        if (await runProduct()) return;
-        ++tries;
-        if (adapter.needsStore && onProduct && tries === 10) renderStoreHint();
-        // Keep looking slowly after the hint, so the unit price appears once a store is chosen on the page.
-        if (tries < 10) setTimeout(tick, 1000);
-        else if (adapter.needsStore && tries < 130) setTimeout(tick, 5000);
-      };
-      tick();
-      // Single-page shops (Mercadona) change the URL without a page load, e.g. when a related product opens in a dialog.
-      // The badge belongs to the page it was read on, so it is removed instead of showing the earlier product's figures.
-      if (!forced) {
-        const shownFor = location.pathname;
-        const watch = setInterval(() => {
-          if (location.pathname === shownFor) return; // query changes (tracking parameters) keep the badge
-          clearInterval(watch);
-          tries = 1000;
-          const host = document.getElementById('shrinkwatch-badge');
-          if (host) host.remove();
-        }, 1000);
-      }
+    if (mode.product) startProduct();
+    // The badge belongs to the page it was read on: on a path change it is removed, and read again if the new page is a product.
+    if (!forced) {
+      SW.watchPath(() => location.pathname, (path) => {
+        run++;
+        const host = document.getElementById('shrinkwatch-badge');
+        if (host) host.remove();
+        mode = SW.pageMode(adapter, path, false);
+        onProduct = mode.product;
+        if (onProduct) startProduct();
+      }, { window: globalThis });
     }
 
     if (onListing) {

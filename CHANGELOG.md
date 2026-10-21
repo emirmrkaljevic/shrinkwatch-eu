@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.5 (21 October 2026)
 Checked in a real desktop Chrome: Mercadona, Auchan FR, Conad and ICA now verified. Coop Shop (IT) needs a Coop account before it shows prices, so it stays unverified.
 
 - Mercadona: badge shown. The product page has no structured data, so the title, pack line and pack price are now read from the product block (it showed only the "choose a store" hint).
@@ -8,6 +8,7 @@ Checked in a real desktop Chrome: Mercadona, Auchan FR, Conad and ICA now verifi
 - Spanish unit words "mililitros", "centilitros", "kilos" and "kilogramos" are read.
 - A shop unit price with three decimals ("1,367 €/L") is no longer read as 367 €/L, which had made the cross-check show a wildly wrong figure.
 - Shops that change the address without loading a new page (Mercadona opens related products in a dialog): the badge is removed when the page path changes, so it never shows the previous product's numbers.
+- Single-page shops: moving from a search or category page to a product without a page load (Mercadona search → product, back/forward) now starts the badge on the new product. Before, it only appeared after a reload.
 
 ## 0.3.4 (20 October 2026)
 Checked in a real desktop Chrome: Auchan PL, Dunnes Stores and Barbora now verified, and K-Ruoka, Selver and Sklavenitis verified after the fixes below. Colruyt shows no price without logging in or choosing a store, and Tesco CZ blocks the browser, so both stay unverified.

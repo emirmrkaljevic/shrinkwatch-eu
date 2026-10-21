@@ -1,6 +1,6 @@
 // Registers one content script for the optional shops the user has enabled.
 // Re-syncs on every start because Firefox does not persist dynamic scripts across sessions.
-const SCRIPTS = ['src/units.js', 'src/history.js', 'src/extract.js', 'src/adapters.js', 'src/listings.js', 'src/content.js'];
+const SCRIPTS = ['src/units.js', 'src/history.js', 'src/extract.js', 'src/adapters.js', 'src/listings.js', 'src/nav.js', 'src/content.js'];
 const ID = 'optional-shops';
 
 // Chrome runs this as a service worker and loads the shop list here; Firefox lists adapters.js before this file.

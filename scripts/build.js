@@ -8,7 +8,7 @@ const { ADAPTERS, matchPatterns } = require('../src/adapters.js');
 const root = path.join(__dirname, '..');
 const matches = [...new Set(ADAPTERS.filter(a => a.core).flatMap(matchPatterns))];
 const optional = [...new Set(ADAPTERS.filter(a => !a.core).flatMap(matchPatterns))];
-const scripts = ['src/units.js', 'src/history.js', 'src/extract.js', 'src/adapters.js', 'src/listings.js', 'src/content.js'];
+const scripts = ['src/units.js', 'src/history.js', 'src/extract.js', 'src/adapters.js', 'src/listings.js', 'src/nav.js', 'src/content.js'];
 
 function manifest(target) {
   const m = {
