@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Piece counts are read in more EU languages, so egg boxes, rolls and capsules get a price per piece: "szt" (PL), "ks" (CZ/SK), "db" (HU), "buc" (RO), "stuks" (NL), "pz"/"pezzi" (IT), "uds"/"unidades" (ES), "pièces" (FR), "kpl" (FI), "tk" (EE), "vnt" (LT), "gab" (LV), "τεμ" (GR), "бр" (BG) and "шт". A weight or volume on the same label still wins. Covered by tests, not yet checked on a live shop.
+
 ## 0.3.5 (21 October 2026)
 Checked in a real desktop Chrome: Mercadona, Auchan FR, Conad and ICA now verified. Coop Shop (IT) needs a Coop account before it shows prices, so it stays unverified.
 

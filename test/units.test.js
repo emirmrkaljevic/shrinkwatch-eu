@@ -117,3 +117,17 @@ test('reads multipacks with a container word before the x', () => {
   assert.strictEqual(parseSize('4 latas x 33 cl').amount, 1320);
   assert.strictEqual(parseSize('Brik 1 Litro | 2,45').amount, 1000);
 });
+
+test('piece counts in other EU languages', () => {
+  const cases = ['Jaja 10 szt.', 'Vejce 10 ks', 'Tojás 10 db', 'Ouă 10 buc', 'Eieren 10 stuks', 'Uova 10 pz', 'Uova fresche 10 pezzi', 'Huevos 12 uds', 'Huevos 12 unidades', 'Œufs 12 pièces', 'Kananmunat 10 kpl', 'Munad 10 tk', 'Kiaušiniai 10 vnt', 'Olas 10 gab', 'Αυγά 10 τεμ.', 'Αυγά 10 τεμάχια', 'Яйца 10 бр', 'Яйца 10 шт'];
+  for (const c of cases) {
+    const r = parseSize(c);
+    assert.ok(r, c);
+    assert.strictEqual(r.unit, 'pc', c);
+    assert.ok(r.amount === 10 || r.amount === 12, c);
+  }
+  // Weight still wins over a piece count.
+  assert.strictEqual(parseSize('Kawa kapsułki 10 szt. 52 g').unit, 'g');
+  // Short words inside other words are not counts.
+  assert.strictEqual(parseSize('Mleko 1 l 3,2 dbałość').unit, 'ml');
+});

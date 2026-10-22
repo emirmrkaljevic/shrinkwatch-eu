@@ -4,10 +4,12 @@
     mg: ['g', 0.001], g: ['g', 1], gr: ['g', 1], gram: ['g', 1], grama: ['g', 1], grams: ['g', 1], gramos: ['g', 1], dag: ['g', 10], kg: ['g', 1000],
     ml: ['ml', 1], milliliter: ['ml', 1], mililitro: ['ml', 1], mililitros: ['ml', 1], centilitro: ['ml', 10], centilitros: ['ml', 10], kilo: ['g', 1000], kilos: ['g', 1000], kilogramo: ['g', 1000], kilogramos: ['g', 1000], gramo: ['g', 1], millilitre: ['ml', 1], kilogram: ['g', 1000], kilogramm: ['g', 1000], gramm: ['g', 1], cl: ['ml', 10], dl: ['ml', 100], l: ['ml', 1000], lt: ['ml', 1000], ltr: ['ml', 1000], lit: ['ml', 1000], litre: ['ml', 1000], liter: ['ml', 1000], litra: ['ml', 1000], litro: ['ml', 1000], litros: ['ml', 1000], litri: ['ml', 1000], litrů: ['ml', 1000],
     'г': ['g', 1], 'гр': ['g', 1], 'кг': ['g', 1000], 'мл': ['ml', 1], 'л': ['ml', 1000], 'γρ': ['g', 1], 'κιλό': ['g', 1000], 'κιλά': ['g', 1000], 'λτ': ['ml', 1000], 'λίτρο': ['ml', 1000], 'λίτρα': ['ml', 1000],
-    kom: ['pc', 1], pcs: ['pc', 1], pc: ['pc', 1], stk: ['pc', 1], 'stück': ['pc', 1], kos: ['pc', 1]
+    kom: ['pc', 1], pcs: ['pc', 1], pc: ['pc', 1], stk: ['pc', 1], 'stück': ['pc', 1], kos: ['pc', 1],
+    // Piece counts in other EU languages (eggs, rolls, capsules, nappies).
+    szt: ['pc', 1], ks: ['pc', 1], db: ['pc', 1], buc: ['pc', 1], stuks: ['pc', 1], pz: ['pc', 1], pezzi: ['pc', 1], uds: ['pc', 1], unidades: ['pc', 1], 'pièces': ['pc', 1], kpl: ['pc', 1], tk: ['pc', 1], vnt: ['pc', 1], gab: ['pc', 1], 'τεμάχια': ['pc', 1], 'τεμ': ['pc', 1], 'бр': ['pc', 1], 'шт': ['pc', 1]
   };
   const NUM = '(\\d+(?:[.,]\\d+)?)';
-  const UNIT = '(кг|гр|мл|г|л|γρ|κιλό|κιλά|λίτρο|λίτρα|λτ|milliliter|millilitre|mililitros|mililitro|centilitros|centilitro|kilogramos|kilogramo|kilogramm|kilogram|kilos|kilo|gramm|mg|kg|dag|gr|gramos|gramo|grams|grama|gram|g|ml|cl|dl|litros|litro|litri|litrů|litre|liter|litra|ltr|lit|lt|l|kom|pcs|pc|stk|stück|kos)';
+  const UNIT = '(кг|гр|мл|г|л|γρ|κιλό|κιλά|λίτρο|λίτρα|λτ|milliliter|millilitre|mililitros|mililitro|centilitros|centilitro|kilogramos|kilogramo|kilogramm|kilogram|kilos|kilo|gramm|mg|kg|dag|gr|gramos|gramo|grams|grama|gram|g|ml|cl|dl|litros|litro|litri|litrů|litre|liter|litra|ltr|lit|lt|l|kom|pcs|pc|stk|stück|kos|unidades|uds|pezzi|pz|pièces|stuks|szt|ks|db|buc|kpl|tk|vnt|gab|τεμάχια|τεμ|бр|шт)';
   // A container word may sit between the count and the "x": "6 briks x 1 L", "6 mini briks x 200 ml" (Mercadona), "4 latas x 33 cl".
   const CONTAINER = '(?:mini\\s*)?(?:briks?|bricks?|latas?|botellas?|botellines|vasos|tarrinas|sobres|bolsas|uds?\\.?|unidades|bouteilles|canettes|pots|bottiglie|lattine|vasetti|pz\\.?|cans|bottles|tins|cartons|dosen|flaschen|becher|stuks|kom\\.?|ks|szt\\.?)';
   const MULTI = new RegExp(NUM + '\\s*(?:' + CONTAINER + '\\s*)?[x×*]\\s*' + NUM + '\\s*' + UNIT + '(?![a-zčćšžđа-яα-ω])', 'i');
