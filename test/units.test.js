@@ -119,7 +119,7 @@ test('reads multipacks with a container word before the x', () => {
 });
 
 test('piece counts in other EU languages', () => {
-  const cases = ['Jaja 10 szt.', 'Vejce 10 ks', 'Tojás 10 db', 'Ouă 10 buc', 'Eieren 10 stuks', 'Uova 10 pz', 'Uova fresche 10 pezzi', 'Huevos 12 uds', 'Huevos 12 unidades', 'Œufs 12 pièces', 'Kananmunat 10 kpl', 'Munad 10 tk', 'Kiaušiniai 10 vnt', 'Olas 10 gab', 'Αυγά 10 τεμ.', 'Αυγά 10 τεμάχια', 'Яйца 10 бр', 'Яйца 10 шт'];
+  const cases = ['Jaja 10 szt.', 'Vejce 10 ks', 'Tojás 10 db', 'Ouă 10 buc', 'Eieren 10 stuks', 'Uova 10 pz', 'Uova fresche 10 pezzi', 'Huevos 12 uds', 'Huevos 12 unidades', 'Œufs 12 pièces', 'Kananmunat 10 kpl', 'Munad 10 tk', 'Kiaušiniai 10 vnt', 'Olas 10 gab', 'Αυγά 10 τεμ.', 'Αυγά 10 τεμάχια', 'Яйца 10 бр', 'Яйца 10 шт', 'Jaja M 10 sztuk', 'Bułki 10 sztuki', 'Vejce 10 kusů', 'Rohlíky 10 kusy', 'Vajcia 10 kusov', 'Tojás 10 darab'];
   for (const c of cases) {
     const r = parseSize(c);
     assert.ok(r, c);
