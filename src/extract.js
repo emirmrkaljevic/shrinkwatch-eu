@@ -264,6 +264,38 @@
     return { value: per.startsWith('100') ? v * 10 : v, per: per === 'kg' || per === '100g' ? 'kg' : 'l' };
   }
 
+  // The shop's own price per piece ("Jmf-pris 3,79 kr/st", "3,33 kr/st"). A currency is required.
+  const PIECE_PRICE = /(?<![\d.,])(\d+(?:[.,]\d{1,2})?)\s*(?:€|eur|kr|kč|zł|ft|lei|ron|rsd|din|km|bam|лв|sek|dkk|nok|pln|czk|huf)\s*\/\s*(?:1\s*)?(?:st|stk|styck|styk|pc|pcs|piece|szt|ks|kom|db|buc|un|unid|ud|pz|pièce|tk|kpl|шт|бр|τεμ)\.?(?![a-zà-ž])/i;
+  function shopPiecePrice(doc) {
+    let seen = 0;
+    for (const el of doc.querySelectorAll('div, p, li, dd, dt, td, span')) {
+      if (el.childElementCount > 4 || isOther(el) || isStruck(el) || isHidden(el)) continue;
+      const t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+      if (!t || t.length > 40) continue;
+      if (++seen > 2000) break;
+      const m = t.match(PIECE_PRICE);
+      if (m) { const v = U.parsePrice(m[1]); if (v > 0) return v; }
+    }
+    return null;
+  }
+
+  // A piece count line right under the title ("6 st, Kronägg", "10 stk.").
+  const PIECE_LINE = /^(\d{1,3})\s*(?:st|stk|styck|stycken|styk|stykker|pcs|pc|szt|ks|kom|db|buc|un|unid|uds|pz|tk|kpl)\.?(?=$|[\s,;|])/i;
+  function pieceLineNearTitle(doc) {
+    const h1 = titleEl(doc);
+    if (!h1) return 0;
+    const scope = (h1.parentElement && h1.parentElement.closest('main, article, [class*="product" i], [class*="detail" i]')) || doc.body;
+    let seen = 0, after = false;
+    for (const el of scope.querySelectorAll('*')) {
+      if (el === h1) { after = true; continue; }
+      if (!after || el.childElementCount > 0) continue;
+      if (++seen > 30) break;
+      const m = (el.textContent || '').replace(/\s+/g, ' ').trim().match(PIECE_LINE);
+      if (m) return parseInt(m[1], 10);
+    }
+    return 0;
+  }
+
   // Currency symbol printed with the price ("€2.25", "49,99 €"). Only symbols that name one currency.
   const SYMBOL = { '€': 'EUR', '£': 'GBP' };
   const PRICE_WITH_SYMBOL = /^(?:([€£])\s?\d+(?:[.,]\d{1,2})?|\d+(?:[.,]\d{1,2})?\s?([€£]))$/;
@@ -319,7 +351,9 @@
       if (shown && shown !== declared) currency = shown;
     }
     if (!currency) currency = visibleCurrency(doc, adapter) || 'EUR';
-    const nameSize = U.parseSize(name);
+    // Swedish shops write a piece count as "10p" in the title.
+    const svPieces = /(?:^|\/)SE(?:\/|$)/.test(adapter.country || '');
+    const nameSize = U.parseSize(name, { svPieces });
     let structured = ldSize(ld);
     // Structured data often gives the size of one item of a multipack ("500 g" for "500 g, 12er Pack").
     if (structured && nameSize && nameSize.count > 1 && structured.count === 1 && nameSize.each === structured.amount && nameSize.unit === structured.unit) structured = nameSize;
@@ -330,9 +364,18 @@
     // A short description is often just the pack ("la bouteille 1L"); og:title may add it to a name without one.
     const shortDesc = desc.length <= 60 ? U.parseSize(desc) : null;
     let size = custom.size || U.parseSize(text(doc, adapter.size)) || structured || nameSize || shortDesc || U.parseSize(og) || labelledSize(doc) || sizeNearTitle(doc) || U.parseSize(doc.title) || U.parseSize(desc) || derivedSize(doc, price, adapter);
+    // Shops that price per piece ("3,33 kr/st") may still print a weight in the title ("Ägg Frigående M 348g").
+    // A piece count from the title or the line under it wins when pack price / count matches that per-piece price.
+    let shopEach = null;
+    if (size && size.unit !== 'pc' && !custom.size && price > 0) {
+      const each = shopPiecePrice(doc);
+      const n = each ? pieceLineNearTitle(doc) : 0;
+      if (n >= 2 && n <= 100 && Math.abs(price / n - each) <= Math.max(0.006, each * 0.01)) { size = { amount: n, unit: 'pc', count: 1, each: n }; shopEach = each; }
+    }
     const id = custom.id || (ld && (ld.gtin13 || ld.gtin || ld.sku)) || text(doc, adapter.id) || url.split(/[?#]/)[0];
     if (!name || !(price > 0)) return null;
     let unitPrice = U.unitPrice(price, size);
+    if (shopEach) unitPrice = { value: shopEach, per: 'pc' }; // the shop's rounding ("3,33 kr/st" for 19,95 kr / 6)
     // Cross-check with the shop's own unit price: if pack price and size disagree with it by more than 5 %,
     // one of them was read wrong, so show the shop's figure and keep this reading out of the price history.
     let unitPriceFromShop = false;

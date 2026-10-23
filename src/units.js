@@ -37,7 +37,12 @@
 
   function num(s) { return parseFloat(String(s).replace(',', '.')); }
 
-  function parseSize(text) {
+  // Swedish shops write a piece count as a bare "p" after the number ("Ägg 10p", "Toalettpapper 8p").
+  // Only read when the caller says the shop is Swedish (opts.svPieces) and nothing else was found,
+  // so "25p" (pence) or "5p" coupons elsewhere are never taken as a pack size.
+  const SV_PIECES = /(?<![\p{L}\d.,])(\d{1,3})p(?=$|[\s,.;)])/u;
+
+  function parseSize(text, opts) {
     if (!text) return null;
     const t = String(text).toLowerCase().replace(/\u00a0/g, ' ');
     const m = t.match(MULTI);
@@ -76,6 +81,8 @@
     }
     const pc = packCount(t);
     if (pc > 1) return { amount: pc, unit: 'pc', count: 1, each: pc };
+    const sv = opts && opts.svPieces ? t.match(SV_PIECES) : null;
+    if (sv) { const n = parseInt(sv[1], 10); if (n >= 2 && n <= 100) return { amount: n, unit: 'pc', count: 1, each: n }; }
     return null;
   }
 

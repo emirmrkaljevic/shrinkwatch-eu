@@ -148,3 +148,13 @@ Real desktop Chrome with the unpacked `dist/chrome` build, egg boxes priced per 
 | Carrefour (PL) | `1.00 zł / pc (10 pcs)` |
 | Dia (ES) | `€0.24 / pc` |
 | Barbora (LT) | `€0.30 / pc` |
+
+## Real-browser check (23 October 2026)
+Real desktop Chrome with the unpacked `dist/chrome` build (0.3.6), egg boxes priced per piece in Portugal and the Nordics.
+
+| Shop | Result |
+|---|---|
+| Continente (PT) | Ovos de Solo Classe M 12 un, 2,99 €: `€0.25 / pc (12 pcs)` |
+| Nemlig (DK) | Æg str. M/L øko. 6 stk., 31,50 kr: `5.25 kr / pc (6 pcs)` |
+| Willys (SE) | Ägg 10p Frigående Utomhus Medium/large, 37,90 kr. First run: no badge, the "10p" in the title was not read. Fixed: on Swedish shops a bare "10p" in the title is read as 10 pieces when no weight or volume is given (fixed in tests, live re-check pending) |
+| Mathem (SE) | Ägg Frigående M 348g, 19,95 kr, "6 st" under the title, shop price 3,33 kr/st. First run: `57.33 kr / kg (348 g)` instead of per piece. Fixed: when the shop prices per piece and pack price / piece count matches that figure, the piece count wins over the weight in the title (fixed in tests, live re-check pending) |
