@@ -128,6 +128,14 @@ test('piece counts in other EU languages', () => {
   }
   // Weight still wins over a piece count.
   assert.strictEqual(parseSize('Kawa kapsułki 10 szt. 52 g').unit, 'g');
-  // Short words inside other words are not counts.
+  // Nordic, Portuguese, French and Romanian piece words, plus pack-count-only items.
+  for (const c of ['Ägg frigående 12 st', 'Avokado 10 styck', 'Bullar 10 stycken', 'Æg 10 styk', 'Æg 10 stykker', 'Ovos M 12 un.', 'Cápsulas 10 unid.', 'Œuf 10 pièce', 'Ouă 10 bucăți', 'Bio-Eier 10er Pack', 'Ägg 12-pack', 'Ägg 12-p', 'Free range eggs pack of 10', 'Œufs bio lot de 12', 'Œufs plein air boîte de 10', 'Uova fresche confezione da 10']) {
+    const r = parseSize(c);
+    assert.ok(r, c);
+    assert.strictEqual(r.unit, 'pc', c);
+    assert.ok(r.amount === 10 || r.amount === 12, c);
+  }
+  // Short words inside other words and English ordinals are not counts.
   assert.strictEqual(parseSize('Mleko 1 l 3,2 dbałość').unit, 'ml');
+  assert.strictEqual(parseSize('1st Grade Apples'), null);
 });

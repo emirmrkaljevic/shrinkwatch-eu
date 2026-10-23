@@ -1,7 +1,11 @@
 # Changelog
 
-## Unreleased
-- Piece counts are read in more EU languages, so egg boxes, rolls and capsules get a price per piece: "szt" (PL), "ks" (CZ/SK), "db" (HU), "buc" (RO), "stuks" (NL), "pz"/"pezzi" (IT), "uds"/"unidades" (ES), "pièces" (FR), "kpl" (FI), "tk" (EE), "vnt" (LT), "gab" (LV), "τεμ" (GR), "бр" (BG) and "шт". Full words are read too: "sztuk"/"sztuki" (PL), "kusů"/"kusy"/"kusov" (CZ/SK), "darab" (HU), "stuk" (NL). A weight or volume on the same label still wins. Checked on egg boxes in a real desktop Chrome: Auchan PL (1.00 zł / pc), Carrefour PL (1.00 zł / pc), Dia (€0.24 / pc) and Barbora (€0.30 / pc).
+## 0.3.6 (23 October 2026)
+Checked on egg boxes in a real desktop Chrome: Auchan PL (`1.00 zł / pc`), Carrefour PL (`1.00 zł / pc`), Dia (`€0.24 / pc`) and Barbora (`€0.30 / pc`).
+
+- Piece counts are read in more EU languages, so egg boxes, rolls and capsules get a price per piece: "szt" (PL), "ks" (CZ/SK), "db" (HU), "buc" (RO), "stuks" (NL), "pz"/"pezzi" (IT), "uds"/"unidades" (ES), "un"/"unid" (PT), "pièce"/"pièces" (FR), "st"/"styck"/"stycken" (SE), "styk"/"stykker" (DK/NO), "kpl" (FI), "tk" (EE), "vnt" (LT), "gab" (LV), "τεμ" (GR), "бр" (BG) and "шт". Full words are read too: "sztuk"/"sztuki" (PL), "kusů"/"kusy"/"kusov" (CZ/SK), "darab" (HU), "stuk" (NL), "bucăți" (RO). A weight or volume on the same label still wins.
+- Pack counts written without a unit word ("10er Pack", "12-pack", "12-p", "pack of 10", "lot de 12", "boîte de 10", "confezione da 10") now count as pieces when the product has no weight or volume (covered by tests).
+- Standalone piece-count lines right under the product title ("10 szt.", "12 uds", "10 stuks", "12 st") are read the same way as weight and volume lines (covered by tests).
 
 ## 0.3.5 (21 October 2026)
 Checked in a real desktop Chrome: Mercadona, Auchan FR, Conad and ICA now verified. Coop Shop (IT) needs a Coop account before it shows prices, so it stays unverified.

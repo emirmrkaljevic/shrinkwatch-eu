@@ -6,10 +6,10 @@
     'г': ['g', 1], 'гр': ['g', 1], 'кг': ['g', 1000], 'мл': ['ml', 1], 'л': ['ml', 1000], 'γρ': ['g', 1], 'κιλό': ['g', 1000], 'κιλά': ['g', 1000], 'λτ': ['ml', 1000], 'λίτρο': ['ml', 1000], 'λίτρα': ['ml', 1000],
     kom: ['pc', 1], pcs: ['pc', 1], pc: ['pc', 1], stk: ['pc', 1], 'stück': ['pc', 1], kos: ['pc', 1],
     // Piece counts in other EU languages (eggs, rolls, capsules, nappies).
-    szt: ['pc', 1], sztuk: ['pc', 1], sztuki: ['pc', 1], sztuka: ['pc', 1], 'kusů': ['pc', 1], kusy: ['pc', 1], kusov: ['pc', 1], darab: ['pc', 1], stuk: ['pc', 1], pezzo: ['pc', 1], unidad: ['pc', 1], ks: ['pc', 1], db: ['pc', 1], buc: ['pc', 1], stuks: ['pc', 1], pz: ['pc', 1], pezzi: ['pc', 1], uds: ['pc', 1], unidades: ['pc', 1], 'pièces': ['pc', 1], kpl: ['pc', 1], tk: ['pc', 1], vnt: ['pc', 1], gab: ['pc', 1], 'τεμάχια': ['pc', 1], 'τεμ': ['pc', 1], 'бр': ['pc', 1], 'шт': ['pc', 1]
+    szt: ['pc', 1], sztuk: ['pc', 1], sztuki: ['pc', 1], sztuka: ['pc', 1], 'kusů': ['pc', 1], kusy: ['pc', 1], kusov: ['pc', 1], darab: ['pc', 1], stuk: ['pc', 1], pezzo: ['pc', 1], unidad: ['pc', 1], ks: ['pc', 1], db: ['pc', 1], buc: ['pc', 1], stuks: ['pc', 1], pz: ['pc', 1], pezzi: ['pc', 1], uds: ['pc', 1], unidades: ['pc', 1], 'pièces': ['pc', 1], kpl: ['pc', 1], tk: ['pc', 1], vnt: ['pc', 1], gab: ['pc', 1], 'τεμάχια': ['pc', 1], 'τεμ': ['pc', 1], 'бр': ['pc', 1], 'шт': ['pc', 1], st: ['pc', 1], styck: ['pc', 1], stycken: ['pc', 1], styk: ['pc', 1], stykker: ['pc', 1], un: ['pc', 1], unid: ['pc', 1], 'pièce': ['pc', 1], 'bucăți': ['pc', 1], bucati: ['pc', 1]
   };
   const NUM = '(\\d+(?:[.,]\\d+)?)';
-  const UNIT = '(кг|гр|мл|г|л|γρ|κιλό|κιλά|λίτρο|λίτρα|λτ|milliliter|millilitre|mililitros|mililitro|centilitros|centilitro|kilogramos|kilogramo|kilogramm|kilogram|kilos|kilo|gramm|mg|kg|dag|gr|gramos|gramo|grams|grama|gram|g|ml|cl|dl|litros|litro|litri|litrů|litre|liter|litra|ltr|lit|lt|l|kom|pcs|pc|stk|stück|kos|unidades|unidad|uds|pezzi|pezzo|pz|pièces|stuks|stuk|sztuki|sztuka|sztuk|szt|kusů|kusy|kusov|darab|ks|db|buc|kpl|tk|vnt|gab|τεμάχια|τεμ|бр|шт)';
+  const UNIT = '(кг|гр|мл|г|л|γρ|κιλό|κιλά|λίτρο|λίτρα|λτ|milliliter|millilitre|mililitros|mililitro|centilitros|centilitro|kilogramos|kilogramo|kilogramm|kilogram|kilos|kilo|gramm|mg|kg|dag|gr|gramos|gramo|grams|grama|gram|g|ml|cl|dl|litros|litro|litri|litrů|litre|liter|litra|ltr|lit|lt|l|kom|pcs|pc|stk|stück|kos|unidades|unidad|uds|unid|un|pezzi|pezzo|pz|pièces|pièce|stuks|stuk|stycken|styck|stykker|styk|st|sztuki|sztuka|sztuk|szt|kusů|kusy|kusov|darab|bucăți|bucati|ks|db|buc|kpl|tk|vnt|gab|τεμάχια|τεμ|бр|шт)';
   // A container word may sit between the count and the "x": "6 briks x 1 L", "6 mini briks x 200 ml" (Mercadona), "4 latas x 33 cl".
   const CONTAINER = '(?:mini\\s*)?(?:briks?|bricks?|latas?|botellas?|botellines|vasos|tarrinas|sobres|bolsas|uds?\\.?|unidades|bouteilles|canettes|pots|bottiglie|lattine|vasetti|pz\\.?|cans|bottles|tins|cartons|dosen|flaschen|becher|stuks|kom\\.?|ks|szt\\.?)';
   const MULTI = new RegExp(NUM + '\\s*(?:' + CONTAINER + '\\s*)?[x×*]\\s*' + NUM + '\\s*' + UNIT + '(?![a-zčćšžđа-яα-ω])', 'i');
@@ -21,7 +21,8 @@
   const PACK_COUNT = [
     /(?:^|[^\d.,])(\d{1,3})\s*-?\s*er(?![a-zäöüß])/i,
     /(?:^|[^\d.,])(\d{1,3})\s*-?\s*(?:pack|packs|stück-packung)(?![a-zäöüß])/i,
-    /\b(?:packung|pack|karton|kiste|set|lot|confezione|pak)\s+(?:mit|of|de|da|van|à)\s+(\d{1,3})(?![.,]\d|\d|\s*(?:mg|g|kg|ml|cl|l)\b)/i
+    /(?:^|[^\d.,])(\d{1,3})\s*-\s*p(?![a-zäöüß])/i,
+    /\b(?:packung|pack|karton|kiste|set|lot|boîte|boite|confezione|pak)\s+(?:mit|of|de|da|van|à)\s+(\d{1,3})(?![.,]\d|\d|\s*(?:mg|g|kg|ml|cl|l)\b)/i
   ];
   function packCount(t) {
     for (const re of PACK_COUNT) {
@@ -55,7 +56,9 @@
     }
     let last = null;
     for (const s of t.matchAll(SINGLE)) {
-      const [base, f] = UNITS[s[2].toLowerCase()];
+      const uKey = s[2].toLowerCase();
+      if (uKey === 'st' && /1st$/i.test(s[0])) continue; // English ordinal ("1st", "21st"), not Swedish "st"
+      const [base, f] = UNITS[uKey];
       if (base === 'pc' && last) continue; // prefer weight/volume
       last = { amount: round(num(s[1]) * f), unit: base, count: 1, each: round(num(s[1]) * f) };
       if (base !== 'pc') break;
@@ -71,6 +74,8 @@
       const each = num(u[2]) * f;
       if (each > 0) return { amount: round(count * each), unit: base, count, each: round(each) };
     }
+    const pc = packCount(t);
+    if (pc > 1) return { amount: pc, unit: 'pc', count: 1, each: pc };
     return null;
   }
 

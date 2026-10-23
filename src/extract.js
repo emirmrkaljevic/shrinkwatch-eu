@@ -115,8 +115,9 @@
     return null;
   }
 
-  // A small element right after the product title whose whole text is a size ("500 g", "ca: 750g", "cca 100 g").
-  const SIZE_ONLY = /^(?:ca\.?:?|cca\.?|approx\.?|~|≈|emb\.?|inh\.?|per\s+\w+)?\s*\d+(?:[.,]\d+)?\s*(?:x\s*\d+(?:[.,]\d+)?\s*)?(?:mg|g|gr|kg|dag|ml|cl|dl|l|ltr|lt|liter|litre|г|гр|кг|мл|л|γρ|κιλ|ml|λ|λτ)\.?$/i;
+  // A small element right after the product title whose whole text is a size ("500 g", "ca: 750g", "10 szt.", "12 uds").
+  const SIZE_PREFIX = /^(?:ca\.?:?|cca\.?|approx\.?|~|≈|emb\.?|inh\.?|per\s+\w+)\s*/i;
+  const SIZE_ONLY = /^\d+(?:[.,]\d+)?\s*(?:[x×*]\s*\d+(?:[.,]\d+)?\s*)?[a-zčćšžđäöüßа-яα-ωά-ώ]+\.?$/i;
   function sizeNearTitle(doc) {
     const h1 = titleEl(doc);
     if (!h1) return null;
@@ -131,7 +132,8 @@
       if (t.length < 2 || t.length > 20) continue;
       const before = el.previousElementSibling ? el.previousElementSibling.textContent.trim() : '';
       if (/(pr\.?|per|pro|je|na|par|za|ανά|за|nährwerte|næring|voeding|nutri)\s*$/i.test(before)) continue; // "per 100 g" nutrition headers
-      if (SIZE_ONLY.test(t)) { const s = U.parseSize(t.replace(/^(ca\.?:?|cca\.?|approx\.?|~|≈|emb\.?|inh\.?|per\s+\w+)\s*/i, '').replace(/\b(ltr|lt)\b/i, 'l')); if (s) return s; }
+      const clean = t.replace(SIZE_PREFIX, '');
+      if (SIZE_ONLY.test(clean)) { const s = U.parseSize(clean); if (s && (s.unit !== 'pc' || s.amount >= 2)) return s; }
     }
     return null;
   }

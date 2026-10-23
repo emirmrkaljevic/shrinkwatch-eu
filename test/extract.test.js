@@ -75,6 +75,12 @@ test('pack size derived from the shop unit price', () => {
 test('size shown as its own line under the title', () => {
   const { document } = parseHTML('<html><head><meta property="og:title" content="Port Salut"></head><body><main><h1>Port Salut 26%</h1><span>Arla</span><span>ca: 750g</span><span class="price">69,90 kr</span></main></body></html>');
   assert.strictEqual(extract(document, { price: '.price', currency: 'SEK' }).size.amount, 750);
+  const eggs = parseHTML('<html><body><main><h1>Eieren vrije uitloop</h1><span>10 stuks</span><span class="price">2,99 €</span></main></body></html>').document;
+  const r = extract(eggs, { price: '.price' });
+  assert.strictEqual(r.unitPrice.per, 'pc');
+  assert.strictEqual(r.unitPrice.value.toFixed(2), '0.30');
+  const stepper = parseHTML('<html><body><main><h1>Avokado</h1><span>1 st</span><span class="price">19,90 kr</span></main></body></html>').document;
+  assert.strictEqual(extract(stepper, { price: '.price', currency: 'SEK' }).size, null);
 });
 
 test('offers list where the first offer has no price', () => {

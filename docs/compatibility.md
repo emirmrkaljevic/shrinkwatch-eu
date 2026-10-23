@@ -108,8 +108,8 @@ Real desktop Chrome with the unpacked `dist/chrome` build, one product page per 
 | Eroski (ES) | Leche semidesnatada PRESIDENT, brik 1 litro, 1,12 € | First run: "Pack size not found" because "litro" was not a known unit, and the schema.org name is cut short. Fixed: litro/litros/litri/gramos are read and the full title comes from the page. Verified after the fix: `€1.12 / l (1 l)` |
 | Carrefour (BE) | Lait demi-écrémé 1 L, 1,45 € | `€1.45 / l (1 l)` |
 | Carrefour (PL) | Łaciate Mleko UHT 3,2 % 1 l, 4,49 zł | Value right, shown as "PLN 4.49 / l". Fixed: zł, Kč, Ft, lei, KM, kr and similar symbols are written after the amount. Verified after the fix: `4.49 zł / l (1 l)` |
-| Intermarché (FR) | – | Blocked by a slider bot check, not attempted |
-| Cours U (FR) | – | No prices until a store is chosen, then "Access Denied" |
+| Intermarché (FR) | - | Blocked by a slider bot check, not attempted |
+| Cours U (FR) | - | No prices until a store is chosen, then "Access Denied" |
 
 ## Real-browser check (19 October 2026)
 Real desktop Chrome with the unpacked `dist/chrome` build (0.3.3), one product page per shop.
@@ -122,8 +122,8 @@ Real desktop Chrome with the unpacked `dist/chrome` build (0.3.3), one product p
 | K-Ruoka (FI) | Pirkka suomalainen kevytmaito 1l, 0,99 € | Wrong: `€0.96 / kg (1.032 kg)`. The schema.org `weight` is the packed weight. Fixed: a size in the product title wins over `weight`; re-checked: `€0.99 / l (1 l)` |
 | Selver (EE) | Piim 2,5%, kiles, FARMI, 1 L, 0,62 € | Wrong: `€0.50 / l (1 l)`, which matches the price before 24 % VAT. Fixed: the price is read from the product's own price block, not from product cards or structured data; re-checked: `€0.62 / l (1 l)` |
 | Sklavenitis (GR) | ΜΑΡΑΤΑ Φρέσκο Γάλα Πλήρες 3,5% 1lt, 1,05 € | No badge: the page has no structured data and the price block comes before the title. Fixed: the price is read from the product's price block, and "/λίτρο" and "/κιλό" unit prices are understood; re-checked: `€1.05 / l (1 l)` and `€1.74 / l (1 l)` |
-| Colruyt (BE) | – | No price without logging in or choosing a store, so it could not be checked |
-| Tesco (CZ) | – | Blocked by a bot check page |
+| Colruyt (BE) | - | No price without logging in or choosing a store, so it could not be checked |
+| Tesco (CZ) | - | Blocked by a bot check page |
 
 ## Real-browser check (20 October 2026)
 Real desktop Chrome with the unpacked `dist/chrome` build, shops that hide prices until a store or postcode is chosen. No account was created on any shop.
@@ -137,4 +137,14 @@ Real desktop Chrome with the unpacked `dist/chrome` build, shops that hide price
 | Mercadona (ES) | Leche semidesnatada, 6 briks x 1 L, 4,98 € | First run: `€0.83 / l (1 l)`, right price per litre (taken from the shop's own figure) but the wrong pack size. Fixed: multipacks written with a container word ("6 briks x 1 L", "6 mini briks x 200 ml", "4 latas x 33 cl") are read, and the current price wins over the struck-out one. Verified after the fix: `€0.83 / l (6 l)` |
 | Mercadona (ES) | Leche semidesnatada, 6 mini briks x 200 ml, 1,64 € | First run: `€328.00 / l (≈5 ml)`. "Mililitros" was not a known unit, and the shop's "1,367 €/L" (three decimals) was read as 367. Fixed: Spanish unit words (mililitros, centilitros, kilos, kilogramos) are read, and a unit price is only taken when the whole number matches. Verified after the fix: `€1.37 / l (1.2 l)` |
 | Mercadona (ES) | Related product opened in a dialog | The URL changes without a page load and the badge kept the earlier product's figures. Fixed: the badge is removed when the page path changes. Verified: badge gone after opening the dialog |
-| Coop Shop (IT) | – | No prices until you log in to a Coop account, so it could not be checked |
+| Coop Shop (IT) | - | No prices until you log in to a Coop account, so it could not be checked |
+
+## Real-browser check (22 October 2026)
+Real desktop Chrome with the unpacked `dist/chrome` build, egg boxes priced per piece across EU languages.
+
+| Shop | Result |
+|---|---|
+| Auchan (PL) | `1.00 zł / pc (10 pcs)` |
+| Carrefour (PL) | `1.00 zł / pc (10 pcs)` |
+| Dia (ES) | `€0.24 / pc` |
+| Barbora (LT) | `€0.30 / pc` |
