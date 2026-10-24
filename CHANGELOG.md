@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+Checked in a real desktop Chrome on Lidl FR, ES, IT, PL and NL.
+
+- Lidl: the pack size line under the price ("125 g confezione", "75cl", "4 x 125 g") is read, so Lidl ES, IT and PL product pages get a badge (they showed "Pack size not found").
+- Lidl outside the euro area (PL, CZ, HU, RO, SE, DK, RS, BA): prices printed without a currency sign use the shop's own currency (a zloty price showed a € sign).
+
 ## 0.3.7 (24 October 2026)
 Checked on egg boxes in a real desktop Chrome: Continente (`€0.25 / pc`), Nemlig (`5.25 kr / pc`), Willys (`3.79 kr / pc`) and Mathem (`3.33 kr / pc`).
 

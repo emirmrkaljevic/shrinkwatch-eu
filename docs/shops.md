@@ -12,6 +12,8 @@ Real desktop Chrome check on 19 October 2026: Auchan PL, Dunnes Stores and Barbo
 
 Real desktop Chrome check on 20 October 2026: Mercadona, Auchan FR, Conad and ICA work once a store or postcode is chosen. Mercadona needed a fix first. Coop Shop (IT) only shows prices after logging in, so it stays unverified. See [compatibility.md](compatibility.md#real-browser-check-20-october-2026).
 
+Real desktop Chrome check on 24 October 2026: Lidl FR, ES, IT, PL and NL work. ES, IT and PL needed a fix first (pack size printed under the price, and zloty prices without a currency sign). See [compatibility.md](compatibility.md#real-browser-check-24-october-2026).
+
 Listing tiles (15 October 2026): Tommy shows unit-price badges on category/search tiles. Konzum, Mercator and Maxi already print unit prices on tiles; a shrinkflation marker is added when local history shows a smaller pack (verified on Konzum).
 
 | Country | Shop | Domains | Mode | Live check |
@@ -21,7 +23,7 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | SI | mercator | mercatoronline.si | core | Works |
 | BA | bingo | bingoshop.ba | core | Works; mostly non-food, few pack sizes |
 | DE/AT/HR/SI/RS/BA | lidl | lidl.de, lidl.at, lidl.hr, lidl.si, lidl.rs, lidl.ba | core | Works |
-| EU | lidl-eu | lidl.fr, lidl.es, lidl.it, lidl.nl, lidl.be, lidl.pl, lidl.cz, lidl.sk, lidl.hu, lidl.ro, lidl.bg, lidl.pt, lidl.ie, lidl.se, lidl.dk, lidl.fi, lidl.gr, lidl.lt, lidl.lv, lidl.ee | opt-in | Not verified yet |
+| EU | lidl-eu | lidl.fr, lidl.es, lidl.it, lidl.nl, lidl.be, lidl.pl, lidl.cz, lidl.sk, lidl.hu, lidl.ro, lidl.bg, lidl.pt, lidl.ie, lidl.se, lidl.dk, lidl.fi, lidl.gr, lidl.lt, lidl.lv, lidl.ee | opt-in | Works on lidl.fr, lidl.es, lidl.it, lidl.pl, lidl.nl (real Chrome, 24 Oct 2026); other Lidl domains not verified yet |
 | RS | maxi | maxi.rs | core | Works |
 | RS | idea | online.idea.rs | opt-in | Works |
 | SI | spar-si | online.spar.si | opt-in | Works |

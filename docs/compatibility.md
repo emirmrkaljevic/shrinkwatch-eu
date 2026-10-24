@@ -158,3 +158,22 @@ Real desktop Chrome with the unpacked `dist/chrome` build (0.3.6), egg boxes pri
 | Nemlig (DK) | Æg str. M/L øko. 6 stk., 31,50 kr: `5.25 kr / pc (6 pcs)` |
 | Willys (SE) | Ägg 10p Frigående Utomhus Medium/large, 37,90 kr. First run: no badge, the "10p" in the title was not read. Fixed: on Swedish shops a bare "10p" in the title is read as 10 pieces when no weight or volume is given. Re-checked: `3.79 kr / pc (10 pcs)`, also 24p `2.50 kr / pc (24 pcs)` and 6p `4.15 kr / pc (6 pcs)`, all matching the shop's Jmf-pris |
 | Mathem (SE) | Ägg Frigående M 348g, 19,95 kr, "6 st" under the title, shop price 3,33 kr/st. First run: `57.33 kr / kg (348 g)` instead of per piece. Fixed: when the shop prices per piece and pack price / piece count matches that figure, the piece count wins over the weight in the title. Re-checked: `3.33 kr / pc (6 pcs)` |
+
+## Real-browser check (24 October 2026)
+
+Lidl online shops outside the core set, checked in a real desktop Chrome after enabling Lidl EU in the popup.
+
+| Shop | Product | Badge | Shop's own unit price |
+|---|---|---|---|
+| lidl.fr | Olive oil 1.5 l | €5.66 / l (1.5 l) | 1 L = 5,66 |
+| lidl.it | Butter 125 g | €7.12 / kg (125 g) | 1 kg = 7.12 € |
+| lidl.it | Milk chocolate 300 g | €8.97 / kg (300 g) | 1 kg = 8.97 € |
+| lidl.es | Olive oil 75 cl | €7.00 / l (750 ml) | not shown |
+| lidl.es | Almond biscuits 125 g | €27.92 / kg (125 g) | not shown |
+| lidl.pl | Chocolate 100 g | 44.90 zł / kg (100 g) | not shown |
+| lidl.pl | Halibut fillet 1 kg | 69.90 zł / kg (1 kg) | not shown |
+| lidl.pl | Milk dessert 4 x 125 g | 17.98 zł / kg (500 g) | 1 kg = 17,98 |
+| lidl.nl | Coffee beans 1.2 kg | €8.33 / kg | not shown |
+
+Before the fix, lidl.es, lidl.it and most lidl.pl pages showed "Pack size not found", because the pack size sits in a line under the price ("125 g confezione", "75cl", "100 g"). The halibut page showed a € sign next to a zloty price. Both are fixed. Known limit: when the pack size is printed only on the product photo, the badge still says "Pack size not found".
+
