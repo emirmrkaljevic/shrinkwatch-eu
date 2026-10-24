@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.7 (24 October 2026)
+Checked on egg boxes in a real desktop Chrome: Continente (`€0.25 / pc`), Nemlig (`5.25 kr / pc`), Willys (`3.79 kr / pc`) and Mathem (`3.33 kr / pc`).
+
+- Willys and other Swedish shops: a bare piece count in the title ("Ägg 10p") is read as 10 pieces when no weight or volume is given. Only on Swedish shops, so "25p" elsewhere is never taken as a pack size.
+- Mathem: when the shop prices per piece and the pack price divided by the piece count matches that figure, the piece count wins over the weight in the title (it showed `57.33 kr / kg (348 g)` for 6 eggs).
+- Docs: test notes no longer name the store locations or postcodes chosen during checks.
+
 ## 0.3.6 (23 October 2026)
 Checked on egg boxes in a real desktop Chrome: Auchan PL (`1.00 zł / pc`), Carrefour PL (`1.00 zł / pc`), Dia (`€0.24 / pc`) and Barbora (`€0.30 / pc`).
 

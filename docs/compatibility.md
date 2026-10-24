@@ -130,10 +130,10 @@ Real desktop Chrome with the unpacked `dist/chrome` build, shops that hide price
 
 | Shop | Product | Result |
 |---|---|---|
-| Conad (IT) | Latte UHT intero 1 L, 1,09 € (pickup store in Milan) | `€1.09 / l (1 l)` |
-| Auchan (FR) | Haché porc et bœuf 400 g, 4,99 € (Click&Collect, Paris) | `€12.48 / kg (400 g)` |
+| Conad (IT) | Latte UHT intero 1 L, 1,09 € (a pickup store chosen) | `€1.09 / l (1 l)` |
+| Auchan (FR) | Haché porc et bœuf 400 g, 4,99 € (a Click&Collect store chosen) | `€12.48 / kg (400 g)` |
 | ICA (SE) | Färsk mellanmjölk 1,5 % 1,5 l, 19,12 kr | `12.75 kr / l (1.5 l)` |
-| Mercadona (ES) | Chocolate líquido a la taza 1 L, 2,45 € (postcode 28001) | First run: only the "choose a store" hint. The page has no structured data, so no price was found. Fixed: the title, the pack line and the pack price are read from the product block. Verified after the fix: `€2.45 / l (1 l)` |
+| Mercadona (ES) | Chocolate líquido a la taza 1 L, 2,45 € (a postcode entered) | First run: only the "choose a store" hint. The page has no structured data, so no price was found. Fixed: the title, the pack line and the pack price are read from the product block. Verified after the fix: `€2.45 / l (1 l)` |
 | Mercadona (ES) | Leche semidesnatada, 6 briks x 1 L, 4,98 € | First run: `€0.83 / l (1 l)`, right price per litre (taken from the shop's own figure) but the wrong pack size. Fixed: multipacks written with a container word ("6 briks x 1 L", "6 mini briks x 200 ml", "4 latas x 33 cl") are read, and the current price wins over the struck-out one. Verified after the fix: `€0.83 / l (6 l)` |
 | Mercadona (ES) | Leche semidesnatada, 6 mini briks x 200 ml, 1,64 € | First run: `€328.00 / l (≈5 ml)`. "Mililitros" was not a known unit, and the shop's "1,367 €/L" (three decimals) was read as 367. Fixed: Spanish unit words (mililitros, centilitros, kilos, kilogramos) are read, and a unit price is only taken when the whole number matches. Verified after the fix: `€1.37 / l (1.2 l)` |
 | Mercadona (ES) | Related product opened in a dialog | The URL changes without a page load and the badge kept the earlier product's figures. Fixed: the badge is removed when the page path changes. Verified: badge gone after opening the dialog |
