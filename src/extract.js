@@ -138,6 +138,19 @@
     return null;
   }
 
+  // A pack-size element may also carry the shop's unit price: Lidl CZ/HU print "580 g, 1 kg = 344,66 Kč" in one
+  // line, and some Lidl footers hold only "1 l = 9,99". That "1 kg = ..." clause is a unit price, never the pack.
+  const BASE_CLAUSE = /\(?\s*(?<![\d.,])(?:1|100)\s*(?:kg|g|l|ml|cl)\s*=[^)]*\)?/gi;
+  function sizeFrom(doc, sel) {
+    if (!sel) return null;
+    for (const el of doc.querySelectorAll(sel)) {
+      if (isOther(el) || isStruck(el)) continue;
+      const s = U.parseSize((textOf(el) || '').replace(BASE_CLAUSE, ' '));
+      if (s) return s;
+    }
+    return null;
+  }
+
   // Screen-reader-only and hidden copies of a price are not the visible price.
   const HIDDEN = '[hidden], [class*="sr-only" i], [class*="visually-hidden" i], [class*="screen-reader" i], template';
   const isHidden = el => !!(el.closest && el.closest(HIDDEN));
@@ -212,6 +225,26 @@
   // Greek shops write the unit as a word: "1,05 €/λίτρο", "8,40 €/κιλό".
   // The number must start the figure: in "1,367 €/L" (three decimals, Mercadona) it must not match "367 €/L".
   const UNIT_PRICE = /(?<![\d.,])(\d+(?:[.,]\d{1,2})?)\s*(?:€|eur|kr|kč|zł|ft|lei|ron|rsd|din|km|bam|лв|bgn|huf|pln|czk|sek|dkk)?\s*\/\s*(?:1\s*)?(kg|l|100\s*g|100\s*ml|κιλό|κιλο|λίτρο|λιτρο)(?![a-z0-9_α-ωά-ώ])/i;
+  // Lidl writes it the other way round: "1 kg = 344,66 Kč", "1 l = 4 998 Ft" (thousands space), "1 l = 9,99".
+  const UNIT_PRICE_EQ = /(?<![\d.,])(1|100)\s*(kg|g|l|ml)\s*=\s*(\d{1,3}(?:[ \u00a0\u202f]\d{3})+(?:[.,]\d{1,2})?|\d+(?:[.,]\d{1,2})?)(?![\d])/i;
+  // Either form as { value, per: 'kg' | 'l' } for one kg or litre.
+  function unitPriceIn(t) {
+    const m = t.match(UNIT_PRICE);
+    if (m) {
+      const v = U.parsePrice(m[1]);
+      if (!(v > 0)) return null;
+      const per = perOf(m);
+      return { value: per.startsWith('100') ? v * 10 : v, per: per === 'kg' || per === '100g' ? 'kg' : 'l' };
+    }
+    const e = t.match(UNIT_PRICE_EQ);
+    if (!e) return null;
+    const v = U.parsePrice(e[3].replace(/[ \u00a0\u202f]/g, ''));
+    if (!(v > 0)) return null;
+    const unit = e[2].toLowerCase(), weight = unit === 'kg' || unit === 'g';
+    const perBase = unit === 'kg' || unit === 'l' ? Number(e[1]) * 1000 : Number(e[1]); // grams or ml the price is for
+    if (perBase !== 1000 && perBase !== 100) return null;
+    return { value: v * (1000 / perBase), per: weight ? 'kg' : 'l' };
+  }
   // The matched unit as 'kg', 'l', '100g' or '100ml'.
   const perOf = m => { const p = m[2].replace(/\s/g, '').toLowerCase(); return /^κιλ/.test(p) ? 'kg' : /^λ/.test(p) ? 'l' : p; };
   function derivedSize(doc, price, adapter) {
@@ -252,16 +285,11 @@
     if (!scope && adapter.price) {
       scope = first(doc, adapter.price);
       for (let i = 0; scope && i < 3; i++) scope = scope.parentElement;
-      if (scope && !UNIT_PRICE.test(scope.innerText || scope.textContent || '')) scope = null;
+      if (scope && !unitPriceIn(scope.innerText || scope.textContent || '')) scope = null;
     }
     if (!scope) scope = labelledUnitPrice(doc);
     if (!scope) return null;
-    const m = (scope.innerText || scope.textContent || '').match(UNIT_PRICE);
-    if (!m) return null;
-    const v = U.parsePrice(m[1]);
-    if (!(v > 0)) return null;
-    const per = perOf(m);
-    return { value: per.startsWith('100') ? v * 10 : v, per: per === 'kg' || per === '100g' ? 'kg' : 'l' };
+    return unitPriceIn(scope.innerText || scope.textContent || '');
   }
 
   // The shop's own price per piece ("Jmf-pris 3,79 kr/st", "3,33 kr/st"). A currency is required.
@@ -340,7 +368,7 @@
     let price = custom.price || U.parsePrice(offer.price);
     if (!(price > 0)) price = U.parsePrice(text(doc, adapter.price) || meta(doc, 'product:price:amount') || meta(doc, 'price') || microdata(doc, 'price'));
     if (!(price > 0)) price = splitPriceAfterTitle(doc);
-    if (!(price > 0)) price = priceFromUnitPrice(doc, adapter, U.parseSize(text(doc, adapter.size)) || U.parseSize(name));
+    if (!(price > 0)) price = priceFromUnitPrice(doc, adapter, sizeFrom(doc, adapter.size) || U.parseSize(name));
     // Structured data sometimes names the wrong currency (tesco.ie says GBP next to a € price):
     // a currency known for the shop domain wins, otherwise the symbol printed with the price.
     const declared = offer.currency || meta(doc, 'product:price:currency') || meta(doc, 'priceCurrency') || microdata(doc, 'priceCurrency');
@@ -363,7 +391,7 @@
     const desc = ld && typeof ld.description === 'string' ? ld.description : '';
     // A short description is often just the pack ("la bouteille 1L"); og:title may add it to a name without one.
     const shortDesc = desc.length <= 60 ? U.parseSize(desc) : null;
-    let size = custom.size || U.parseSize(text(doc, adapter.size)) || structured || nameSize || shortDesc || U.parseSize(og) || labelledSize(doc) || sizeNearTitle(doc) || U.parseSize(doc.title) || U.parseSize(desc) || derivedSize(doc, price, adapter);
+    let size = custom.size || sizeFrom(doc, adapter.size) || structured || nameSize || shortDesc || U.parseSize(og) || labelledSize(doc) || sizeNearTitle(doc) || U.parseSize(doc.title) || U.parseSize(desc) || derivedSize(doc, price, adapter);
     // Shops that price per piece ("3,33 kr/st") may still print a weight in the title ("Ägg Frigående M 348g").
     // A piece count from the title or the line under it wins when pack price / count matches that per-piece price.
     let shopEach = null;

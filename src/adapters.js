@@ -16,9 +16,9 @@
       listing: { tile: '.box.item.product', link: 'a[href*="/izdelek/"]', name: '.product-name', ownUnitPrice: true } }),
     A('bingo', 'BA', ['bingoshop.ba'], { core: true, productPath: /^\/proizvod\//, price: 'div.price', currency: 'BAM', status: 'verified',
       listing: { tile: 'div.product', link: 'a[href*="/proizvod/"]', price: 'div.price', currency: 'BAM' } }),
-    A('lidl', 'DE/AT/HR/SI/RS/BA', ['lidl.de', 'lidl.at', 'lidl.hr', 'lidl.si', 'lidl.rs', 'lidl.ba'], { core: true, productPath: /\/p\d+/, price: '.ods-price__value, .m-price__price', size: '.ods-price__footer .block-text', status: 'verified (lidl.de)',
+    A('lidl', 'DE/AT/HR/SI/RS/BA', ['lidl.de', 'lidl.at', 'lidl.hr', 'lidl.si', 'lidl.rs', 'lidl.ba'], { core: true, productPath: /\/p\d+/, price: '.ods-price__value, .m-price__price', size: '.ods-price__footer .block-text, .ods-price__footer > div', status: 'verified (lidl.de)',
       currencyByHost: { 'lidl.rs': 'RSD', 'lidl.ba': 'BAM' } }),
-    A('lidl-eu', 'EU', ['lidl.fr', 'lidl.es', 'lidl.it', 'lidl.nl', 'lidl.be', 'lidl.pl', 'lidl.cz', 'lidl.sk', 'lidl.hu', 'lidl.ro', 'lidl.bg', 'lidl.pt', 'lidl.ie', 'lidl.se', 'lidl.dk', 'lidl.fi', 'lidl.gr', 'lidl.lt', 'lidl.lv', 'lidl.ee'], { productPath: /\/p\d+/, price: '.ods-price__value, .m-price__price', size: '.ods-price__footer .block-text',
+    A('lidl-eu', 'EU', ['lidl.fr', 'lidl.es', 'lidl.it', 'lidl.nl', 'lidl.be', 'lidl.pl', 'lidl.cz', 'lidl.sk', 'lidl.hu', 'lidl.ro', 'lidl.bg', 'lidl.pt', 'lidl.ie', 'lidl.se', 'lidl.dk', 'lidl.fi', 'lidl.gr', 'lidl.lt', 'lidl.lv', 'lidl.ee'], { productPath: /\/p\d+/, price: '.ods-price__value, .m-price__price', size: '.ods-price__footer .block-text, .ods-price__footer > div',
       currencyByHost: { 'lidl.pl': 'PLN', 'lidl.cz': 'CZK', 'lidl.hu': 'HUF', 'lidl.ro': 'RON', 'lidl.se': 'SEK', 'lidl.dk': 'DKK' } }),
     // Balkans (optional)
     A('maxi', 'RS', ['maxi.rs'], { status: 'verified', core: true, productPath: /\/p\/\d+/, currency: 'RSD', price: '[data-testid="product-properties-price-info"] [data-testid="product-block-price"], [data-testid="product-block-price"]', size: '[data-testid="product-properties-supplementary-price-info"]',

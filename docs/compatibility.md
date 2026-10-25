@@ -177,3 +177,17 @@ Lidl online shops outside the core set, checked in a real desktop Chrome after e
 
 Before the fix, lidl.es, lidl.it and most lidl.pl pages showed "Pack size not found", because the pack size sits in a line under the price ("125 g confezione", "75cl", "100 g"). The halibut page showed a € sign next to a zloty price. Both are fixed. Known limit: when the pack size is printed only on the product photo, the badge still says "Pack size not found".
 
+## Real-browser check (25 October 2026)
+
+More Lidl domains, checked in a real desktop Chrome after enabling the shop in the popup.
+
+| Shop | Product | Badge | Shop's own unit price |
+|---|---|---|---|
+| lidl.cz | Tea concentrate 580 g | 344.66 Kč / kg (580 g) | 1 kg = 344,66 Kč |
+| lidl.cz | Espresso beans 1 kg | 299.90 Kč / kg (1 kg) | not shown |
+| lidl.hu | Organic coffee beans 500 g | 5998 Ft / kg (500 g) | 1 kg = 5 998 Ft |
+| lidl.hu | Organic olive oil 500 ml | 4998 Ft / l (500 ml) | 1 l = 4 998 Ft |
+| lidl.sk | Vodka 0,7 l | €9.99 / l (700 ml) | 1 l = 9,99 |
+| lidl.be | Coffee beans 1.2 kg | €9.99 / kg (1.2 kg) | 9,99 EUR/kg |
+
+Before the fix, lidl.cz and lidl.hu showed "Pack size not found": there the pack size and the shop's unit price share one plain line under the price ("580 g, 1 kg = 344,66 Kč") instead of a separate pack size element. lidl.ro and lidl.pt did not load in this check, so they stay unverified.

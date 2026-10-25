@@ -124,7 +124,8 @@
   function formatMoney(v, cur) {
     const n = Number(v);
     if (!isFinite(n)) return '';
-    if (SUFFIX[cur]) return n.toFixed(2) + ' ' + SUFFIX[cur];
+    // Forint prices have no decimals in shops ("2999 Ft", "1 kg = 5 998 Ft").
+    if (SUFFIX[cur]) return n.toFixed(cur === 'HUF' ? 0 : 2) + ' ' + SUFFIX[cur];
     try { return new Intl.NumberFormat('en-GB', { style: 'currency', currency: cur || 'EUR' }).format(n); } catch (e) { return n.toFixed(2) + ' ' + cur; }
   }
 

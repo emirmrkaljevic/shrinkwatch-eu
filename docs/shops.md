@@ -23,7 +23,7 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | SI | mercator | mercatoronline.si | core | Works |
 | BA | bingo | bingoshop.ba | core | Works; mostly non-food, few pack sizes |
 | DE/AT/HR/SI/RS/BA | lidl | lidl.de, lidl.at, lidl.hr, lidl.si, lidl.rs, lidl.ba | core | Works |
-| EU | lidl-eu | lidl.fr, lidl.es, lidl.it, lidl.nl, lidl.be, lidl.pl, lidl.cz, lidl.sk, lidl.hu, lidl.ro, lidl.bg, lidl.pt, lidl.ie, lidl.se, lidl.dk, lidl.fi, lidl.gr, lidl.lt, lidl.lv, lidl.ee | opt-in | Works on lidl.fr, lidl.es, lidl.it, lidl.pl, lidl.nl (real Chrome, 24 Oct 2026); other Lidl domains not verified yet |
+| EU | lidl-eu | lidl.fr, lidl.es, lidl.it, lidl.nl, lidl.be, lidl.pl, lidl.cz, lidl.sk, lidl.hu, lidl.ro, lidl.bg, lidl.pt, lidl.ie, lidl.se, lidl.dk, lidl.fi, lidl.gr, lidl.lt, lidl.lv, lidl.ee | opt-in | Works on lidl.fr, lidl.es, lidl.it, lidl.pl, lidl.nl (real Chrome, 24 Oct 2026) and lidl.cz, lidl.hu, lidl.sk, lidl.be (25 Oct 2026); other Lidl domains not verified yet |
 | RS | maxi | maxi.rs | core | Works |
 | RS | idea | online.idea.rs | opt-in | Works |
 | SI | spar-si | online.spar.si | opt-in | Works |
