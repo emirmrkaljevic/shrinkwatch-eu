@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.8 (25 October 2026)
 Checked in a real desktop Chrome on Lidl FR, ES, IT, PL and NL.
 
 - Lidl: the pack size line under the price ("125 g confezione", "75cl", "4 x 125 g") is read, so Lidl ES, IT and PL product pages get a badge (they showed "Pack size not found").
