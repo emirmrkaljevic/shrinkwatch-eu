@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.9 (26 October 2026)
 Checked in a real desktop Chrome on Lidl CZ, HU, SK and BE.
 
 - Lidl CZ and HU: the line under the price that holds both pack size and unit price ("580 g, 1 kg = 344,66 Kč") is read, so these product pages get a badge (they showed "Pack size not found").
