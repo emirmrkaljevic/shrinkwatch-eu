@@ -30,12 +30,21 @@ footer{text-align:center;color:#777;font-size:14px;padding:30px 20px}
 <body>
 <header>
 <h1>ShrinkWatch EU</h1>
-<p>See the real price per kg or litre on supermarket web shops, and get a warning when a pack shrinks but the price stays the same.</p>
-<a class="btn" href="https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest">Download the latest release</a>
+<p>Stop doing price per kg math. See the real price per kg or litre on supermarket web shops, and get a warning when a pack shrinks but the price stays the same.</p>
+<a class="btn" href="#install">Install in 1 minute</a>
 <a class="btn alt" href="https://github.com/emirmrkaljevic/shrinkwatch-eu">Source on GitHub</a>
 </header>
 <main>
 <p><img src="img/demo.gif" alt="ShrinkWatch EU badge on a fictional product page: unit price, then a shrinkflation warning" width="800"></p>
+
+<h2 id="install">Install in 1 minute</h2>
+<p>Free, no account. It is not in the browser stores yet, so you install it from a zip file:</p>
+<ol>
+<li>Download <code>shrinkwatch-chrome-*.zip</code> or <code>shrinkwatch-firefox-*.zip</code> from the <a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest">latest release</a>.</li>
+<li><strong>Chrome / Edge / Brave:</strong> unzip it, open <code>chrome://extensions</code> (or <code>edge://extensions</code>), turn on Developer mode and click "Load unpacked".</li>
+<li><strong>Firefox:</strong> open <code>about:debugging#/runtime/this-firefox</code>, click "Load Temporary Add-on" and pick the zip.</li>
+</ol>
+<p>Listings on Firefox Add-ons and Microsoft Edge Add-ons are planned. Until then, the release zip is the way to install.</p>
 
 <h2>What it does</h2>
 <div class="grid">
@@ -59,14 +68,6 @@ footer{text-align:center;color:#777;font-size:14px;padding:30px 20px}
 <li><strong>Croatia, Slovenia, Serbia and Bosnia and Herzegovina:</strong> Konzum, Tommy, Mercator, Spar Online, Maxi, Idea, Bingo, Lidl.</li>
 </ul>
 <p><strong>Not verified yet:</strong> Intermarché, Cours U, Colruyt, Tesco Czechia and Coop Italy. They are in the extension, but their sites blocked the test browser or showed no prices without a login, so we can't promise they work.</p>
-
-<h2>Install</h2>
-<ol>
-<li>Download <code>shrinkwatch-chrome-*.zip</code> or <code>shrinkwatch-firefox-*.zip</code> from the <a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest">latest release</a>.</li>
-<li><strong>Chrome / Edge / Brave:</strong> unzip it, open <code>chrome://extensions</code> (or <code>edge://extensions</code>), turn on Developer mode and click "Load unpacked".</li>
-<li><strong>Firefox:</strong> open <code>about:debugging#/runtime/this-firefox</code>, click "Load Temporary Add-on" and pick the zip.</li>
-</ol>
-<p>Listings on Firefox Add-ons and Microsoft Edge Add-ons are planned. Until then, the release zip is the way to install.</p>
 
 <h2>Missing a shop?</h2>
 <p><a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=shop-request.yml">Request it on GitHub</a>, or <a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=wrong-result.yml">report a wrong result</a>.</p>
