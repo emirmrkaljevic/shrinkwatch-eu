@@ -1,6 +1,6 @@
 # ShrinkWatch EU
 
-[![Latest release](https://img.shields.io/github/v/release/emirmrkaljevic/shrinkwatch-eu)](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest) [![Shops](https://img.shields.io/badge/shops-about%2070-2e7d32)](docs/shops.md) [![Website](https://img.shields.io/badge/website-shrinkwatch--eu-2e7d32)](https://emirmrkaljevic.github.io/shrinkwatch-eu/) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/emirmrkaljevic/shrinkwatch-eu)](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest) [![Shops](https://img.shields.io/badge/shops-71-2e7d32)](docs/shops.md) [![Website](https://img.shields.io/badge/website-shrinkwatch--eu-2e7d32)](https://emirmrkaljevic.github.io/shrinkwatch-eu/) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 <p align="center"><a href="https://skintoscan.com/#packages"><img src=".github/assets/skintoscan-support.svg" width="684" alt="Support my open-source work: get a SkinToScan pack"></a><br><sub>If you find this useful, you can support me by getting a SkinToScan pack, my other project. It's a one-time purchase that directly funds my open-source work.</sub></p>
 <p align="center"><a href="https://skintoscan.com/checkout/?add-to-cart=138"><img src=".github/assets/skintoscan-pack-1.svg" width="220" alt="Buy Single Picture Check, €4.49"></a> <a href="https://skintoscan.com/checkout/?add-to-cart=139"><img src=".github/assets/skintoscan-pack-5.svg" width="220" alt="Buy 5 Picture Pack, €19.99 (popular)"></a> <a href="https://skintoscan.com/checkout/?add-to-cart=140"><img src=".github/assets/skintoscan-pack-15.svg" width="220" alt="Buy 15 Picture Pack, €54.99"></a></p>
@@ -17,7 +17,7 @@ A browser extension for Chrome and Firefox that shows the **price per kg / litre
 
 ## Supported shops
 
-About 70 grocery and drugstore web shops in 25 EU countries plus Serbia and Bosnia and Herzegovina. The full list, with live check results, is in [docs/shops.md](docs/shops.md).
+71 grocery and drugstore web shops in 25 EU countries plus Serbia and Bosnia and Herzegovina. The full list, with live check results, is in [docs/shops.md](docs/shops.md).
 
 - **Core shops** work right after install: Konzum, Tommy, Mercator, Bingo, Lidl (DE, AT, HR, SI, RS, BA) and Maxi. On Tommy category and search pages the extension also shows unit prices on product tiles; Konzum, Mercator and Maxi already print unit prices there, so only a shrinkflation marker is added when your local history shows a smaller pack.
 - **Opt-in shops**: open the shop, click the ShrinkWatch icon and choose "Enable on this shop". The browser asks for access to that shop only.
@@ -35,7 +35,7 @@ Every shop first uses the page's own schema.org `Product` data, then Open Graph 
 - Edge: same as Chrome, but open `edge://extensions` and turn on "Developer mode" at the bottom left.
 - Firefox loads it only until the next restart. A permanent install will come with the Firefox Add-ons listing.
 
-Store listings (Chrome Web Store, Firefox Add-ons) are coming.
+Listings on Firefox Add-ons and Microsoft Edge Add-ons are planned.
 
 ## FAQ
 

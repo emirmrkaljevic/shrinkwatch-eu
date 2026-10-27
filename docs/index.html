@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ShrinkWatch EU: unit prices and shrinkflation alerts for grocery web shops</title>
-<meta name="description" content="Free, open-source browser extension for Chrome, Edge and Firefox. Shows the price per kg or litre on about 70 supermarket web shops in the EU and the Balkans and warns when a pack gets smaller for the same price.">
+<meta name="description" content="Free, open-source browser extension for Chrome, Edge and Firefox. Shows the price per kg or litre on 71 supermarket web shops in the EU and the Balkans and warns when a pack gets smaller for the same price.">
 <meta property="og:title" content="ShrinkWatch EU">
 <meta property="og:description" content="See the price per kg or litre on grocery web shops and get warned about shrinkflation. Free and open source, no tracking.">
 <meta property="og:image" content="https://emirmrkaljevic.github.io/shrinkwatch-eu/img/social-preview.png">
@@ -46,18 +46,19 @@ footer{text-align:center;color:#777;font-size:14px;padding:30px 20px}
 </div>
 
 <h2>Supported shops</h2>
-<p>About 70 grocery web shops in Germany, Austria, France, Italy, Spain, Portugal, the Netherlands, Belgium, the Nordics, Poland, Czechia, Hungary, Romania, Greece, the Baltics, Croatia, Slovenia, Serbia and Bosnia and Herzegovina, including Lidl, Kaufland, Rewe, Billa, Carrefour, Auchan, Konzum, Mercator and Maxi. <a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/blob/main/docs/shops.md">See the full list</a>. A few shops are on by default. Others ask for access only when you switch them on.</p>
+<p>71 grocery web shops in Germany, Austria, France, Italy, Spain, Portugal, the Netherlands, Belgium, the Nordics, Poland, Czechia, Hungary, Romania, Greece, the Baltics, Croatia, Slovenia, Serbia and Bosnia and Herzegovina, including Lidl, Kaufland, Rewe, Billa, Carrefour, Auchan, Konzum, Mercator and Maxi. <a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/blob/main/docs/shops.md">See the full list</a>. 65 of them show a badge on real product pages in our checks (three of those only show the price on items without a pack size). Six are not verified yet, because the site blocks the test browser or needs a login first. Every result is listed in the <a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/blob/main/docs/compatibility.md">compatibility notes</a>. A few shops are on by default. Others ask for access only when you switch them on.</p>
 
 <h2>By country</h2>
 <ul>
 <li><strong>Germany and Austria:</strong> Lidl, Kaufland, Rewe, Netto, dm, Rossmann, Billa, Gurkerl.</li>
-<li><strong>France, Belgium and the Netherlands:</strong> Carrefour, E.Leclerc, Monoprix, Delhaize, Albert Heijn, Jumbo, Plus, Dirk.</li>
-<li><strong>Spain, Portugal and Italy:</strong> Mercadona, Carrefour, Dia, Alcampo, Eroski, Continente, Pingo Doce, Esselunga, Carrefour Italia.</li>
-<li><strong>Central and Eastern Europe:</strong> Rohlik, Košík, Kifli, Auchan Hungary, Frisco, Carrefour Poland, Auchan Poland, Freshful, Auchan and Carrefour Romania, eBag.</li>
-<li><strong>Nordics and Baltics:</strong> Mathem, Willys, Coop Sweden, Nemlig, Bilka ToGo, S-kaupat, Rimi, Barbora, K-Ruoka, Selver.</li>
+<li><strong>France, Belgium and the Netherlands:</strong> Carrefour, Auchan, E.Leclerc, Monoprix, Lidl, Delhaize, Jumbo, Plus, Dirk.</li>
+<li><strong>Spain, Portugal and Italy:</strong> Mercadona, Carrefour, Dia, Alcampo, Eroski, Continente, Pingo Doce, Esselunga, Conad, Carrefour Italia, Lidl.</li>
+<li><strong>Central and Eastern Europe:</strong> Rohlik, Košík, Kifli, Auchan Hungary, Frisco, Carrefour Poland, Auchan Poland, Freshful, Auchan and Carrefour Romania, Mega Image, eBag, Lidl.</li>
+<li><strong>Nordics and Baltics:</strong> ICA, Mathem, Willys, Coop Sweden, Nemlig, Bilka ToGo, S-kaupat, Rimi, Barbora, K-Ruoka, Selver.</li>
 <li><strong>Greece and Ireland:</strong> AB, My Market, Sklavenitis, SuperValu, Tesco Ireland, Dunnes Stores.</li>
-<li><strong>Croatia, Slovenia, Serbia and Bosnia and Herzegovina:</strong> Konzum, Tommy, Mercator, Spar Online, Maxi, Idea, Bingo.</li>
+<li><strong>Croatia, Slovenia, Serbia and Bosnia and Herzegovina:</strong> Konzum, Tommy, Mercator, Spar Online, Maxi, Idea, Bingo, Lidl.</li>
 </ul>
+<p><strong>Not verified yet:</strong> Albert Heijn, Intermarché, Cours U, Colruyt, Tesco Czechia and Coop Italy. They are in the extension, but their sites blocked the test browser or showed no prices without a login, so we can't promise they work.</p>
 
 <h2>Install</h2>
 <ol>
@@ -65,7 +66,7 @@ footer{text-align:center;color:#777;font-size:14px;padding:30px 20px}
 <li><strong>Chrome / Edge / Brave:</strong> unzip it, open <code>chrome://extensions</code> (or <code>edge://extensions</code>), turn on Developer mode and click "Load unpacked".</li>
 <li><strong>Firefox:</strong> open <code>about:debugging#/runtime/this-firefox</code>, click "Load Temporary Add-on" and pick the zip.</li>
 </ol>
-<p>Store listings for Chrome and Firefox are coming.</p>
+<p>Listings on Firefox Add-ons and Microsoft Edge Add-ons are planned. Until then, the release zip is the way to install.</p>
 
 <h2>Missing a shop?</h2>
 <p><a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=shop-request.yml">Request it on GitHub</a>, or <a href="https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=wrong-result.yml">report a wrong result</a>.</p>
