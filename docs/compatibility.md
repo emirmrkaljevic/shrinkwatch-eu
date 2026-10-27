@@ -191,3 +191,14 @@ More Lidl domains, checked in a real desktop Chrome after enabling the shop in t
 | lidl.be | Coffee beans 1.2 kg | €9.99 / kg (1.2 kg) | 9,99 EUR/kg |
 
 Before the fix, lidl.cz and lidl.hu showed "Pack size not found": there the pack size and the shop's unit price share one plain line under the price ("580 g, 1 kg = 344,66 Kč") instead of a separate pack size element. lidl.ro and lidl.pt did not load in this check, so they stay unverified.
+
+## Real-browser check (27 October 2026)
+Real desktop Chrome with the unpacked 0.3.9 build, "Enable on this shop" and reload. No account was used.
+
+| Shop | Product | Badge | Shop's own unit price |
+|---|---|---|---|
+| Albert Heijn (NL) | AH Halfvolle melk 1 l, €1.29 | `€1.29 / l (1 l)` | Prijs per LT € 1,29 |
+| Albert Heijn (NL) | AH Smeuïge pindakaas 600 g, €3.69 | `€6.15 / kg (600 g)` | Prijs per KG € 6,15 |
+| Colruyt (BE) | - | - | Product pages show no price without logging in, and search stayed empty, so it is still unverified |
+
+Albert Heijn loaded normally this time (it showed "Access Denied" on 16 October). ah.be was not checked.

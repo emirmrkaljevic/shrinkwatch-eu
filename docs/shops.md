@@ -4,7 +4,7 @@ Core shops run automatically. Other shops are switched on per shop from the exte
 
 Live checks: 14 October 2026 (updated after the third round), headless Chromium, real product pages. Sites with bot protection were not tested. Opt-in permission flow verified in a real Chrome browser on 15 October 2026 (gurkerl.at): Enable prompt, then unit-price badge after reload; Disable removes access. Chrome does not prompt again when a shop is re-enabled after Disable, because it remembers the earlier approval; Site access on the extension's details page revokes it fully.
 
-Real desktop Chrome check on 16 October 2026: dm, Rossmann, Kaufland DE, Carrefour FR and Tesco IE, Netto and Rewe work; Albert Heijn blocked the browser. See [compatibility.md](compatibility.md#real-browser-check-16-october-2026).
+Real desktop Chrome check on 16 October 2026: dm, Rossmann, Kaufland DE, Carrefour FR and Tesco IE, Netto and Rewe work; Albert Heijn blocked the browser that day and worked on 27 October. See [compatibility.md](compatibility.md#real-browser-check-16-october-2026).
 
 Real desktop Chrome check on 17 October 2026: Monoprix, Carrefour ES, Dia, Alcampo, Eroski, Carrefour BE and Carrefour PL work; Intermarché and Cours U blocked the browser. See [compatibility.md](compatibility.md#real-browser-check-17-october-2026).
 
@@ -52,7 +52,7 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | PT | continente | continente.pt | opt-in | Works |
 | PT | pingodoce | pingodoce.pt | opt-in | Works |
 | PT | auchan-pt | auchan.pt | opt-in | Works |
-| NL/BE | ah | ah.nl, ah.be | opt-in | Blocked: "Access Denied" in a real Chrome (16 Oct 2026), not verified |
+| NL/BE | ah | ah.nl, ah.be | opt-in | Works on ah.nl (real Chrome, 27 Oct 2026); ah.be not checked |
 | NL | jumbo | jumbo.com | opt-in | Works |
 | NL | plus | plus.nl | opt-in | Works |
 | NL | dirk | dirk.nl | opt-in | Works |
