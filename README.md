@@ -5,37 +5,46 @@
 <p align="center"><a href="https://skintoscan.com/#packages"><img src=".github/assets/skintoscan-support.svg" width="684" alt="Support my open-source work: get a SkinToScan pack"></a><br><sub>If you find this useful, you can support me by getting a SkinToScan pack, my other project. It's a one-time purchase that directly funds my open-source work.</sub></p>
 <p align="center"><a href="https://skintoscan.com/checkout/?add-to-cart=138"><img src=".github/assets/skintoscan-pack-1.svg" width="220" alt="Buy Single Picture Check, €4.49"></a> <a href="https://skintoscan.com/checkout/?add-to-cart=139"><img src=".github/assets/skintoscan-pack-5.svg" width="220" alt="Buy 5 Picture Pack, €19.99 (popular)"></a> <a href="https://skintoscan.com/checkout/?add-to-cart=140"><img src=".github/assets/skintoscan-pack-15.svg" width="220" alt="Buy 15 Picture Pack, €54.99"></a></p>
 
-A browser extension for Chrome and Firefox that shows the **price per kg / litre / piece** on supermarket web shops in the EU and the Balkans, and warns you about **shrinkflation**: when a pack gets smaller but the price stays the same.
+**See the real price per kg or litre on your supermarket web shop, and get a warning when your usual product quietly shrinks.**
 
 > "Was 500 g for €2.00, now 450 g for €2.00 = **+11.1% per kg**"
 
 ![The badge on a fictional demo product: unit price, then a shrinkflation warning](docs/img/demo.gif)
 
-- Works on the product pages you open. No account, no server, no tracking.
-- Remembers pack sizes and prices **only in your browser** so it can spot a smaller pack next time.
-- Open source (MIT).
+## What it does for you
 
-## Supported shops
+- **No more mental math.** Every product page shows the price per kg, litre or piece, so you can compare packs of different sizes at a glance.
+- **Catches shrinkflation.** It remembers the pack size and price you saw before. When the same product comes back smaller for the same money, you get a warning.
+- **Private.** No account, no server, no tracking. Your history stays only in your browser.
+- **Free and open source** (MIT). Works in Chrome, Edge, Brave and Firefox.
 
-71 grocery and drugstore web shops in 25 EU countries plus Serbia and Bosnia and Herzegovina. The full list, with live check results, is in [docs/shops.md](docs/shops.md).
+## Install in 1 minute
 
-- **Core shops** work right after install: Konzum, Tommy, Mercator, Bingo, Lidl (DE, AT, HR, SI, RS, BA) and Maxi. On Tommy category and search pages the extension also shows unit prices on product tiles; Konzum, Mercator and Maxi already print unit prices there, so only a shrinkflation marker is added when your local history shows a smaller pack.
-- **Opt-in shops**: open the shop, click the ShrinkWatch icon and choose "Enable on this shop". The browser asks for access to that shop only.
-- **Any other site**: "Check this page now" reads the current page once, without any standing permission.
+The extension is not in the browser stores yet, so you install it from a zip file. It takes about a minute.
 
-Every shop first uses the page's own schema.org `Product` data, then Open Graph tags, then a few CSS selectors. If your shop is missing or broken, please open an issue with the product URL.
+**Chrome, Edge or Brave**
 
-## Install
+1. Download `shrinkwatch-chrome-*.zip` from the [latest release](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest) and unzip it.
+2. Open `chrome://extensions` (in Edge: `edge://extensions`).
+3. Turn on **Developer mode** (top right in Chrome, bottom left in Edge).
+4. Click **Load unpacked** and choose the unzipped folder.
+5. Open a product page on a supported shop. The badge appears next to the price.
 
-**From a release:** download `shrinkwatch-chrome-*.zip` or `shrinkwatch-firefox-*.zip` from [Releases](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases).
+**Firefox**
 
-- Chrome / Edge / Brave: unzip, open `chrome://extensions`, enable Developer mode, click "Load unpacked" and choose the folder.
-- Firefox: open `about:debugging#/runtime/this-firefox`, click "Load Temporary Add-on" and pick the zip.
+1. Download `shrinkwatch-firefox-*.zip` from the [latest release](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest).
+2. Open `about:debugging#/runtime/this-firefox`.
+3. Click **Load Temporary Add-on** and pick the zip.
 
-- Edge: same as Chrome, but open `edge://extensions` and turn on "Developer mode" at the bottom left.
-- Firefox loads it only until the next restart. A permanent install will come with the Firefox Add-ons listing.
+Firefox keeps it only until the next restart. A permanent install will come with the Firefox Add-ons listing, which is planned along with Microsoft Edge Add-ons.
 
-Listings on Firefox Add-ons and Microsoft Edge Add-ons are planned.
+## Which shops work
+
+71 grocery and drugstore web shops in 25 EU countries plus Serbia and Bosnia and Herzegovina. **66 of them are verified** on real product pages in a real browser. The other 5 (Intermarché, Cours U, Colruyt, Tesco Czechia and Coop Italy) are included but not verified yet, because their sites blocked the test browser or need a login to show prices. Full list with check results: [docs/shops.md](docs/shops.md).
+
+- **Work right after install:** Konzum, Tommy, Mercator, Bingo, Maxi and Lidl (DE, AT, HR, SI, RS, BA). On Tommy category and search pages you also get unit prices on product tiles.
+- **Other shops:** open the shop, click the ShrinkWatch icon and choose "Enable on this shop". The browser asks for access to that shop only.
+- **Any other site:** "Check this page now" reads the current page once, without any standing permission.
 
 ## FAQ
 
@@ -51,7 +60,11 @@ Listings on Firefox Add-ons and Microsoft Edge Add-ons are planned.
 
 **Is a shrinkflation warning proof?** No. It compares what this browser saw before with what the shop shows now. Shop data can be wrong, so check the pack before drawing conclusions.
 
-## Develop
+## For developers
+
+Every shop first uses the page's own schema.org `Product` data, then Open Graph tags, then a few CSS selectors.
+
+### Build and test
 
 ```sh
 npm ci
@@ -61,7 +74,7 @@ npm run build   # dist/shrinkwatch-chrome-<version>.zip and dist/shrinkwatch-fir
 
 Adding a shop: add an entry to `src/adapters.js`, save a product page as a fixture in `test/fixtures/`, and add a test in `test/extract.test.js`.
 
-## How shrinkflation is detected
+### How shrinkflation is detected
 
 For each product (keyed by EAN/SKU or URL) the extension keeps a short local history of pack size and price. When you see a product again with a smaller pack and a higher price per unit than before, it shows a warning. A smaller pack that is proportionally cheaper is not flagged.
 
