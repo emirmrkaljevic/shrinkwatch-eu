@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.10 (30 October 2026)
+
+- When a product page has a price but no pack size in the page text (for example a size printed only on the photo), the badge now shows the price with "Pack size not found" and a short hint on how to report the product link, instead of a bare "Pack size not found".
+- `npm test` runs with an explicit file pattern, so the test suite works on Node 22 and newer.
+
 ## 0.3.9 (26 October 2026)
 Checked in a real desktop Chrome on Lidl CZ, HU, SK and BE.
 
