@@ -53,7 +53,11 @@
       box.appendChild(div);
     };
     if (p.unitPrice) line([[`${fmt(p.unitPrice.value, p.currency)} / ${p.unitPrice.per}`, true], [` (${SW.formatSize(p.size)})`]]);
-    else line([['Pack size not found']]);
+    else {
+      const [title, hint] = SW.missingSizeText();
+      line(p.price ? [[`${fmt(p.price, p.currency)}`, true], [` · ${title}`]] : [[title]]);
+      if (p.price) line([[hint]]);
+    }
     if (alert) line([[`⚠ Shrinkflation: was ${SW.formatSize(alert.oldSize)} for ${fmt(alert.oldPrice, p.currency)}, now ${SW.formatSize(alert.newSize)} for ${fmt(alert.newPrice, p.currency)} = `], [`+${alert.unitPriceIncrease}% per unit`, true]]);
     const close = document.createElement('button');
     close.type = 'button';

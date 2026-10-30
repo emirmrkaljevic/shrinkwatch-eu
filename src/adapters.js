@@ -6,6 +6,8 @@
   const A = (id, country, hosts, extra = {}) => ({ id, country, hosts, productPath: /./, core: false, status: 'unverified', ...extra });
   // Hint for shops that hide prices until a store or delivery address is chosen.
   const storeHintText = () => 'Choose a store or delivery address on this shop to see the unit price.';
+  // Shown when a price was found but no pack size: say what is missing and how to help.
+  const missingSizeText = () => ['Pack size not found', 'The price is here, but the pack size is not in the page text (it may be only on the photo). Report the product link on GitHub so this shop can be improved.'];
   const ADAPTERS = [
     // Balkans (core)
     A('konzum', 'HR/BA', ['konzum.hr', 'konzum.ba'], { core: true, productPath: /^\/web\/products\//, price: '.single-product__price .price--primary', name: '.single-product__title h1', status: 'verified',
@@ -183,7 +185,7 @@
     return hit.length ? hit : wanted.slice();
   }
 
-  const api = { storeHintText, ADAPTERS, adapterFor, matchPatterns, originsForHost, grantedPatterns, originsToRemove };
+  const api = { storeHintText, missingSizeText, ADAPTERS, adapterFor, matchPatterns, originsForHost, grantedPatterns, originsToRemove };
   root.SW = Object.assign(root.SW || {}, api);
   if (typeof module !== 'undefined') module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
