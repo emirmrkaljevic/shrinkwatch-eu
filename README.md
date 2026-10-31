@@ -2,6 +2,8 @@
 
 [![Latest release](https://img.shields.io/github/v/release/emirmrkaljevic/shrinkwatch-eu)](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest) [![Shops](https://img.shields.io/badge/shops-71-2e7d32)](docs/shops.md) [![Website](https://img.shields.io/badge/website-shrinkwatch--eu-2e7d32)](https://emirmrkaljevic.github.io/shrinkwatch-eu/) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![ShrinkWatch EU | AlternativeTo](https://alternativeto.net/static/badges/badge-compact-color.svg)](https://alternativeto.net/software/shrinkwatch-eu/about/?utm_source=badge&utm_medium=referral)
 
+**[Install for Firefox](https://addons.mozilla.org/en-US/firefox/addon/shrinkwatch-eu/)** from addons.mozilla.org, one click, updates automatically. On Chrome, Edge and Brave, install from the release zip (steps below).
+
 <p align="center"><a href="https://skintoscan.com/#packages"><img src=".github/assets/skintoscan-support.svg" width="684" alt="Support my open-source work: get a SkinToScan pack"></a><br><sub>If you find this useful, you can support me by getting a SkinToScan pack, my other project. It's a one-time purchase that directly funds my open-source work.</sub></p>
 <p align="center"><a href="https://skintoscan.com/checkout/?add-to-cart=138"><img src=".github/assets/skintoscan-pack-1.svg" width="220" alt="Buy Single Picture Check, €4.49"></a> <a href="https://skintoscan.com/checkout/?add-to-cart=139"><img src=".github/assets/skintoscan-pack-5.svg" width="220" alt="Buy 5 Picture Pack, €19.99 (popular)"></a> <a href="https://skintoscan.com/checkout/?add-to-cart=140"><img src=".github/assets/skintoscan-pack-15.svg" width="220" alt="Buy 15 Picture Pack, €54.99"></a></p>
 
@@ -32,11 +34,13 @@ The extension is not in the browser stores yet, so you install it from a zip fil
 
 **Firefox**
 
+[Install for Firefox](https://addons.mozilla.org/en-US/firefox/addon/shrinkwatch-eu/) from addons.mozilla.org. Or install the zip manually:
+
 1. Download `shrinkwatch-firefox-*.zip` from the [latest release](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest).
 2. Open `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on** and pick the zip.
 
-Firefox keeps it only until the next restart. A permanent install will come with the Firefox Add-ons listing, which is planned along with Microsoft Edge Add-ons.
+Firefox keeps a manual install only until the next restart. For a permanent install use the Firefox Add-ons listing above. A Microsoft Edge Add-ons listing is planned.
 
 ## Which shops work
 
