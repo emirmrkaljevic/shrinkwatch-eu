@@ -22,7 +22,7 @@
 
 ## Install in 1 minute
 
-The extension is not in the browser stores yet, so you install it from a zip file. It takes about a minute.
+On Firefox it is one click from the Add-ons store. On Chrome, Edge and Brave you install it from a zip file for now, which takes about a minute.
 
 **Chrome, Edge or Brave**
 
