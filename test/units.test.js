@@ -139,3 +139,15 @@ test('piece counts in other EU languages', () => {
   assert.strictEqual(parseSize('Mleko 1 l 3,2 dbałość').unit, 'ml');
   assert.strictEqual(parseSize('1st Grade Apples'), null);
 });
+
+test('grams and millilitres with a thousands separator', () => {
+  assert.strictEqual(parseSize('Weizenmehl Type 405 1.000 g').amount, 1000);
+  assert.strictEqual(parseSize('Haferflocken 1.000g').amount, 1000);
+  assert.strictEqual(parseSize('Olio 1.500 ml').amount, 1500);
+  assert.strictEqual(parseSize('Rice 1,250 g').amount, 1250);
+  assert.deepStrictEqual(parseSize('Wasser 6 x 1.000 ml'), { amount: 6000, unit: 'ml', count: 6, each: 1000 });
+  // Larger units keep the decimal meaning.
+  assert.strictEqual(parseSize('Zucker 1,000 kg').amount, 1000);
+  assert.strictEqual(parseSize('Wine 0,750 l').amount, 750);
+  assert.strictEqual(parseSize('Tea 20 x 1.75 g').amount, 35);
+});

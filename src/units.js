@@ -37,6 +37,15 @@
 
   function num(s) { return parseFloat(String(s).replace(',', '.')); }
 
+  // Grams and millilitres with a thousands separator: "1.000 g", "1,500 ml" (DE, NL, IT, ES shops).
+  // Nobody sells 1.5 g or 1.5 ml of groceries, so three digits after the separator mean thousands
+  // for these small units only. "1,000 kg" or "0,750 l" keep their decimal meaning.
+  function sizeNum(s, unitKey) {
+    const u = UNITS[String(unitKey).toLowerCase()];
+    if (u && u[1] === 1 && (u[0] === 'g' || u[0] === 'ml') && /^[1-9]\d{0,2}[.,]\d{3}$/.test(s)) return parseFloat(String(s).replace(/[.,]/, ''));
+    return num(s);
+  }
+
   // Swedish shops write a piece count as a bare "p" after the number ("Ägg 10p", "Toalettpapper 8p").
   // Only read when the caller says the shop is Swedish (opts.svPieces) and nothing else was found,
   // so "25p" (pence) or "5p" coupons elsewhere are never taken as a pack size.
@@ -49,14 +58,14 @@
     if (m) {
       const [base, f] = UNITS[m[3].toLowerCase()];
       const count = num(m[1]);
-      const each = num(m[2]) * f;
+      const each = sizeNum(m[2], m[3]) * f;
       return { amount: round(count * each), unit: base, count, each: round(each) };
     }
     const a = t.match(MULTI_AFTER);
     if (a) {
       const [base, f] = UNITS[a[2].toLowerCase()];
       const count = num(a[3]);
-      const each = num(a[1]) * f;
+      const each = sizeNum(a[1], a[2]) * f;
       if (base !== 'pc' && count >= 2 && each > 0) return { amount: round(count * each), unit: base, count, each: round(each) };
     }
     let last = null;
@@ -65,7 +74,8 @@
       if (uKey === 'st' && /1st$/i.test(s[0])) continue; // English ordinal ("1st", "21st"), not Swedish "st"
       const [base, f] = UNITS[uKey];
       if (base === 'pc' && last) continue; // prefer weight/volume
-      last = { amount: round(num(s[1]) * f), unit: base, count: 1, each: round(num(s[1]) * f) };
+      const n = sizeNum(s[1], uKey);
+      last = { amount: round(n * f), unit: base, count: 1, each: round(n * f) };
       if (base !== 'pc') break;
     }
     if (last && last.amount > 0) {
@@ -76,7 +86,7 @@
     if (u) {
       const [base, f] = UNITS[u[1].toLowerCase()];
       const count = u[3] ? num(u[3]) : 1;
-      const each = num(u[2]) * f;
+      const each = sizeNum(u[2], u[1]) * f;
       if (each > 0) return { amount: round(count * each), unit: base, count, each: round(each) };
     }
     const pc = packCount(t);
