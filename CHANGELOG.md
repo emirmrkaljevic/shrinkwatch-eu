@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.11 (5 November 2026)
+
+- Pack sizes with thousands separators are read correctly again on DE, NL, IT and ES shops. A size such as "1.000 g" or "1,500 ml" was treated as 1 g or 1.5 ml, so the unit price looked about 1000 times too high.
+- Space-grouped thousands are read too: "1 000 g", "1 000 ml", "6 x 1 000 ml", including thin-space forms used on some shop pages.
+
 ## 0.3.10 (30 October 2026)
 
 - When a product page has a price but no pack size in the page text (for example a size printed only on the photo), the badge now shows the price with "Pack size not found" and a short hint on how to report the product link, instead of a bare "Pack size not found".
