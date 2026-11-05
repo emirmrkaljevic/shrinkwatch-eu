@@ -146,6 +146,11 @@ test('grams and millilitres with a thousands separator', () => {
   assert.strictEqual(parseSize('Olio 1.500 ml').amount, 1500);
   assert.strictEqual(parseSize('Rice 1,250 g').amount, 1250);
   assert.deepStrictEqual(parseSize('Wasser 6 x 1.000 ml'), { amount: 6000, unit: 'ml', count: 6, each: 1000 });
+  // Space-grouped thousands (French / Nordic shops).
+  assert.strictEqual(parseSize('Farine 1 000 g').amount, 1000);
+  assert.strictEqual(parseSize('Huile 1 000 ml').amount, 1000);
+  assert.deepStrictEqual(parseSize('Eau 6 x 1 000 ml'), { amount: 6000, unit: 'ml', count: 6, each: 1000 });
+  assert.strictEqual(parseSize('Farine 1\u202f000 g').amount, 1000);
   // Larger units keep the decimal meaning.
   assert.strictEqual(parseSize('Zucker 1,000 kg').amount, 1000);
   assert.strictEqual(parseSize('Wine 0,750 l').amount, 750);

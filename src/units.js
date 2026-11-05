@@ -53,7 +53,10 @@
 
   function parseSize(text, opts) {
     if (!text) return null;
-    const t = String(text).toLowerCase().replace(/\u00a0/g, ' ');
+    // Collapse French/Nordic space-grouped thousands ("1 000 g", "1\u202f000 ml") into digits
+    // before matching, so MULTI/SINGLE still see a plain number. Leave multipacks and decimals alone.
+    let t = String(text).toLowerCase().replace(/[\u00a0\u202f\u2009]/g, ' ');
+    t = t.replace(/(\d{1,3}(?: \d{3})+)(?!\d)/g, (m) => m.replace(/ /g, ''));
     const m = t.match(MULTI);
     if (m) {
       const [base, f] = UNITS[m[3].toLowerCase()];
