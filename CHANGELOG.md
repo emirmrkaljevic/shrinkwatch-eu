@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Fractions before the unit are read: "1/2 kg", "3/4 l", "½ kg", "1½ l". "1/2 kg" was read as 2 kg, so the price per kg looked four times too low.
+
 ## 0.3.11 (5 November 2026)
 
 - Pack sizes with thousands separators are read correctly again on DE, NL, IT and ES shops. A size such as "1.000 g" or "1,500 ml" was treated as 1 g or 1.5 ml, so the unit price looked about 1000 times too high.

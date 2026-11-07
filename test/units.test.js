@@ -156,3 +156,13 @@ test('grams and millilitres with a thousands separator', () => {
   assert.strictEqual(parseSize('Wine 0,750 l').amount, 750);
   assert.strictEqual(parseSize('Tea 20 x 1.75 g').amount, 35);
 });
+
+test('reads fractions written before the unit', () => {
+  assert.strictEqual(parseSize('Pan de molde 1/2 kg').amount, 500);
+  assert.strictEqual(parseSize('Olio 3/4 l').amount, 750);
+  assert.strictEqual(parseSize('Kava ½ kg').amount, 500);
+  assert.strictEqual(parseSize('Mlijeko 1½ l').amount, 1500);
+  assert.strictEqual(parseSize('Brašno ¼ kg').amount, 250);
+  assert.strictEqual(parseSize('Promo 24/7, 500 g').amount, 500);
+  assert.strictEqual(parseSize('Sok 2 x 1,5 l').amount, 3000);
+});

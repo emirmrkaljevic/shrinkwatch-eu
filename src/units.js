@@ -57,6 +57,10 @@
     // before matching, so MULTI/SINGLE still see a plain number. Leave multipacks and decimals alone.
     let t = String(text).toLowerCase().replace(/[\u00a0\u202f\u2009]/g, ' ');
     t = t.replace(/(\d{1,3}(?: \d{3})+)(?!\d)/g, (m) => m.replace(/ /g, ''));
+    // Fractions before a unit: "1/2 kg", "½ kg", "1½ l", "3/4 l" (ES, IT and Balkan shops).
+    // Without this, "1/2 kg" was read as 2 kg. Only proper fractions with a small denominator.
+    t = t.replace(/(\d)?\s*([½¼¾])/g, (m, w, fr) => String((w ? Number(w) : 0) + { '½': 0.5, '¼': 0.25, '¾': 0.75 }[fr]));
+    t = t.replace(/(?<![\d.,\/])([1-7])\s*\/\s*([2-8])(?![\d.,\/])(?=\s*\p{L})/gu, (m, a, b) => (Number(a) < Number(b) ? String(round(a / b)) : m));
     const m = t.match(MULTI);
     if (m) {
       const [base, f] = UNITS[m[3].toLowerCase()];
