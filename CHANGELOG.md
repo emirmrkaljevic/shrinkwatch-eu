@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.3.12 (9 November 2026)
+
 - Fractions before the unit are read: "1/2 kg", "3/4 l", "½ kg", "1½ l". "1/2 kg" was read as 2 kg, so the price per kg looked four times too low.
 
 ## 0.3.11 (5 November 2026)
