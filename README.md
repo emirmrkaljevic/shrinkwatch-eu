@@ -16,6 +16,7 @@
 ## What it does for you
 
 - **No more mental math.** Every product page shows the price per kg, litre or piece, so you can compare packs of different sizes at a glance.
+- **Reads the pack, not just the first number.** Multipacks such as "4 Becher à 125 g" or "4 pots de 125 g" are counted as the whole pack. Cans use drained weight (Abtropfgewicht, poids égoutté) when it is given, so the price per kg is for the food, not the oil. Count packs such as "12 Rollen" or "Eggs x 6" show a price per piece when there is no weight or volume. Fractions such as "1/2 kg" and "1½ l" are read as well.
 - **Catches shrinkflation.** It remembers the pack size and price you saw before. When the same product comes back smaller for the same money, you get a warning.
 - **Private.** No account, no server, no tracking. Your history stays only in your browser.
 - **Free and open source** (MIT). Works in Chrome, Edge, Brave and Firefox.
@@ -55,6 +56,8 @@ Firefox keeps a manual install only until the next restart. For a permanent inst
 **My shop is not listed.** Open a product page and click "Check this page now" in the popup. If that works, please [request the shop](https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=shop-request.yml) so it can be added.
 
 **The badge shows the wrong size or price.** Please [report it](https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=wrong-result.yml) with the product link.
+
+**How does it work out the pack size?** It does not just take the first number on the page. A yogurt labelled "4 Becher à 125 g" or "4 pots de 125 g" is 500 g, not 125 g. A can that lists both a net weight and a drained weight (Abtropfgewicht, poids égoutté) uses the drained weight, so you compare the food, not the oil or brine. Count packs such as "12 Rollen", "30 lavettes" or "Eggs x 6" show a price per piece when no weight or volume is given. Fractions such as "1/2 kg" and "1½ l" are read as 500 g and 1.5 l.
 
 **Why does the popup ask for permission on some shops?** Only a few shops are enabled by default. Any other shop is switched on only when you click "Enable on this shop", so the extension never gets access to sites you don't use.
 
