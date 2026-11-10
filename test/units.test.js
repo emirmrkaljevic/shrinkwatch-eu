@@ -166,3 +166,25 @@ test('reads fractions written before the unit', () => {
   assert.strictEqual(parseSize('Promo 24/7, 500 g').amount, 500);
   assert.strictEqual(parseSize('Sok 2 x 1,5 l').amount, 3000);
 });
+
+test('multipacks written as a count of containers and the size of each', () => {
+  assert.deepStrictEqual(parseSize('Joghurt 4 Becher à 125 g'), { amount: 500, unit: 'g', count: 4, each: 125 });
+  assert.strictEqual(parseSize('Yaourt nature 4 pots de 125 g').amount, 500);
+  assert.strictEqual(parseSize('Bière 6 bouteilles de 25 cl').amount, 1500);
+  assert.strictEqual(parseSize('Yogurt 4 vasetti da 125 g').amount, 500);
+  assert.strictEqual(parseSize('Acqua 6 bottiglie da 1,5 l').amount, 9000);
+  assert.strictEqual(parseSize('Yogur 4 unidades de 125 g').amount, 500);
+  assert.strictEqual(parseSize('Thee 20 zakjes à 1,5 g').amount, 30);
+  assert.strictEqual(parseSize('Water 6 bottles of 500 ml').amount, 3000);
+  assert.strictEqual(parseSize('Jogurt 4 kubeczki po 125 g').amount, 500);
+  assert.strictEqual(parseSize('Kräutertee 20 Beutel x 1,75 g').amount, 35);
+  assert.strictEqual(parseSize('Kaffee 10 Kapseln à 5,2 g').amount, 52);
+  assert.strictEqual(parseSize('Yoghurt 4 st à 125 g').amount, 500);
+  assert.deepStrictEqual(parseSize('Eier 4 Packungen à 10 Stück'), { amount: 40, unit: 'pc', count: 4, each: 10 });
+  // Not a count: no container word, a year, or a brand between count and size.
+  assert.strictEqual(parseSize('Gouda 48 de 400 g').amount, 400);
+  assert.strictEqual(parseSize('Vin 2020 bouteilles de 75 cl').amount, 750);
+  assert.strictEqual(parseSize('Joghurt 4 Becher Danone 125 g').amount, 125);
+  // Unit price uses the whole pack.
+  assert.strictEqual(unitPrice(1.99, parseSize('Joghurt 4 Becher à 125 g')).value.toFixed(2), '3.98');
+});

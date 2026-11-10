@@ -15,6 +15,19 @@
   const MULTI = new RegExp(NUM + '\\s*(?:' + CONTAINER + '\\s*)?[x×*]\\s*' + NUM + '\\s*' + UNIT + '(?![a-zčćšžđа-яα-ω])', 'i');
   const SINGLE = new RegExp('(?:^|[^\\d.,])' + NUM + '\\s*' + UNIT + '(?![a-zčćšžđа-яα-ω])', 'gi');
 
+  // Count, a container word, then a joiner and the size of each: "4 Becher à 125 g", "4 pots de 125 g",
+  // "6 bottiglie da 1,5 l", "20 Beutel x 1,75 g", "6 bottles of 500 ml", "4 kubeczki po 125 g".
+  // Only listed container words, so "Gouda 48 de 400 g" or a year before "de" is never read as a count.
+  const CONTAINER_OF = '(?:becher|beutel|beuteln|kapseln|kapsel|dosen|flaschen|packungen|portionen|riegel|tüten|tafeln|schalen|stück|stk|st|' +
+    'pots|bouteilles|canettes|sachets|briques|boîtes|boites|capsules|portions|barres|tablettes|berlingots|pièces|' +
+    'vasetti|bottiglie|lattine|bustine|capsule|confezioni|pezzi|pz|vaschette|merendine|' +
+    'unidades|uds|botellas|latas|sobres|bolsitas|cápsulas|capsulas|tarrinas|briks|bricks|' +
+    'pakken|flessen|blikken|bekers|zakjes|stuks|porties|repen|' +
+    'bags|cans|bottles|sachets|pieces|bars|packs|cartons|tins|pods|tea bags|' +
+    'kubeczki|kubeczków|butelki|butelek|puszki|puszek|saszetki|saszetek|kapsułki|kapsułek|szt|' +
+    'flaskor|burkar|påsar|bägare|flasker|dåser|poser)';
+  const MULTI_OF = new RegExp('(?<![\\d.,])(\\d{1,3})\\s*' + CONTAINER_OF + '(?![\\p{L}])\\.?\\s*(?:(?:à|á|a|je|zu je|zu|de|da|di|van|of|po)(?![\\p{L}])|[x×*])\\s*' + NUM + '\\s*' + UNIT + '(?![\\p{L}])', 'iu');
+
   // Size first, count after: "500 g x 12".
   const MULTI_AFTER = new RegExp(NUM + '\\s*' + UNIT + '\\s*[x×*]\\s*(\\d{1,3})(?![.,]\\d|\\d|\\s*(?:mg|g|kg|ml|cl|l)\\b)', 'i');
   // Pack count written as words: "12er Pack", "6er-Pack", "10er", "Packung mit 12", "pack of 6", "6-pack", "lot de 6".
@@ -67,6 +80,13 @@
       const count = num(m[1]);
       const each = sizeNum(m[2], m[3]) * f;
       return { amount: round(count * each), unit: base, count, each: round(each) };
+    }
+    const o = t.match(MULTI_OF);
+    if (o) {
+      const count = parseInt(o[1], 10);
+      const [base, f] = UNITS[o[3].toLowerCase()];
+      const each = sizeNum(o[2], o[3]) * f;
+      if (count >= 2 && count <= 100 && each > 0) return { amount: round(count * each), unit: base, count, each: round(each) };
     }
     const a = t.match(MULTI_AFTER);
     if (a) {
