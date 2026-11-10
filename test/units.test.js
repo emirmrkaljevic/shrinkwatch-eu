@@ -188,3 +188,26 @@ test('multipacks written as a count of containers and the size of each', () => {
   // Unit price uses the whole pack.
   assert.strictEqual(unitPrice(1.99, parseSize('Joghurt 4 Becher à 125 g')).value.toFixed(2), '3.98');
 });
+
+test('prefers drained weight over the net weight of the can', () => {
+  const { parseDrainedSize, unitPrice } = require('../src/units.js');
+  assert.deepStrictEqual(parseSize('Thunfisch in Öl 185 g (Abtropfgewicht 140 g)'), { amount: 140, unit: 'g', count: 1, each: 140 });
+  assert.strictEqual(parseSize('Thunfisch, Nettofüllmenge 185 g, Abtropfgewicht 140 g').amount, 140);
+  assert.strictEqual(parseSize('Abtropfgewicht: 140 g').amount, 140);
+  assert.strictEqual(parseSize('Thon albacore 185 g, poids égoutté 140 g').amount, 140);
+  assert.strictEqual(parseSize('Thon 185 g dont 140 g égoutté').amount, 140);
+  assert.strictEqual(parseSize('Tonno 185 g, peso sgocciolato 140 g').amount, 140);
+  assert.strictEqual(parseSize('Atún 185 g, peso escurrido 140 g').amount, 140);
+  assert.strictEqual(parseSize('Tuna 185 g, drained weight 140 g').amount, 140);
+  assert.strictEqual(parseSize('Tonijn 185 g, uitlekgewicht 140 g').amount, 140);
+  assert.strictEqual(parseSize('Atum 185 g, peso escorrido 140 g').amount, 140);
+  assert.deepStrictEqual(parseSize('Mais 3 x 140 g (Abtropfgewicht 3 x 85 g)'), { amount: 255, unit: 'g', count: 3, each: 85 });
+  assert.strictEqual(parseSize('Thon, Abtropfgewicht 4 x 140 g').amount, 560);
+  // No drained phrase: the net weight is unchanged.
+  assert.strictEqual(parseSize('Thunfisch in Öl 185 g').amount, 185);
+  assert.strictEqual(parseDrainedSize('Thunfisch in Öl 185 g'), null);
+  // A cooking line with words between the size and "égoutté" is not a drained weight.
+  assert.strictEqual(parseSize('Pour 200 g de pâtes égouttées, 500 g de tomates').amount, 200);
+  // Unit price uses the food weight, not the can including oil.
+  assert.strictEqual(unitPrice(1.99, parseSize('Thunfisch in Öl 185 g (Abtropfgewicht 140 g)')).value.toFixed(2), '14.21');
+});

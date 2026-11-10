@@ -64,36 +64,67 @@
   // so "25p" (pence) or "5p" coupons elsewhere are never taken as a pack size.
   const SV_PIECES = /(?<![\p{L}\d.,])(\d{1,3})p(?=$|[\s,.;)])/u;
 
-  function parseSize(text, opts) {
+  // Drained weight of canned food in liquid is the amount of food, so it wins over the
+  // net weight of the can including brine or oil: "Abtropfgewicht 140 g", "poids égoutté 140 g".
+  const DRAINED_WORD = '(?:abtropf-?\\s*gewicht|poids(?:\\s+net)?\\s+[eé]goutt[eé]s?|[eé]goutt[eé]s?|peso(?:\\s+netto)?\\s+sgocciolato|peso\\s+escurrido|peso\\s+escorrido|uitlekgewicht|uitgelekt(?:e)?\\s+gewicht|drained(?:\\s+net)?\\s+weight|afdryppet\\s+v(?:æ|ae)gt|avrunnen\\s+vikt|valumapaino|(?:waga|masa(?:\\s+netto)?)\\s+po\\s+ods[aą]czeniu|hmotnost\\s+po\\s+scezen[ií]|lecsepegtetett(?:\\s+t[oö]meg)?|greutate\\s+scurs[aă]|στραγγισμ[έε]νο\\s+β[άα]ρος)';
+  const DRAINED_SIZE = '(?:' + NUM + '\\s*(?:' + CONTAINER + '\\s*)?[x×*]\\s*)?' + NUM + '\\s*' + UNIT;
+  const DRAINED_THEN = new RegExp(DRAINED_WORD + '\\s*[:=]?\\s*' + DRAINED_SIZE + '(?![\\p{L}])', 'iu');
+  const THEN_DRAINED = new RegExp(DRAINED_SIZE + '\\s*' + DRAINED_WORD, 'iu');
+
+  function fromDrainedMatch(m) {
+    if (!m) return null;
+    const count = m[1] != null ? num(m[1]) : 1;
+    const raw = m[2];
+    const uKey = m[3].toLowerCase();
+    const u = UNITS[uKey];
+    if (!u || u[0] === 'pc' || !(count >= 1 && count <= 100)) return null;
+    const each = sizeNum(raw, uKey) * u[1];
+    if (!(each > 0)) return null;
+    return { amount: round(count * each), unit: u[0], count, each: round(each) };
+  }
+
+  function parseDrainedSize(text) {
     if (!text) return null;
-    // Collapse French/Nordic space-grouped thousands ("1 000 g", "1\u202f000 ml") into digits
-    // before matching, so MULTI/SINGLE still see a plain number. Leave multipacks and decimals alone.
+    return fromDrainedMatch(prep(text).match(DRAINED_THEN) || prep(text).match(THEN_DRAINED));
+  }
+
+  // Lowercase, fold grouped thousands and fractions, the same prep parseSize uses.
+  function prep(text) {
     let t = String(text).toLowerCase().replace(/[\u00a0\u202f\u2009]/g, ' ');
     t = t.replace(/(\d{1,3}(?: \d{3})+)(?!\d)/g, (m) => m.replace(/ /g, ''));
-    // Fractions before a unit: "1/2 kg", "½ kg", "1½ l", "3/4 l" (ES, IT and Balkan shops).
-    // Without this, "1/2 kg" was read as 2 kg. Only proper fractions with a small denominator.
     t = t.replace(/(\d)?\s*([½¼¾])/g, (m, w, fr) => String((w ? Number(w) : 0) + { '½': 0.5, '¼': 0.25, '¾': 0.75 }[fr]));
     t = t.replace(/(?<![\d.,\/])([1-7])\s*\/\s*([2-8])(?![\d.,\/])(?=\s*\p{L})/gu, (m, a, b) => (Number(a) < Number(b) ? String(round(a / b)) : m));
+    return t;
+  }
+
+  function parseSize(text, opts) {
+    if (!text) return null;
+    const drained = parseDrainedSize(text);
+    let t = prep(text);
+    function finish(size) {
+      if (drained && (!size || (size.unit === drained.unit && drained.amount <= size.amount))) return drained;
+      return size;
+    }
     const m = t.match(MULTI);
     if (m) {
       const [base, f] = UNITS[m[3].toLowerCase()];
       const count = num(m[1]);
       const each = sizeNum(m[2], m[3]) * f;
-      return { amount: round(count * each), unit: base, count, each: round(each) };
+      return finish({ amount: round(count * each), unit: base, count, each: round(each) });
     }
     const o = t.match(MULTI_OF);
     if (o) {
       const count = parseInt(o[1], 10);
       const [base, f] = UNITS[o[3].toLowerCase()];
       const each = sizeNum(o[2], o[3]) * f;
-      if (count >= 2 && count <= 100 && each > 0) return { amount: round(count * each), unit: base, count, each: round(each) };
+      if (count >= 2 && count <= 100 && each > 0) return finish({ amount: round(count * each), unit: base, count, each: round(each) });
     }
     const a = t.match(MULTI_AFTER);
     if (a) {
       const [base, f] = UNITS[a[2].toLowerCase()];
       const count = num(a[3]);
       const each = sizeNum(a[1], a[2]) * f;
-      if (base !== 'pc' && count >= 2 && each > 0) return { amount: round(count * each), unit: base, count, each: round(each) };
+      if (base !== 'pc' && count >= 2 && each > 0) return finish({ amount: round(count * each), unit: base, count, each: round(each) });
     }
     let last = null;
     for (const s of t.matchAll(SINGLE)) {
@@ -107,20 +138,20 @@
     }
     if (last && last.amount > 0) {
       const count = last.unit === 'pc' ? 1 : packCount(t);
-      return count > 1 ? { amount: round(count * last.each), unit: last.unit, count, each: last.each } : last;
+      return finish(count > 1 ? { amount: round(count * last.each), unit: last.unit, count, each: last.each } : last);
     }
     const u = t.match(UNIT_FIRST);
     if (u) {
       const [base, f] = UNITS[u[1].toLowerCase()];
       const count = u[3] ? num(u[3]) : 1;
       const each = sizeNum(u[2], u[1]) * f;
-      if (each > 0) return { amount: round(count * each), unit: base, count, each: round(each) };
+      if (each > 0) return finish({ amount: round(count * each), unit: base, count, each: round(each) });
     }
     const pc = packCount(t);
-    if (pc > 1) return { amount: pc, unit: 'pc', count: 1, each: pc };
+    if (pc > 1) return finish({ amount: pc, unit: 'pc', count: 1, each: pc });
     const sv = opts && opts.svPieces ? t.match(SV_PIECES) : null;
-    if (sv) { const n = parseInt(sv[1], 10); if (n >= 2 && n <= 100) return { amount: n, unit: 'pc', count: 1, each: n }; }
-    return null;
+    if (sv) { const n = parseInt(sv[1], 10); if (n >= 2 && n <= 100) return finish({ amount: n, unit: 'pc', count: 1, each: n }); }
+    return finish(null);
   }
 
   function round(x) { return Math.round(x * 1000) / 1000; }
@@ -166,7 +197,7 @@
     try { return new Intl.NumberFormat('en-GB', { style: 'currency', currency: cur || 'EUR' }).format(n); } catch (e) { return n.toFixed(2) + ' ' + cur; }
   }
 
-  const api = { parseSize, unitPrice, parsePrice, formatSize, formatMoney };
+  const api = { parseSize, parseDrainedSize, unitPrice, parsePrice, formatSize, formatMoney };
   root.SW = Object.assign(root.SW || {}, api);
   if (typeof module !== 'undefined') module.exports = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

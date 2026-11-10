@@ -99,16 +99,19 @@
 
   // Labels shops use for a separate pack-size field, in the languages of supported shops.
   const SIZE_LABEL = /^(inhalt|nettoinhalt|füllmenge|menge|inhoud|contenu|poids net|poids|contenance|contenuto|peso netto|quantità|contenido|peso neto|cantidad|conteúdo|peso líquido|quantidade|gramatura|zawartość|waga netto|pojemność|hmotnost|obsah|množství|kiszerelés|nettó tömeg|tartalom|cantitate|greutate netă|gramaj|neto količina|količina|neto|pakiranje|masa|teža|neto masa|zapremina|nettovikt|vikt|mängd|volym|storlek|förpackning|nettovægt|netto mængde|nettomængde|nettoindhold|indhold|mængde|нето|нето количество|количество|разфасовка|грамаж|sisältö|nettopaino|määrä|kogus|neto kogis|kiekis|svoris|daudzums|tilpums|svars|καθαρό βάρος|βάρος|ποσότητα|περιεκτικότητα|net weight|net content|size|pack size|weight|quantity)\s*:?$/i;
+  // Drained-weight labels (canned food in liquid). Preferred over net weight for the unit price.
+  const DRAINED_LABEL = /^(?:abtropf-?gewicht|poids(?:\s+net)?\s+[eé]goutt[eé]s?|peso(?:\s+netto)?\s+sgocciolato|peso\s+escurrido|peso\s+escorrido|uitlekgewicht|uitgelekt(?:e)?\s+gewicht|drained(?:\s+net)?\s+weight|afdryppet\s+v(?:æ|ae)gt|avrunnen\s+vikt|valumapaino|(?:waga|masa(?:\s+netto)?)\s+po\s+ods[aą]czeniu|hmotnost\s+po\s+scezen[ií]|lecsepegtetett(?:\s+t[oö]meg)?|greutate\s+scurs[aă]|στραγγισμ[έε]νο\s+β[άα]ρος)\s*:?$/i;
 
-  function labelledSize(doc) {
+  function labelledSize(doc, labelRe) {
+    const re = labelRe || SIZE_LABEL;
     const cands = doc.querySelectorAll('dt, th, td, span, div, li, strong, b, label, p');
     for (const el of cands) {
       if (el.childElementCount > 3) continue;
       const t = (el.textContent || '').replace(/\s+/g, ' ').trim();
       if (!t || t.length > 40) continue;
       const m = t.match(/^([^:]{2,30}):\s*(.+)$/);
-      if (m && SIZE_LABEL.test(m[1].trim())) { const s = U.parseSize(m[2]); if (s) return s; }
-      if (!SIZE_LABEL.test(t)) continue;
+      if (m && re.test(m[1].trim())) { const s = U.parseSize(m[2]); if (s) return s; }
+      if (!re.test(t)) continue;
       const next = el.nextElementSibling || (el.parentElement && el.parentElement.nextElementSibling);
       if (next) { const s = U.parseSize(next.textContent); if (s) return s; }
     }
@@ -392,6 +395,9 @@
     // A short description is often just the pack ("la bouteille 1L"); og:title may add it to a name without one.
     const shortDesc = desc.length <= 60 ? U.parseSize(desc) : null;
     let size = custom.size || sizeFrom(doc, adapter.size) || structured || nameSize || shortDesc || U.parseSize(og) || labelledSize(doc) || sizeNearTitle(doc) || U.parseSize(doc.title) || U.parseSize(desc) || derivedSize(doc, price, adapter);
+    // A drained-weight field or phrase on the page wins over a net weight in the title or structured data.
+    const drained = labelledSize(doc, DRAINED_LABEL) || U.parseDrainedSize(name) || U.parseDrainedSize(desc) || U.parseDrainedSize(og) || U.parseDrainedSize(doc.title);
+    if (drained && drained.unit !== 'pc' && (!size || (size.unit === drained.unit && drained.amount <= size.amount))) size = drained;
     // Shops that price per piece ("3,33 kr/st") may still print a weight in the title ("Ägg Frigående M 348g").
     // A piece count from the title or the line under it wins when pack price / count matches that per-piece price.
     let shopEach = null;

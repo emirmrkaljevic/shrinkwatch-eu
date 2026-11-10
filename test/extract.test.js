@@ -94,3 +94,13 @@ test('multipack name wins over a per-item netContent', () => {
   assert.strictEqual(p.size.amount, 6000);
   assert.strictEqual(p.unitPrice.value.toFixed(2), '15.08');
 });
+
+test('prefers a labelled drained weight over the net weight in the title', () => {
+  const page = parseHTML('<html><body><h1>Thunfisch in Olivenöl 185 g</h1><span class="price">1,99 €</span><dl><dt>Nettofüllmenge</dt><dd>185 g</dd><dt>Abtropfgewicht</dt><dd>140 g</dd></dl></body></html>').document;
+  const p = extract(page, { price: '.price' });
+  assert.strictEqual(p.size.amount, 140);
+  assert.strictEqual(p.unitPrice.per, 'kg');
+  assert.strictEqual(p.unitPrice.value.toFixed(2), '14.21');
+  const fr = parseHTML('<html><body><h1>Thon albacore 185 g</h1><p class="price">2,15 €</p><p>Poids net : 185 g</p><p>Poids égoutté : 140 g</p></body></html>').document;
+  assert.strictEqual(extract(fr, { price: '.price' }).size.amount, 140);
+});

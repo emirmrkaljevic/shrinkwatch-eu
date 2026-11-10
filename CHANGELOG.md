@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Drained weight is preferred for canned food in liquid: "Abtropfgewicht 140 g", "poids égoutté 140 g", "dont 140 g égoutté", "peso sgocciolato", "peso escurrido", "uitlekgewicht", "drained weight". The net weight of the can including brine or oil was used, so the price per kg looked too low.
+
 ## 0.3.13 (10 November 2026)
 
 - Multipacks written as a count of containers and the size of each are read as the whole pack: "4 Becher à 125 g", "4 pots de 125 g", "6 bottiglie da 1,5 l", "4 unidades de 125 g", "20 zakjes à 1,5 g", "6 bottles of 500 ml", "4 kubeczki po 125 g", "20 Beutel x 1,75 g". Only one container was counted, so the price per kg or litre looked several times too high.
