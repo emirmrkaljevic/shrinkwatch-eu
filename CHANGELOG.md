@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Count packs written with a product word, or with a times sign and no size, are read as a price per piece when the label has no weight or volume: "12 Rollen", "6 rolls", "12 rouleaux", "30 lavettes", "Eggs x 6", "x 12". "10 Stück", "20 pz" and "10 szt." were already read this way.
+
 - Drained weight is preferred for canned food in liquid: "Abtropfgewicht 140 g", "poids égoutté 140 g", "dont 140 g égoutté", "peso sgocciolato", "peso escurrido", "uitlekgewicht", "drained weight". The net weight of the can including brine or oil was used, so the price per kg looked too low.
 
 ## 0.3.13 (10 November 2026)

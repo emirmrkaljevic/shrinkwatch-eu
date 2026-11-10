@@ -211,3 +211,32 @@ test('prefers drained weight over the net weight of the can', () => {
   // Unit price uses the food weight, not the can including oil.
   assert.strictEqual(unitPrice(1.99, parseSize('Thunfisch in Öl 185 g (Abtropfgewicht 140 g)')).value.toFixed(2), '14.21');
 });
+
+test('count packs with a product word or a times sign, when there is no weight or volume', () => {
+  assert.deepStrictEqual(parseSize('Küchenrollen 12 Rollen'), { amount: 12, unit: 'pc', count: 1, each: 12 });
+  assert.strictEqual(parseSize('12 Rollen').amount, 12);
+  assert.strictEqual(parseSize('Kitchen Towels 6 rolls').amount, 6);
+  assert.strictEqual(parseSize('x 12 rolls').amount, 12);
+  assert.strictEqual(parseSize('Papier toilette x 12 rouleaux').amount, 12);
+  assert.strictEqual(parseSize('12 rouleaux').amount, 12);
+  assert.strictEqual(parseSize('30 lavettes').amount, 30);
+  assert.strictEqual(parseSize('Lavettes x 30').amount, 30);
+  assert.strictEqual(parseSize('Lingettes 80 lingettes').amount, 80);
+  assert.strictEqual(parseSize('Toiletpapier 8 rollen').amount, 8);
+  assert.strictEqual(parseSize('Carta igienica 12 rotoli').amount, 12);
+  assert.strictEqual(parseSize('Papel 6 rollos').amount, 6);
+  assert.strictEqual(parseSize('Eggs x 6').amount, 6);
+  assert.strictEqual(parseSize('Pack x 6').amount, 6);
+  assert.deepStrictEqual(parseSize('x 12'), { amount: 12, unit: 'pc', count: 1, each: 12 });
+  // Already-supported piece words still work, and weight still wins.
+  assert.strictEqual(parseSize('Eier 10 Stück').amount, 10);
+  assert.strictEqual(parseSize('Uova 20 pz').amount, 20);
+  assert.strictEqual(parseSize('Jaja 10 szt.').amount, 10);
+  assert.strictEqual(parseSize('Küchenrollen 12 Rollen 2.4 kg').unit, 'g');
+  assert.strictEqual(parseSize('Cola 6 x 0,5 l').amount, 3000);
+  // A dimension is not a pack count.
+  assert.strictEqual(parseSize('Beutel 4.5 x 6 cm'), null);
+  // Unit price is per piece.
+  assert.strictEqual(unitPrice(2.40, parseSize('Küchenrollen 12 Rollen')).per, 'pc');
+  assert.strictEqual(unitPrice(2.40, parseSize('Küchenrollen 12 Rollen')).value.toFixed(2), '0.20');
+});
