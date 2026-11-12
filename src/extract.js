@@ -227,7 +227,8 @@
   // When only the shop's own unit price is shown ("1,99 €/kg"), derive the pack size from it.
   // Greek shops write the unit as a word: "1,05 €/λίτρο", "8,40 €/κιλό".
   // The number must start the figure: in "1,367 €/L" (three decimals, Mercadona) it must not match "367 €/L".
-  const UNIT_PRICE = /(?<![\d.,])(\d+(?:[.,]\d{1,2})?)\s*(?:€|eur|kr|kč|zł|ft|lei|ron|rsd|din|km|bam|лв|bgn|huf|pln|czk|sek|dkk)?\s*\/\s*(?:1\s*)?(kg|l|100\s*g|100\s*ml|κιλό|κιλο|λίτρο|λιτρο)(?![a-z0-9_α-ωά-ώ])/i;
+  // litre/liter before l, so "£1.15/litre" (Tesco UK and IE) is not read as 1.15 l.
+  const UNIT_PRICE = /(?<![\d.,])(\d+(?:[.,]\d{1,2})?)\s*(?:€|eur|£|gbp|kr|kč|zł|ft|lei|ron|rsd|din|km|bam|лв|bgn|huf|pln|czk|sek|dkk)?\s*\/\s*(?:1\s*)?(kg|litre|liter|l|100\s*g|100\s*ml|κιλό|κιλο|λίτρο|λιτρο)(?![a-z0-9_α-ωά-ώ])/i;
   // Lidl writes it the other way round: "1 kg = 344,66 Kč", "1 l = 4 998 Ft" (thousands space), "1 l = 9,99".
   const UNIT_PRICE_EQ = /(?<![\d.,])(1|100)\s*(kg|g|l|ml)\s*=\s*(\d{1,3}(?:[ \u00a0\u202f]\d{3})+(?:[.,]\d{1,2})?|\d+(?:[.,]\d{1,2})?)(?![\d])/i;
   // Either form as { value, per: 'kg' | 'l' } for one kg or litre.
@@ -282,6 +283,22 @@
     return null;
   }
 
+  // A short leaf after the title that is only a unit price ("£1.15/litre", "€1.12/litre").
+  function visibleShopUnitPrice(doc) {
+    const h1 = titleEl(doc);
+    if (!h1) return null;
+    let after = false, seen = 0;
+    for (const el of doc.querySelectorAll('body *')) {
+      if (el === h1) { after = true; continue; }
+      if (!after || el.childElementCount > 0 || /^(script|style)$/i.test(el.tagName)) continue;
+      if (isOther(el) || isStruck(el) || isHidden(el)) continue;
+      if (++seen > 200) break;
+      const t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+      if (t && t.length <= 40 && unitPriceIn(t)) return el;
+    }
+    return null;
+  }
+
   // The shop's own unit price next to the pack price ("10,00 € / 1l"), as { value, per: 'kg' | 'l' }.
   function shopUnitPrice(doc, adapter) {
     let scope = first(doc, adapter.unitPrice);
@@ -291,6 +308,7 @@
       if (scope && !unitPriceIn(scope.innerText || scope.textContent || '')) scope = null;
     }
     if (!scope) scope = labelledUnitPrice(doc);
+    if (!scope) scope = visibleShopUnitPrice(doc);
     if (!scope) return null;
     return unitPriceIn(scope.innerText || scope.textContent || '');
   }
@@ -334,17 +352,32 @@
     const own = text(doc, adapter.price);
     const sym = own && own.match(/[€£]/);
     if (sym) return SYMBOL[sym[0]];
+    const el = firstVisiblePrice(doc);
+    if (!el) return null;
+    const m = (el.textContent || '').replace(/\s+/g, ' ').trim().match(PRICE_WITH_SYMBOL);
+    return m ? SYMBOL[m[1] || m[2]] : null;
+  }
+
+  // A leaf after the title whose whole text is a pack price ("£1.30", "€2.25"). Unit prices such as
+  // "£1.15/litre" do not match, and recommendation tiles and struck prices are skipped.
+  function firstVisiblePrice(doc) {
     const h1 = titleEl(doc);
     if (!h1) return null;
     let after = false, seen = 0;
     for (const el of doc.querySelectorAll('body *')) {
       if (el === h1) { after = true; continue; }
-      if (!after || el.childElementCount > 0 || isOther(el) || isStruck(el)) continue;
+      if (!after || el.childElementCount > 0 || /^(script|style)$/i.test(el.tagName)) continue;
+      if (isOther(el) || isStruck(el) || isHidden(el)) continue;
       if (++seen > 200) break;
-      const m = (el.textContent || '').replace(/\s+/g, ' ').trim().match(PRICE_WITH_SYMBOL);
-      if (m) return SYMBOL[m[1] || m[2]];
+      const t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+      if (PRICE_WITH_SYMBOL.test(t)) return el;
     }
     return null;
+  }
+
+  function visiblePrice(doc) {
+    const el = firstVisiblePrice(doc);
+    return el ? U.parsePrice((el.textContent || '').replace(/\s+/g, ' ').trim()) : null;
   }
 
   // Currency of the shop domain when the adapter knows it: currencyByHost { 'tesco.ie': 'EUR' } or currency.
@@ -371,6 +404,7 @@
     let price = custom.price || U.parsePrice(offer.price);
     if (!(price > 0)) price = U.parsePrice(text(doc, adapter.price) || meta(doc, 'product:price:amount') || meta(doc, 'price') || microdata(doc, 'price'));
     if (!(price > 0)) price = splitPriceAfterTitle(doc);
+    if (!(price > 0)) price = visiblePrice(doc);
     if (!(price > 0)) price = priceFromUnitPrice(doc, adapter, sizeFrom(doc, adapter.size) || U.parseSize(name));
     // Structured data sometimes names the wrong currency (tesco.ie says GBP next to a € price):
     // a currency known for the shop domain wins, otherwise the symbol printed with the price.

@@ -100,7 +100,7 @@
     // Ireland / Nordics / Baltics / Greece
     // /groceries/en-IE/products/<id> (old) and /shop/en-IE/products/<id> (since October 2026)
     // tesco.ie product JSON-LD says GBP next to a € price, so the currency comes from the domain.
-    A('tesco', 'IE/UK', ['tesco.ie', 'tesco.com'], { status: 'verified (tesco.ie)', productPath: /\/products\//, currencyByHost: { 'tesco.ie': 'EUR', 'tesco.com': 'GBP' } }),
+    A('tesco', 'IE/UK', ['tesco.ie', 'tesco.com'], { status: 'verified (tesco.ie, tesco.com)', productPath: /\/products\//, currencyByHost: { 'tesco.ie': 'EUR', 'tesco.com': 'GBP' } }),
     A('dunnes', 'IE', ['dunnesstoresgrocery.com'], { status: 'verified (real Chrome, 19 Oct 2026)' }),
     A('supervalu', 'IE', ['shop.supervalu.ie']),
     A('ica', 'SE', ['handlaprivatkund.ica.se'], { status: 'verified (real Chrome, 20 Oct 2026)' }),

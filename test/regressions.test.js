@@ -51,6 +51,39 @@ test('Tesco IE: JSON-LD says GBP but the shop sells in euro', () => {
   assert.strictEqual(extract(doc, {}, '').currency, 'EUR');
 });
 
+test('Tesco UK: visible pound price and /litre unit price on tesco.com', () => {
+  const doc = load('tesco-uk.html');
+  const uk = extract(doc, adapterFor('www.tesco.com'), 'https://www.tesco.com/groceries/en-GB/products/252207537');
+  assert.strictEqual(uk.name, 'Tesco British Semi Skimmed Milk 1.13L, 2 Pints');
+  assert.strictEqual(uk.price, 1.3);
+  assert.strictEqual(uk.currency, 'GBP');
+  assert.strictEqual(uk.size.amount, 1130);
+  assert.strictEqual(uk.size.unit, 'ml');
+  assert.ok(!uk.unitPriceFromShop); // 1.30 / 1.13 l matches the shop £1.15/litre within 5 %
+  assert.strictEqual(badge(uk), '£1.15 / l (1.13 l)');
+  // tesco.ie would still force euro if this markup were used there
+  assert.strictEqual(extract(doc, adapterFor('www.tesco.ie'), 'https://www.tesco.ie/shop/en-IE/products/252207537').currency, 'EUR');
+});
+
+test('shop unit price written as £/litre is read, and a pint-only title is 568 ml each', () => {
+  // Pack price disagrees with the shop figure by more than 5 %: show £1.15/litre.
+  const disagree = page('<meta property="og:title" content="Milk 1.13L">',
+    '<h1>Milk 1.13L</h1><p>£2.00</p><p>£1.15/litre</p>');
+  const a = adapterFor('www.tesco.com');
+  const url = 'https://www.tesco.com/groceries/en-GB/products/252207537';
+  const p = extract(disagree, a, url);
+  assert.strictEqual(p.price, 2);
+  assert.strictEqual(p.unitPriceFromShop, true);
+  assert.strictEqual(badge(p), '£1.15 / l (1.13 l)');
+  // Title only in pints, as on Tesco "2 Pints" labels when no litre figure is given.
+  const pints = page('<meta property="og:title" content="Milk 2 Pints">',
+    '<h1>Milk 2 Pints</h1><p>£1.30</p>');
+  const q = extract(pints, a, url);
+  assert.strictEqual(q.size.amount, 1136);
+  assert.strictEqual(q.currency, 'GBP');
+  assert.strictEqual(badge(q), '£1.14 / l (1.136 l)');
+});
+
 test('declared currency is kept when nothing on the page contradicts it', () => {
   const doc = page(ld({ '@type': 'Product', name: 'Milk 2 l', offers: { price: 1.99, priceCurrency: 'GBP' } }), '<h1>Milk 2 l</h1><p>£1.99</p>');
   assert.strictEqual(extract(doc, {}, 'https://shop.example/p/1').currency, 'GBP');

@@ -240,3 +240,15 @@ test('count packs with a product word or a times sign, when there is no weight o
   assert.strictEqual(unitPrice(2.40, parseSize('Küchenrollen 12 Rollen')).per, 'pc');
   assert.strictEqual(unitPrice(2.40, parseSize('Küchenrollen 12 Rollen')).value.toFixed(2), '0.20');
 });
+
+test('UK pint packs are 568 ml each, and a metric size on the same label wins', () => {
+  // Tesco UK labels: "568Ml, 1 Pint", "1.13L, 2 Pints", "3.408L, 6 Pints". 1 pint = 568 ml.
+  assert.deepStrictEqual(parseSize('2 Pints'), { amount: 1136, unit: 'ml', count: 1, each: 1136 });
+  assert.deepStrictEqual(parseSize('6 pints'), { amount: 3408, unit: 'ml', count: 1, each: 3408 });
+  assert.deepStrictEqual(parseSize('1 Pint'), { amount: 568, unit: 'ml', count: 1, each: 568 });
+  assert.strictEqual(parseSize('2 pint').amount, 1136);
+  // The marketed metric size is used when both are written: 1.13 L, not 2 x 568 ml.
+  assert.deepStrictEqual(parseSize('Tesco British Semi Skimmed Milk 1.13L, 2 Pints'), { amount: 1130, unit: 'ml', count: 1, each: 1130 });
+  assert.strictEqual(parseSize('Tesco British Whole Milk 568Ml, 1 Pint').amount, 568);
+  assert.strictEqual(parseSize('Tesco British Semi Skimmed Milk 3.408L, 6 Pints').amount, 3408);
+});

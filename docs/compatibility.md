@@ -202,3 +202,15 @@ Real desktop Chrome with the unpacked 0.3.9 build, "Enable on this shop" and rel
 | Colruyt (BE) | - | - | Product pages show no price without logging in, and search stayed empty, so it is still unverified |
 
 Albert Heijn loaded normally this time (it showed "Access Denied" on 16 October). ah.be was not checked.
+
+## Tesco UK (12 November 2026)
+
+Public tesco.com product pages, opened as published text (the site still blocks direct automated browsers, so this was not a real-desktop-Chrome check). A fixture from the first page is in `test/fixtures/tesco-uk.html`.
+
+| Shop | Product | Result |
+|---|---|---|
+| Tesco (UK) | tesco.com/groceries/en-GB/products/252207537 (Tesco British Semi Skimmed Milk 1.13L, 2 Pints, £1.30, shop £1.15/litre) | Works after a fix: £1.15 / l (1.13 l). First run on the public page text: no badge, because the pack price is only in the visible "£1.30" and there is no structured price or Tesco price selector. The shop unit price is written as "£1.15/litre", which was not read. Both are fixed. |
+| Tesco (UK) | tesco.com/groceries/en-GB/products/251314233 (Tesco British Whole Milk 568Ml, 1 Pint, £0.85, shop £1.50/litre) | Same reading: 568 ml from the title, £0.85, £1.50 / l |
+| Tesco (UK) | tesco.com/groceries/en-GB/products/255986260 (Tesco British Semi Skimmed Milk 3.408L, 6 Pints, £2.55, shop £0.75/litre) | Same reading: 3.408 l from the title, £2.55, £0.75 / l |
+
+UK pint sizes with no litre or millilitre figure ("2 Pints") are 568 ml each (2 pints = 1.136 l). When the title has both, the metric size is used: "1.13L, 2 Pints" is 1.13 l, which matches the shop's £1.15/litre on the £1.30 pack.

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Tesco UK (tesco.com): a pack price printed on the page as "£1.30" is read when the markup has no structured price, so the badge appears. Shop unit prices written as "£1.15/litre" are used for the cross-check. A UK pint is 568 ml, so a label that only says "2 Pints" or "6 Pints" still gets a price per litre; a metric size on the same label still wins ("1.13L, 2 Pints" is 1.13 l). Checked on public tesco.com product pages on 12 November 2026 (the site blocks direct automated browsers): £1.15 / l on Tesco British Semi Skimmed Milk 1.13L, 2 Pints (£1.30).
+
 ## 0.3.14 (11 November 2026)
 
 - Count packs written with a product word, or with a times sign and no size, are read as a price per piece when the label has no weight or volume: "12 Rollen", "6 rolls", "12 rouleaux", "30 lavettes", "Eggs x 6", "x 12". "10 Stück", "20 pz" and "10 szt." were already read this way.
