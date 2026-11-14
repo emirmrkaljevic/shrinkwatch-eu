@@ -14,6 +14,8 @@ Real desktop Chrome check on 20 October 2026: Mercadona, Auchan FR, Conad and IC
 
 Public product-page check on 12 November 2026: Tesco UK (tesco.com) works. The site blocks direct automated browsers, so the check used the public page text (title, pack price and £/litre unit price) and a fixture built from it. See [compatibility.md](compatibility.md#tesco-uk-12-november-2026).
 
+Public product-page check on 14 November 2026: Morrisons UK (groceries.morrisons.com) works. The public HTML has schema.org product data (pack price and size) and a visible £/litre unit price. See [compatibility.md](compatibility.md#morrisons-uk-14-november-2026).
+
 Real desktop Chrome check on 24 October 2026: Lidl FR, ES, IT, PL and NL work. ES, IT and PL needed a fix first (pack size printed under the price, and zloty prices without a currency sign). See [compatibility.md](compatibility.md#real-browser-check-24-october-2026).
 
 Listing tiles (15 October 2026): Tommy shows unit-price badges on category/search tiles. Konzum, Mercator and Maxi already print unit prices on tiles; a shrinkflation marker is added when local history shows a smaller pack (verified on Konzum).
@@ -75,6 +77,7 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | RO | freshful | freshful.ro | opt-in | Works |
 | BG | ebag | ebag.bg | opt-in | Price works; some items show no pack size |
 | IE/UK | tesco | tesco.ie, tesco.com | opt-in | Works (tesco.ie, real Chrome, 16 Oct 2026: €1.13 / l on 2 l milk; tesco.com public page, 12 Nov 2026: £1.15 / l on 1.13 l milk) |
+| UK | morrisons | groceries.morrisons.com | opt-in | Works (public page, 14 Nov 2026: £1.06 / l on 1.136 l milk) |
 | IE | dunnes | dunnesstoresgrocery.com | opt-in | Verified (real Chrome, 19 Oct 2026) |
 | IE | supervalu | shop.supervalu.ie | opt-in | Works |
 | SE | ica | handlaprivatkund.ica.se | opt-in | Verified (real Chrome, 20 Oct 2026); choose a store first |

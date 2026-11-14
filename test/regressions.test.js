@@ -84,6 +84,19 @@ test('shop unit price written as £/litre is read, and a pint-only title is 568 
   assert.strictEqual(badge(q), '£1.14 / l (1.136 l)');
 });
 
+test('Morrisons UK: schema.org pack price and size on groceries.morrisons.com', () => {
+  const doc = load('morrisons-uk.html');
+  const p = extract(doc, adapterFor('groceries.morrisons.com'), 'https://groceries.morrisons.com/products/morrisons-british-semi-skimmed-milk-2-pints/103051652');
+  assert.strictEqual(p.name, 'Morrisons British Semi Skimmed Milk  2 Pints');
+  assert.strictEqual(p.price, 1.2);
+  assert.strictEqual(p.currency, 'GBP');
+  assert.strictEqual(p.id, '103051652');
+  assert.strictEqual(p.size.amount, 1136);
+  assert.strictEqual(p.size.unit, 'ml');
+  assert.ok(!p.unitPriceFromShop); // 1.20 / 1.136 l matches the shop £1.06/litre within 5 %
+  assert.strictEqual(badge(p), '£1.06 / l (1.136 l)');
+});
+
 test('declared currency is kept when nothing on the page contradicts it', () => {
   const doc = page(ld({ '@type': 'Product', name: 'Milk 2 l', offers: { price: 1.99, priceCurrency: 'GBP' } }), '<h1>Milk 2 l</h1><p>£1.99</p>');
   assert.strictEqual(extract(doc, {}, 'https://shop.example/p/1').currency, 'GBP');

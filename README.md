@@ -1,6 +1,6 @@
 # ShrinkWatch EU
 
-[![Latest release](https://img.shields.io/github/v/release/emirmrkaljevic/shrinkwatch-eu)](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest) [![Firefox Add-ons](https://img.shields.io/amo/v/shrinkwatch-eu?label=firefox%20add-ons)](https://addons.mozilla.org/en-US/firefox/addon/shrinkwatch-eu/) [![Shops](https://img.shields.io/badge/shops-71-2e7d32)](docs/shops.md) [![Website](https://img.shields.io/badge/website-shrinkwatch--eu-2e7d32)](https://emirmrkaljevic.github.io/shrinkwatch-eu/) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![ShrinkWatch EU | AlternativeTo](https://alternativeto.net/static/badges/badge-compact-color.svg)](https://alternativeto.net/software/shrinkwatch-eu/about/?utm_source=badge&utm_medium=referral)
+[![Latest release](https://img.shields.io/github/v/release/emirmrkaljevic/shrinkwatch-eu)](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest) [![Firefox Add-ons](https://img.shields.io/amo/v/shrinkwatch-eu?label=firefox%20add-ons)](https://addons.mozilla.org/en-US/firefox/addon/shrinkwatch-eu/) [![Shops](https://img.shields.io/badge/shops-72-2e7d32)](docs/shops.md) [![Website](https://img.shields.io/badge/website-shrinkwatch--eu-2e7d32)](https://emirmrkaljevic.github.io/shrinkwatch-eu/) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![ShrinkWatch EU | AlternativeTo](https://alternativeto.net/static/badges/badge-compact-color.svg)](https://alternativeto.net/software/shrinkwatch-eu/about/?utm_source=badge&utm_medium=referral)
 
 **[Install for Firefox](https://addons.mozilla.org/en-US/firefox/addon/shrinkwatch-eu/)** from addons.mozilla.org, one click, updates automatically. On Chrome, Edge and Brave, install from the release zip (steps below).
 
@@ -15,15 +15,15 @@
 
 ## What it does for you
 
-- **No more mental math.** Every product page shows the price per kg, litre or piece, so you can compare packs of different sizes at a glance.
-- **Reads the pack, not just the first number.** Multipacks such as "4 Becher à 125 g" or "4 pots de 125 g" are counted as the whole pack. Cans use drained weight (Abtropfgewicht, poids égoutté) when it is given, so the price per kg is for the food, not the oil. Count packs such as "12 Rollen" or "Eggs x 6" show a price per piece when there is no weight or volume. Fractions such as "1/2 kg" and "1½ l" are read as well.
+- **Unit prices on the page.** Every product page shows the price per kg, litre or piece, so you can compare packs of different sizes.
+- **Reads the pack, not just the first number.** Multipacks such as "4 Becher à 125 g" or "4 pots de 125 g" are counted as the whole pack, and cans use drained weight (Abtropfgewicht, poids égoutté) when it is given, so the price per kg is for the food, not the oil. Count packs such as "12 Rollen" or "Eggs x 6" show a price per piece when there is no weight or volume. Fractions such as "1/2 kg" and "1½ l" are read as well.
 - **Catches shrinkflation.** It remembers the pack size and price you saw before. When the same product comes back smaller for the same money, you get a warning.
 - **Private.** No account, no server, no tracking. Your history stays only in your browser.
 - **Free and open source** (MIT). Works in Chrome, Edge, Brave and Firefox.
 
 ## Install in 1 minute
 
-On Firefox it is one click from the Add-ons store. On Chrome, Edge and Brave you install it from a zip file for now, which takes about a minute.
+On Chrome, Edge and Brave you install it from a zip file for now:
 
 **Chrome, Edge or Brave**
 
@@ -45,7 +45,7 @@ Firefox keeps a manual install only until the next restart. For a permanent inst
 
 ## Which shops work
 
-71 grocery and drugstore web shops in 25 EU countries plus Serbia and Bosnia and Herzegovina. **66 of them are verified** on real product pages in a real browser. The other 5 (Intermarché, Cours U, Colruyt, Tesco Czechia and Coop Italy) are included but not verified yet, because their sites blocked the test browser or need a login to show prices. Full list with check results: [docs/shops.md](docs/shops.md).
+72 grocery and drugstore web shops across Europe. **67 of them are verified** on real product pages. The other 5 (Intermarché, Cours U, Colruyt, Tesco Czechia and Coop Italy) are included but not verified yet, because their sites blocked the test browser or need a login to show prices. Full list with check results: [docs/shops.md](docs/shops.md).
 
 - **Work right after install:** Konzum, Tommy, Mercator, Bingo, Maxi and Lidl (DE, AT, HR, SI, RS, BA). On Tommy category and search pages you also get unit prices on product tiles.
 - **Other shops:** open the shop, click the ShrinkWatch icon and choose "Enable on this shop". The browser asks for access to that shop only.
@@ -57,7 +57,7 @@ Firefox keeps a manual install only until the next restart. For a permanent inst
 
 **The badge shows the wrong size or price.** Please [report it](https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=wrong-result.yml) with the product link.
 
-**How does it work out the pack size?** It does not just take the first number on the page. A yogurt labelled "4 Becher à 125 g" or "4 pots de 125 g" is 500 g, not 125 g. A can that lists both a net weight and a drained weight (Abtropfgewicht, poids égoutté) uses the drained weight, so you compare the food, not the oil or brine. Count packs such as "12 Rollen", "30 lavettes" or "Eggs x 6" show a price per piece when no weight or volume is given. Fractions such as "1/2 kg" and "1½ l" are read as 500 g and 1.5 l.
+**How does it work out the pack size?** It reads the whole pack, not just the first number, uses drained weight when a can lists one, and can show a price per piece for count packs. If a size looks wrong, please [report it](https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=wrong-result.yml) with the product link.
 
 **Why does the popup ask for permission on some shops?** Only a few shops are enabled by default. Any other shop is switched on only when you click "Enable on this shop", so the extension never gets access to sites you don't use.
 

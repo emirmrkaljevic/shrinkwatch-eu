@@ -214,3 +214,14 @@ Public tesco.com product pages, opened as published text (the site still blocks 
 | Tesco (UK) | tesco.com/groceries/en-GB/products/255986260 (Tesco British Semi Skimmed Milk 3.408L, 6 Pints, £2.55, shop £0.75/litre) | Same reading: 3.408 l from the title, £2.55, £0.75 / l |
 
 UK pint sizes with no litre or millilitre figure ("2 Pints") are 568 ml each (2 pints = 1.136 l). When the title has both, the metric size is used: "1.13L, 2 Pints" is 1.13 l, which matches the shop's £1.15/litre on the £1.30 pack.
+
+## Morrisons UK (14 November 2026)
+
+Public groceries.morrisons.com product pages, opened with curl (the public HTML includes schema.org product data). A stripped fixture from the first page is in `test/fixtures/morrisons-uk.html`.
+
+| Shop | Product | Result |
+|---|---|---|
+| Morrisons (UK) | groceries.morrisons.com/products/morrisons-british-semi-skimmed-milk-2-pints/103051652 (Morrisons British Semi Skimmed Milk 2 Pints, 1.136L, £1.20, shop £1.06/litre) | Works: £1.06 / l (1.136 l). The pack price and size come from schema.org; the visible £1.06/litre matches within 5 %. |
+| Morrisons (UK) | groceries.morrisons.com/products/morrisons-british-semi-skimmed-milk-2-pint/113239376 (Morrisons British Semi Skimmed Milk 2 Pint, 1.136L, £1.20, shop £1.06/litre) | Same reading: £1.06 / l (1.136 l) |
+| Morrisons (UK) | groceries.morrisons.com/products/morrisons-for-farmers-british-semi-skimmed-milk-2-pint/113155720 (Morrisons For Farmers British Semi Skimmed Milk 2 Pint, 1.136L, £1.29, shop £1.14/litre) | Same reading: £1.14 / l (1.136 l) |
+
