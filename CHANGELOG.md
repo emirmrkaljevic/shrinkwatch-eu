@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.3.16 (15 November 2026)
+
 - Picard (picard.fr): product pages are read from the visible pack price and the "le sachet de 450 g" (or "la boîte de 400 g") pack size, and the visible euro-per-kg unit price is used for the cross-check. Checked on public product pages on 15 November 2026: €15.53 / kg on Cocktail de fruits rouges (450 g, €6.99) and €14.95 / kg on Lait de coco (200 g, €2.99).
 
 - Morrisons UK (groceries.morrisons.com): product pages are read from the shop's schema.org price and pack size, and the visible £/litre unit price is used for the cross-check. Checked on public product pages on 14 November 2026: £1.06 / l on Morrisons British Semi Skimmed Milk 2 Pints (1.136 l, £1.20) and £1.14 / l on Morrisons For Farmers British Semi Skimmed Milk 2 Pint (1.136 l, £1.29).
