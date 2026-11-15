@@ -16,6 +16,8 @@ Public product-page check on 12 November 2026: Tesco UK (tesco.com) works. The s
 
 Public product-page check on 14 November 2026: Morrisons UK (groceries.morrisons.com) works. The public HTML has schema.org product data (pack price and size) and a visible £/litre unit price. See [compatibility.md](compatibility.md#morrisons-uk-14-november-2026).
 
+Public product-page check on 15 November 2026: Picard (picard.fr) works. The public HTML has the pack price, the pack size ("le sachet de 450 g") and a visible euro-per-kg unit price. See [compatibility.md](compatibility.md#picard-15-november-2026).
+
 Real desktop Chrome check on 24 October 2026: Lidl FR, ES, IT, PL and NL work. ES, IT and PL needed a fix first (pack size printed under the price, and zloty prices without a currency sign). See [compatibility.md](compatibility.md#real-browser-check-24-october-2026).
 
 Listing tiles (15 October 2026): Tommy shows unit-price badges on category/search tiles. Konzum, Mercator and Maxi already print unit prices on tiles; a shrinkflation marker is added when local history shows a smaller pack (verified on Konzum).
@@ -44,6 +46,7 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | FR | intermarche | intermarche.com | opt-in | Blocked: slider bot check in a real Chrome (17 Oct 2026), not verified |
 | FR | monoprix | monoprix.fr | opt-in | Verified (real Chrome, 17 Oct 2026) |
 | FR | coursesu | coursesu.com | opt-in | Blocked: "Access Denied" after choosing a store in a real Chrome (17 Oct 2026), not verified |
+| FR | picard | picard.fr | opt-in | Works (public page, 15 Nov 2026: €15.53 / kg on 450 g frozen fruit) |
 | IT | esselunga | spesaonline.esselunga.it | opt-in | Works |
 | IT | carrefour-it | carrefour.it | opt-in | Works |
 | IT | conad | spesaonline.conad.it | opt-in | Verified (real Chrome, 20 Oct 2026); choose a pickup store or address first |

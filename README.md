@@ -1,6 +1,6 @@
 # ShrinkWatch EU
 
-[![Latest release](https://img.shields.io/github/v/release/emirmrkaljevic/shrinkwatch-eu)](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest) [![Firefox Add-ons](https://img.shields.io/amo/v/shrinkwatch-eu?label=firefox%20add-ons)](https://addons.mozilla.org/en-US/firefox/addon/shrinkwatch-eu/) [![Shops](https://img.shields.io/badge/shops-72-2e7d32)](docs/shops.md) [![Website](https://img.shields.io/badge/website-shrinkwatch--eu-2e7d32)](https://emirmrkaljevic.github.io/shrinkwatch-eu/) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![ShrinkWatch EU | AlternativeTo](https://alternativeto.net/static/badges/badge-compact-color.svg)](https://alternativeto.net/software/shrinkwatch-eu/about/?utm_source=badge&utm_medium=referral)
+[![Latest release](https://img.shields.io/github/v/release/emirmrkaljevic/shrinkwatch-eu)](https://github.com/emirmrkaljevic/shrinkwatch-eu/releases/latest) [![Firefox Add-ons](https://img.shields.io/amo/v/shrinkwatch-eu?label=firefox%20add-ons)](https://addons.mozilla.org/en-US/firefox/addon/shrinkwatch-eu/) [![Shops](https://img.shields.io/badge/shops-73-2e7d32)](docs/shops.md) [![Website](https://img.shields.io/badge/website-shrinkwatch--eu-2e7d32)](https://emirmrkaljevic.github.io/shrinkwatch-eu/) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![ShrinkWatch EU | AlternativeTo](https://alternativeto.net/static/badges/badge-compact-color.svg)](https://alternativeto.net/software/shrinkwatch-eu/about/?utm_source=badge&utm_medium=referral)
 
 **[Install for Firefox](https://addons.mozilla.org/en-US/firefox/addon/shrinkwatch-eu/)** from addons.mozilla.org, one click, updates automatically. On Chrome, Edge and Brave, install from the release zip (steps below).
 
@@ -45,7 +45,7 @@ Firefox keeps a manual install only until the next restart. For a permanent inst
 
 ## Which shops work
 
-72 grocery and drugstore web shops across Europe. **67 of them are verified** on real product pages. The other 5 (Intermarché, Cours U, Colruyt, Tesco Czechia and Coop Italy) are included but not verified yet, because their sites blocked the test browser or need a login to show prices. Full list with check results: [docs/shops.md](docs/shops.md).
+73 grocery and drugstore web shops across Europe. **68 of them are verified** on real product pages. The other 5 (Intermarché, Cours U, Colruyt, Tesco Czechia and Coop Italy) are included but not verified yet, because their sites blocked the test browser or need a login to show prices. Full list with check results: [docs/shops.md](docs/shops.md).
 
 - **Work right after install:** Konzum, Tommy, Mercator, Bingo, Maxi and Lidl (DE, AT, HR, SI, RS, BA). On Tommy category and search pages you also get unit prices on product tiles.
 - **Other shops:** open the shop, click the ShrinkWatch icon and choose "Enable on this shop". The browser asks for access to that shop only.

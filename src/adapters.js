@@ -54,6 +54,7 @@
     A('intermarche', 'FR', ['intermarche.com'], { productPath: /\/produit\// }),
     A('monoprix', 'FR', ['monoprix.fr'], { status: 'verified (real Chrome, 17 Oct 2026)', productPath: /\/products\/|\/p\// }),
     A('coursesu', 'FR', ['coursesu.com'], { productPath: /\/p\// }),
+    A('picard', 'FR', ['picard.fr'], { status: 'verified (picard.fr, 15 Nov 2026)', productPath: /\/produits\//, size: '.pi-ProductDetails-weight', unitPrice: '.pi-ProductDetails-kiloPrice', currency: 'EUR' }),
     // Italy
     A('esselunga', 'IT', ['spesaonline.esselunga.it'], { productPath: /\/prodotto\/\d+/, status: 'verified', needsStore: true }),
     A('carrefour-it', 'IT', ['carrefour.it']),

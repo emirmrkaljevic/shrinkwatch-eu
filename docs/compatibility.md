@@ -225,3 +225,13 @@ Public groceries.morrisons.com product pages, opened with curl (the public HTML 
 | Morrisons (UK) | groceries.morrisons.com/products/morrisons-british-semi-skimmed-milk-2-pint/113239376 (Morrisons British Semi Skimmed Milk 2 Pint, 1.136L, £1.20, shop £1.06/litre) | Same reading: £1.06 / l (1.136 l) |
 | Morrisons (UK) | groceries.morrisons.com/products/morrisons-for-farmers-british-semi-skimmed-milk-2-pint/113155720 (Morrisons For Farmers British Semi Skimmed Milk 2 Pint, 1.136L, £1.29, shop £1.14/litre) | Same reading: £1.14 / l (1.136 l) |
 
+## Picard (15 November 2026)
+
+Public picard.fr product pages, opened with curl. A stripped fixture from the first page is in `test/fixtures/picard-fr.html`.
+
+| Shop | Product | Result |
+|---|---|---|
+| Picard (FR) | picard.fr/produits/melange-fruits-rouges-000000000000068209.html (Cocktail de fruits rouges, 450 g, €6.99, shop €15.53/kg) | Works: €15.53 / kg (450 g). The pack price and size come from the product details; the visible €15.53/kg matches within 5 %. |
+| Picard (FR) | picard.fr/produits/lait-coco-000000000000069827.html (Lait de coco, 200 g, €2.99, shop €14.95/kg) | Same reading: €14.95 / kg (200 g) |
+| Picard (FR) | picard.fr/produits/myrtilles-sauvages-bio-000000000000068810.html (Myrtilles sauvages bio, 450 g, €8.99, shop €19.97/kg) | Same reading: €19.97 / kg (450 g) |
+

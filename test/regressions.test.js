@@ -97,6 +97,19 @@ test('Morrisons UK: schema.org pack price and size on groceries.morrisons.com', 
   assert.strictEqual(badge(p), '£1.06 / l (1.136 l)');
 });
 
+test('Picard FR: pack price, sachet weight and €/kg unit price on picard.fr', () => {
+  const doc = load('picard-fr.html');
+  const p = extract(doc, adapterFor('www.picard.fr'), 'https://www.picard.fr/produits/melange-fruits-rouges-000000000000068209.html');
+  assert.strictEqual(p.name, 'Cocktail de fruits rouges');
+  assert.strictEqual(p.price, 6.99);
+  assert.strictEqual(p.currency, 'EUR');
+  assert.strictEqual(p.size.amount, 450);
+  assert.strictEqual(p.size.unit, 'g');
+  assert.ok(!p.unitPriceFromShop); // 6.99 / 450 g matches the shop €15.53/kg within 5 %
+  assert.strictEqual(badge(p), '€15.53 / kg (450 g)');
+});
+
+
 test('declared currency is kept when nothing on the page contradicts it', () => {
   const doc = page(ld({ '@type': 'Product', name: 'Milk 2 l', offers: { price: 1.99, priceCurrency: 'GBP' } }), '<h1>Milk 2 l</h1><p>£1.99</p>');
   assert.strictEqual(extract(doc, {}, 'https://shop.example/p/1').currency, 'GBP');
