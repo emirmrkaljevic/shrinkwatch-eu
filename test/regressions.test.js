@@ -109,6 +109,18 @@ test('Picard FR: pack price, sachet weight and €/kg unit price on picard.fr', 
   assert.strictEqual(badge(p), '€15.53 / kg (450 g)');
 });
 
+test('Edeka DE: pack price, title size and €/l Grundpreis on edeka24.de', () => {
+  const doc = load('edeka24-de.html');
+  const p = extract(doc, adapterFor('edeka24.de'), 'https://edeka24.de/Lebensmittel/Fruehstueck-Snacks/Milch-pflanzliche-Varianten/Weihenstephan-Haltbare-Milch-3-5-1L.html');
+  assert.strictEqual(p.name, 'Weihenstephan Haltbare Milch 3,5% 1L');
+  assert.strictEqual(p.price, 1.79);
+  assert.strictEqual(p.currency, 'EUR');
+  assert.strictEqual(p.size.amount, 1000);
+  assert.strictEqual(p.size.unit, 'ml');
+  assert.ok(!p.unitPriceFromShop); // 1.79 / 1 l matches the shop €1.79/l within 5 %
+  assert.strictEqual(badge(p), '€1.79 / l (1 l)');
+});
+
 
 test('declared currency is kept when nothing on the page contradicts it', () => {
   const doc = page(ld({ '@type': 'Product', name: 'Milk 2 l', offers: { price: 1.99, priceCurrency: 'GBP' } }), '<h1>Milk 2 l</h1><p>£1.99</p>');

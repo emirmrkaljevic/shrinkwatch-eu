@@ -235,3 +235,14 @@ Public picard.fr product pages, opened with curl. A stripped fixture from the fi
 | Picard (FR) | picard.fr/produits/lait-coco-000000000000069827.html (Lait de coco, 200 g, €2.99, shop €14.95/kg) | Same reading: €14.95 / kg (200 g) |
 | Picard (FR) | picard.fr/produits/myrtilles-sauvages-bio-000000000000068810.html (Myrtilles sauvages bio, 450 g, €8.99, shop €19.97/kg) | Same reading: €19.97 / kg (450 g) |
 
+
+## Edeka (16 November 2026)
+
+Public edeka24.de product pages, opened with curl. A stripped fixture from the first page is in `test/fixtures/edeka24-de.html`.
+
+| Shop | Product | Result |
+|---|---|---|
+| Edeka (DE) | edeka24.de/Lebensmittel/Fruehstueck-Snacks/Milch-pflanzliche-Varianten/Weihenstephan-Haltbare-Milch-3-5-1L.html (Weihenstephan Haltbare Milch 3,5% 1L, €1.79, shop €1.79/l) | Works: €1.79 / l (1 l). The pack price comes from the product price block and the size from the title; the visible €1.79/l matches within 5 %. |
+| Edeka (DE) | edeka24.de/Lebensmittel/Fruehstueck-Snacks/Milch-pflanzliche-Varianten/Unsere-Heimat-H-Milch-3-5-1L.html (Unsere Heimat H-Milch 3,5% 1L, €1.49, shop €1.49/l) | Same reading: €1.49 / l (1 l) |
+| Edeka (DE) | edeka24.de/Lebensmittel/Fruehstueck-Snacks/Milch-pflanzliche-Varianten/Berchtesgadener-Land-haltbare-Berg-und-Alpen-Milch-3-5-1L.html (Berchtesgadener Land haltbare Berg und Alpen Milch 3,5% 1L, €1.89, shop €1.89/l) | Same reading: €1.89 / l (1 l) |
+

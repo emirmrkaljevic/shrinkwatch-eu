@@ -42,6 +42,7 @@
     // siblings repeat "48"), shop unit price "Grundpreis: 15.08 / kg". JSON-LD offers.price is used first.
     A('netto', 'DE', ['netto-online.de'], { status: 'verified', productPath: /\/p-\d+/, currency: 'EUR',
       price: '.tc-salePrice .prices__ins--digits-before-comma', unitPrice: '.tc-product-baseprice, .product-property__base-price' }),
+    A('edeka', 'DE', ['edeka24.de'], { status: 'verified (edeka24.de, 16 Nov 2026)', productPath: /\.html$/, name: 'h1', price: '.price-block .price', unitPrice: 'li.price-note', currency: 'EUR' }),
     // Austria
     A('billa', 'AT', ['shop.billa.at'], { status: 'verified', productPath: /\/produkte\//, price: '.ws-product-price-value',
       // pack info is a list item such as "1 liter Packung" or "500 g Becher"

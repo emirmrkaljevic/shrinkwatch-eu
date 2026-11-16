@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Edeka (edeka24.de): product pages are read from the visible pack price and the pack size in the product title (for example "1L"), and the visible euro-per-litre Grundpreis is used for the cross-check. Checked on public product pages on 16 November 2026: €1.79 / l on Weihenstephan Haltbare Milch 3,5% (1 l, €1.79) and €1.49 / l on Unsere Heimat H-Milch 3,5% (1 l, €1.49).
+
 ## 0.3.16 (15 November 2026)
 
 - Picard (picard.fr): product pages are read from the visible pack price and the "le sachet de 450 g" (or "la boîte de 400 g") pack size, and the visible euro-per-kg unit price is used for the cross-check. Checked on public product pages on 15 November 2026: €15.53 / kg on Cocktail de fruits rouges (450 g, €6.99) and €14.95 / kg on Lait de coco (200 g, €2.99).
