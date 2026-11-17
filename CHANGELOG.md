@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.17 (17 November 2026)
 
 - Edeka (edeka24.de): product pages are read from the visible pack price and the pack size in the product title (for example "1L"), and the visible euro-per-litre Grundpreis is used for the cross-check. Checked on public product pages on 16 November 2026: €1.79 / l on Weihenstephan Haltbare Milch 3,5% (1 l, €1.79) and €1.49 / l on Unsere Heimat H-Milch 3,5% (1 l, €1.49).
 
