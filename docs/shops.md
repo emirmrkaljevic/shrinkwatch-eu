@@ -20,6 +20,8 @@ Public product-page check on 15 November 2026: Picard (picard.fr) works. The pub
 
 Public product-page check on 16 November 2026: Edeka (edeka24.de) works. The public HTML has the pack price, the pack size in the product title ("1L") and a visible euro-per-litre Grundpreis. See [compatibility.md](compatibility.md#edeka-16-november-2026).
 
+Public product-page check on 18 November 2026: Knuspr (knuspr.de) works. The public HTML has schema.org pack price data, the pack size ("1 l") and a visible euro-per-litre unit price. See [compatibility.md](compatibility.md#knuspr-18-november-2026).
+
 Real desktop Chrome check on 24 October 2026: Lidl FR, ES, IT, PL and NL work. ES, IT and PL needed a fix first (pack size printed under the price, and zloty prices without a currency sign). See [compatibility.md](compatibility.md#real-browser-check-24-october-2026).
 
 Listing tiles (15 October 2026): Tommy shows unit-price badges on category/search tiles. Konzum, Mercator and Maxi already print unit prices on tiles; a shrinkflation marker is added when local history shows a smaller pack (verified on Konzum).
@@ -41,6 +43,7 @@ Listing tiles (15 October 2026): Tommy shows unit-price badges on category/searc
 | DE | rossmann | rossmann.de | opt-in | Works (real Chrome, 16 Oct 2026) |
 | DE | netto | netto-online.de | opt-in | Verified (real Chrome, 16 Oct 2026) |
 | DE | edeka | edeka24.de | opt-in | Works (public page, 16 Nov 2026: €1.79 / l on 1 l milk) |
+| DE | knuspr | knuspr.de | opt-in | Works (public page, 18 Nov 2026: €1.43 / l on 1 l milk) |
 | AT | billa | shop.billa.at | opt-in | Works |
 | AT | gurkerl | gurkerl.at | opt-in | Works; opt-in flow verified in real Chrome (15 Oct 2026) |
 | FR | carrefour-fr | carrefour.fr | opt-in | Works (real Chrome, 16 Oct 2026: €1.26 / l on 1 l milk) |

@@ -246,3 +246,13 @@ Public edeka24.de product pages, opened with curl. A stripped fixture from the f
 | Edeka (DE) | edeka24.de/Lebensmittel/Fruehstueck-Snacks/Milch-pflanzliche-Varianten/Unsere-Heimat-H-Milch-3-5-1L.html (Unsere Heimat H-Milch 3,5% 1L, €1.49, shop €1.49/l) | Same reading: €1.49 / l (1 l) |
 | Edeka (DE) | edeka24.de/Lebensmittel/Fruehstueck-Snacks/Milch-pflanzliche-Varianten/Berchtesgadener-Land-haltbare-Berg-und-Alpen-Milch-3-5-1L.html (Berchtesgadener Land haltbare Berg und Alpen Milch 3,5% 1L, €1.89, shop €1.89/l) | Same reading: €1.89 / l (1 l) |
 
+## Knuspr (18 November 2026)
+
+Public knuspr.de product pages, opened with curl. A stripped fixture from the first page is in `test/fixtures/knuspr-de.html`.
+
+| Shop | Product | Result |
+|---|---|---|
+| Knuspr (DE) | knuspr.de/2192-weihenstephan-haltbare-milch-3-5-fett (Weihenstephan Haltbare Milch 3.5% Fett, 1 l, €1.43, shop €1.43/l) | Works: €1.43 / l (1 l). The pack price comes from schema.org data and the size from the product weight line; the visible €1.43/l matches within 5 %. |
+| Knuspr (DE) | knuspr.de/2191-weihenstephan-haltbare-milch-1-5-fett (Weihenstephan Haltbare Milch 1,5% Fett, 1 l, €1.33, shop €1.33/l) | Same reading: €1.33 / l (1 l) |
+| Knuspr (DE) | knuspr.de/126944-landliebe-frischmilch-3-8-mehrwerg (Landliebe Frischmilch 3,8% (Mehrwerg), 1 l, €1.79, shop €1.79/l) | Same reading: €1.79 / l (1 l) |
+

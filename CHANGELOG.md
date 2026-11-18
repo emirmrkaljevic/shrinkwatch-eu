@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Knuspr (knuspr.de): product pages are read from the shop's schema.org pack price, the pack size such as "1 l", and the visible euro-per-litre unit price is used for the cross-check. Checked on public product pages on 18 November 2026: €1.43 / l on Weihenstephan Haltbare Milch 3.5% Fett (1 l, €1.43) and €1.33 / l on Weihenstephan Haltbare Milch 1,5% Fett (1 l, €1.33).
+
 ## 0.3.17 (17 November 2026)
 
 - Edeka (edeka24.de): product pages are read from the visible pack price and the pack size in the product title (for example "1L"), and the visible euro-per-litre Grundpreis is used for the cross-check. Checked on public product pages on 16 November 2026: €1.79 / l on Weihenstephan Haltbare Milch 3,5% (1 l, €1.79) and €1.49 / l on Unsere Heimat H-Milch 3,5% (1 l, €1.49).

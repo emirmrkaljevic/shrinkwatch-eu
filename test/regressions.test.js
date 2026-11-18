@@ -121,6 +121,18 @@ test('Edeka DE: pack price, title size and €/l Grundpreis on edeka24.de', () =
   assert.strictEqual(badge(p), '€1.79 / l (1 l)');
 });
 
+test('Knuspr DE: pack price, pack size and €/l unit price on knuspr.de', () => {
+  const doc = load('knuspr-de.html');
+  const p = extract(doc, adapterFor('knuspr.de'), 'https://www.knuspr.de/2192-weihenstephan-haltbare-milch-3-5-fett');
+  assert.strictEqual(p.name, 'Weihenstephan Haltbare Milch 3.5% Fett');
+  assert.strictEqual(p.price, 1.43);
+  assert.strictEqual(p.currency, 'EUR');
+  assert.strictEqual(p.size.amount, 1000);
+  assert.strictEqual(p.size.unit, 'ml');
+  assert.ok(!p.unitPriceFromShop); // 1.43 / 1 l matches the shop €1.43/l within 5 %
+  assert.strictEqual(badge(p), '€1.43 / l (1 l)');
+});
+
 
 test('declared currency is kept when nothing on the page contradicts it', () => {
   const doc = page(ld({ '@type': 'Product', name: 'Milk 2 l', offers: { price: 1.99, priceCurrency: 'GBP' } }), '<h1>Milk 2 l</h1><p>£1.99</p>');
