@@ -53,37 +53,11 @@ Firefox keeps a manual install only until the next restart. For a permanent inst
 
 ## FAQ
 
-**My shop is not listed.** Open a product page and click "Check this page now" in the popup. If that works, please [request the shop](https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=shop-request.yml) so it can be added.
-
-**The badge shows the wrong size or price.** Please [report it](https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=wrong-result.yml) with the product link.
-
-**How does it work out the pack size?** It reads the whole pack, not just the first number, uses drained weight when a can lists one, and can show a price per piece for count packs. If a size looks wrong, please [report it](https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=wrong-result.yml) with the product link.
-
-**Why does the popup ask for permission on some shops?** Only a few shops are enabled by default. Any other shop is switched on only when you click "Enable on this shop", so the extension never gets access to sites you don't use.
-
-**Does it send my data anywhere?** No. Pack sizes and prices are stored only in your browser.
-
-**Can I move my history to another browser?** Yes. In the popup, click "Back up or restore history" to export it as a JSON file, then import that file in the other browser.
-
-**Is a shrinkflation warning proof?** No. It compares what this browser saw before with what the shop shows now. Shop data can be wrong, so check the pack before drawing conclusions.
+Common questions (my shop is not listed, wrong size or price, permissions, data, moving your history) are answered in the [FAQ](docs/faq.md). Found a bug? [Report a wrong result](https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=wrong-result.yml) or [request a shop](https://github.com/emirmrkaljevic/shrinkwatch-eu/issues/new?template=shop-request.yml).
 
 ## For developers
 
-Every shop first uses the page's own schema.org `Product` data, then Open Graph tags, then a few CSS selectors.
-
-### Build and test
-
-```sh
-npm ci
-npm test        # unit tests (pack-size parsing, unit price, shrinkflation detection, real page fixtures)
-npm run build   # dist/shrinkwatch-chrome-<version>.zip and dist/shrinkwatch-firefox-<version>.zip
-```
-
-Adding a shop: add an entry to `src/adapters.js`, save a product page as a fixture in `test/fixtures/`, and add a test in `test/extract.test.js`.
-
-### How shrinkflation is detected
-
-For each product (keyed by EAN/SKU or URL) the extension keeps a short local history of pack size and price. When you see a product again with a smaller pack and a higher price per unit than before, it shows a warning. A smaller pack that is proportionally cheaper is not flagged.
+Every shop first uses the page's own schema.org `Product` data, then Open Graph tags, then a few CSS selectors. `npm ci && npm test && npm run build` runs the tests and builds both zips. Details are in [development](docs/development.md).
 
 ## Privacy
 
@@ -92,6 +66,16 @@ No data is collected or sent anywhere. See [PRIVACY.md](PRIVACY.md).
 ## Disclaimer
 
 ShrinkWatch EU is an independent project. It is not affiliated with, endorsed by or sponsored by Konzum, Lidl, Kaufland, Mercator, Bingo, Spar, Tommy, Rewe, Tesco or any other retailer. Shop names are trademarks of their owners and are used only to describe compatibility. Unit prices are computed from the information shown on the page and may be wrong; always check the shop's own label.
+
+## Docs
+
+- [Supported shops: every shop and the result of its last check](docs/shops.md)
+- [Shop compatibility: the full log of checks on real product pages](docs/compatibility.md)
+- [FAQ: common questions about results, permissions and privacy](docs/faq.md)
+- [Development: build, tests, adding a shop and how detection works](docs/development.md)
+- [Privacy policy](PRIVACY.md)
+- [Changelog](CHANGELOG.md)
+- [Website](https://emirmrkaljevic.github.io/shrinkwatch-eu/)
 
 ## License
 
