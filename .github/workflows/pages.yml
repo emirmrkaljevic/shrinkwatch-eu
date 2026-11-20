@@ -1,0 +1,51 @@
+name: Pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "docs/shops.md"
+      - "docs/compatibility.md"
+      - "docs/img/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # The website lives in site/. The shop list and the compatibility notes
+      # are also published as shops.html and compatibility.html, and the demo
+      # GIF is shared with the README, so those come from docs/.
+      - name: Assemble site
+        run: |
+          mkdir -p _src/img
+          cp -r site/. _src/
+          cp docs/shops.md docs/compatibility.md _src/
+          cp docs/img/demo.gif _src/img/
+      - uses: actions/configure-pages@v5
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./_src
+          destination: ./_site
+      - uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
