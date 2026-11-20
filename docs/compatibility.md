@@ -1,5 +1,7 @@
 # Shop compatibility
 
+The full log of shop checks on real product pages, round by round. The short list is in [supported shops](shops.md), and the overview is in the [README](../README.md).
+
 Checked on 14 October 2026 by loading the extension in headless Chromium and opening a real product page.
 
 | Shop | Page tested | Result |

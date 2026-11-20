@@ -33,6 +33,8 @@ jobs:
           cp -r site/. _src/
           cp docs/shops.md docs/compatibility.md _src/
           cp docs/img/demo.gif _src/img/
+          # On the website, point the README link at the repository page.
+          sed -i 's#](\.\./README\.md)#](https://github.com/emirmrkaljevic/shrinkwatch-eu\#readme)#g' _src/*.md
       - uses: actions/configure-pages@v5
       - uses: actions/jekyll-build-pages@v1
         with:

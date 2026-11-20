@@ -1,5 +1,7 @@
 # Supported shops
 
+Every shop ShrinkWatch EU supports, with the result of its last check. For install steps and an overview, see the [README](../README.md).
+
 Core shops run automatically. Other shops are switched on per shop from the extension popup ("Enable on this shop"), so the extension only asks for access to sites you use. An enabled opt-in shop can be turned off again with "Disable on this shop". On unsupported or not-yet-enabled sites, "Check this page now" reads the current page once.
 
 Live checks: 14 October 2026 (updated after the third round), headless Chromium, real product pages. Sites with bot protection were not tested. Opt-in permission flow verified in a real Chrome browser on 15 October 2026 (gurkerl.at): Enable prompt, then unit-price badge after reload; Disable removes access. Chrome does not prompt again when a shop is re-enabled after Disable, because it remembers the earlier approval; Site access on the extension's details page revokes it fully.
